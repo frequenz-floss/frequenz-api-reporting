@@ -1,0 +1,17 @@
+// Frequenz Reporting API
+//
+// Frequenz gRPC API to aggregate component data from microgrids
+//
+// Copyright:
+// Copyright 2023 Frequenz Energy-as-a-Service GmbH
+//
+// License:
+// MIT
+
+syntax = "proto3";
+
+package frequenz.api.reporting.reporting;
+message HelloWorld {
+  // The greeting.
+  string greet = 1;
+}

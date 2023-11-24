@@ -1,0 +1,46 @@
+{
+  "cookiecutter": {
+    "Introduction": "",
+    "type": "api",
+    "name": "reporting",
+    "description": "Frequenz gRPC API to aggregate component data from microgrids",
+    "title": "Frequenz Reporting API",
+    "keywords": "cloud, microgrid",
+    "github_org": "frequenz-floss",
+    "license": "MIT",
+    "author_name": "Frequenz Energy-as-a-Service GmbH",
+    "author_email": "floss@frequenz.com",
+    "python_package": "frequenz.api.reporting",
+    "pypi_package_name": "frequenz-api-reporting",
+    "github_repo_name": "frequenz-api-reporting",
+    "default_codeowners": "(like @some-org/some-team; defaults to a team based on the repo type)",
+    "_template": "gh:frequenz-floss/frequenz-repo-config-python",
+    "_repo_dir": "/home/stefan/.cookiecutters/frequenz-repo-config-python/cookiecutter",
+    "_checkout": "v0.7.5"
+  },
+  "_cookiecutter": {
+    "Introduction": "{{cookiecutter | introduction}}",
+    "type": [
+      "actor",
+      "api",
+      "app",
+      "lib",
+      "model"
+    ],
+    "name": null,
+    "description": null,
+    "title": "{{cookiecutter | proj_title}}",
+    "keywords": "(comma separated: 'frequenz', <type> and <name> are included automatically)",
+    "github_org": "frequenz-floss",
+    "license": [
+      "MIT",
+      "Proprietary"
+    ],
+    "author_name": "Frequenz Energy-as-a-Service GmbH",
+    "author_email": "floss@frequenz.com",
+    "python_package": "{{cookiecutter | python_package}}",
+    "pypi_package_name": "{{cookiecutter | pypi_package_name}}",
+    "github_repo_name": "{{cookiecutter | github_repo_name}}",
+    "default_codeowners": "(like @some-org/some-team; defaults to a team based on the repo type)"
+  }
+}

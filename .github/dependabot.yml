@@ -1,0 +1,59 @@
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      day: "saturday"
+    labels:
+      - "part:tooling"
+      - "type:tech-debt"
+    # Default versioning-strategy. For other versioning-strategy see:
+    # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#versioning-strategy
+    versioning-strategy: auto
+    # Allow up to 10 open pull requests for updates to dependency versions
+    open-pull-requests-limit: 10
+    # We group production and development ("optional" in the context of
+    # pyproject.toml) dependency updates when they are patch and minor updates,
+    # so we end up with less PRs being generated.
+    # Major updates are still managed, but they'll create one PR per
+    # dependency, as major updates are expected to be breaking, it is better to
+    # manage them individually.
+    groups:
+      required:
+        dependency-type: "production"
+        update-types:
+          - "minor"
+          - "patch"
+      optional:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      day: "saturday"
+    labels:
+      - "part:tooling"
+      - "type:tech-debt"
+
+  - package-ecosystem: "gitsubmodule"
+    directory: "/"
+    # We only want to track updates on google api common because the
+    # dependencies to other submodules are also indirectly tracked by the
+    # python dependencies (and because the gitsubmodule dependency tracker
+    # doesn't support updating only to tags or following semver, see
+    # https://github.com/dependabot/dependabot-core/issues/1639 for details)
+    # We do so by explicitly ignoring the other submodules, as `ignore` all
+    # + `allow` one doesn't seem to work.
+    ignore:
+      - dependency-name: "submodules/frequenz-api-common"
+    schedule:
+      interval: "monthly"
+      day: "saturday"
+    labels:
+      - "part:tooling"
+      - "type:tech-debt"
