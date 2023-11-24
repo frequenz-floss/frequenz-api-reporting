@@ -15,7 +15,6 @@ labelMappings:
   "part:docs": "part:docs"
   "part:tests": "part:tests"
   "part:tooling": "part:tooling"
+  "part:proto": "part:proto"
+  "part:python": "part:python"
   "part:❓": "part:❓"
-  # TODO(cookiecutter): Add other parts
-  # Please have in mind that that the part:xxx labels need to
-  # be created in the GitHub repository.

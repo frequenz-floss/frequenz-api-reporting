@@ -2,8 +2,6 @@
 //
 // Frequenz gRPC API to aggregate component data from microgrids
 //
-// TODO(cookiecutter): Add a more descriptive package description.
-//
 // Copyright:
 // Copyright 2023 Frequenz Energy-as-a-Service GmbH
 //
@@ -13,10 +11,6 @@
 syntax = "proto3";
 
 package frequenz.api.reporting.reporting;
-
-// An example message.
-//
-// TODO(cookiecutter): Remove this message.
 message HelloWorld {
   // The greeting.
   string greet = 1;
