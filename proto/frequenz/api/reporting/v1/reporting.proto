@@ -14,11 +14,11 @@ package frequenz.api.reporting.v1;
 
 import "google/protobuf/timestamp.proto";
 
-import "frequenz/api/common/v1/components.proto";
-import "frequenz/api/common/v1/components/data.proto";
-import "frequenz/api/common/v1/metrics.proto";
-import "frequenz/api/common/v1/microgrids.proto";
-import "frequenz/api/common/v1/pagination.proto";
+import "frequenz/api/common/v1/metrics/metric_sample.proto";
+import "frequenz/api/common/v1/microgrid/components/components.proto";
+import "frequenz/api/common/v1/microgrid/microgrid.proto";
+import "frequenz/api/common/v1/pagination/pagination_info.proto";
+import "frequenz/api/common/v1/pagination/pagination_params.proto";
 
 // The Reporting service provides services for real-time and historical metrics monitoring
 // of various microgrid components like Batteries, EV Chargers, and Inverters.
@@ -202,7 +202,7 @@ message ListMicrogridComponentsDataRequest {
   // !!! note
   //     Each entry in this repeated field associates a microgrid ID with its respective
   //     component IDs. At least one such association must be provided for a valid request.
-  repeated frequenz.api.common.v1.microgrids.MicrogridComponentIDs microgrid_components = 1;
+  repeated frequenz.api.common.v1.microgrid.MicrogridComponentIDs microgrid_components = 1;
 
   // List of metrics to return. Only the specified metrics will be returned.
   //
@@ -271,7 +271,7 @@ message ListMicrogridComponentsDataResponse {
     uint64 microgrid_id = 1;
 
     // A list of components with related metric timeseries data samples.
-    repeated frequenz.api.common.v1.components.ComponentData components = 2;
+    repeated frequenz.api.common.v1.microgrid.components.ComponentData components = 2;
   }
 
   // List of microgrids metrics timeseries data, organized per component.
@@ -309,7 +309,7 @@ message ReceiveMicrogridComponentsDataStreamRequest {
   // !!! note
   //     Each entry in this repeated field associates a microgrid ID with its respective
   //     component IDs. At least one such association must be provided for a valid request.
-  repeated frequenz.api.common.v1.microgrids.MicrogridComponentIDs microgrid_components = 1;
+  repeated frequenz.api.common.v1.microgrid.MicrogridComponentIDs microgrid_components = 1;
 
   // List of metrics to return. Only the specified metrics will be returned.
   //
@@ -379,7 +379,7 @@ message ReceiveMicrogridComponentsDataStreamResponse {
   uint64 microgrid_id = 1;
 
   // List of components within this microgrid, each with its associated data samples.
-  repeated frequenz.api.common.v1.components.ComponentData components = 2;
+  repeated frequenz.api.common.v1.microgrid.components.ComponentData components = 2;
 }
 
 // Message defining the request format for fetching aggregated historical metrics
