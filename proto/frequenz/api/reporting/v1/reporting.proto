@@ -16,8 +16,8 @@ import "google/protobuf/timestamp.proto";
 
 import "frequenz/api/common/v1/components.proto";
 import "frequenz/api/common/v1/components/data.proto";
-import "frequenz/api/common/v1/microgrids.proto";
 import "frequenz/api/common/v1/metrics.proto";
+import "frequenz/api/common/v1/microgrids.proto";
 import "frequenz/api/common/v1/pagination.proto";
 
 // The Reporting service provides services for real-time and historical metrics monitoring
@@ -103,8 +103,9 @@ message ResamplingOptions {
 message IncludeOptions {
   // Defines whether to include results in the response message.
   enum FilterOption {
-    FILTER_OPTION_EXCLUDE = 0;
-    FILTER_OPTION_INCLUDE = 1;
+    FILTER_OPTION_UNSPECIFIED = 0;
+    FILTER_OPTION_EXCLUDE = 1;
+    FILTER_OPTION_INCLUDE = 2;
   }
 
   // Optional bound inclusion. By default, bounds are not included in the response.
@@ -407,7 +408,7 @@ message ListAggregatedMicrogridComponentsDataRequest {
   //     aggregations can be specified for a list of microgrid components, allowing for different
   //     metrics and formula combinations. At least one formula must be provided for a valid
   //     request.
-  repeated AggregationConfig aggregation_config = 1;
+  repeated AggregationConfig aggregation_configs = 1;
 
   // General filter that applies to all formula aggregations provided.
   AggregationListFilter filter = 2;
