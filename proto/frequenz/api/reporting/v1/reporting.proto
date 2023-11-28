@@ -397,7 +397,8 @@ message ListAggregatedMicrogridComponentsDataRequest {
   // General filter criteria for querying aggregated microgrid components data.
   message AggregationListFilter {
     // Optional resampling options like resolution for the data, represented in seconds.
-    // If omitted, data will be returned in its original representation.
+    // If omitted, data will be returned in its original representation,
+    // and the default resampling period will be one second.
     ResamplingOptions resampling_options = 1;
 
     // Optional time-based filter criteria.
