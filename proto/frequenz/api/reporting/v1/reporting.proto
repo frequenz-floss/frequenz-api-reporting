@@ -42,7 +42,8 @@ service Reporting {
   //
   // !!! note
   //     This RPC endpoint streams metrics data for components of one or more microgrids.
-  //     Clients need to provide at least one component ID to get a result.
+  //     Clients need to provide at least one microgrid ID and one component ID
+  //     to get a result.
   rpc ReceiveMicrogridComponentsDataStream(ReceiveMicrogridComponentsDataStreamRequest)
     returns (stream ReceiveMicrogridComponentsDataStreamResponse) {}
 
@@ -52,6 +53,7 @@ service Reporting {
   // !!! note
   //     This RPC endpoint retrieves aggregated historical metrics data based on user-defined
   //     formulas for microgrid components. At least one formula must be provided for a valid query.
+  //     Formulas are provided on a per-microgrid basis.
   rpc ListAggregatedMicrogridComponentsData(ListAggregatedMicrogridComponentsDataRequest)
     returns (ListAggregatedMicrogridComponentsDataResponse) {}
 
@@ -71,7 +73,8 @@ service Reporting {
 // !!! note
 //     Specifies the start and end time for the query. Both fields are optional, but
 //     their absence or presence has specific implications for the query results.
-//
+//     Data will be returned as a set of rows, which each row containing a timestamp.
+//     This timestamp will be >= start and < end.
 message TimeFilter {
   // Optional UTC start time for the query.
   //
