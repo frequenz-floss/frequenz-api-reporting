@@ -169,8 +169,7 @@ message SimpleAggregatedMetricSample {
   // The UTC sample timestamp for the aggregated metrics.
   //
   // !!! info
-  //     This timestamp indicates the specific moment when the aggregated metric value
-  //      is calculated.
+  //     This is the original timestamp of the samples that were aggregated.
   google.protobuf.Timestamp sampled_at = 1;
 
   // The aggregated value of the metric.
@@ -533,6 +532,6 @@ message ReceiveAggregatedMicrogridComponentsDataStreamResponse {
   // The metric and formula that has been used to aggregate the sample.
   AggregationConfig aggregation_config = 1;
 
-  // Aggregated sample value and corresponding UTC timestamp when it was generated.
+  // Aggregated sample value and corresponding UTC timestamp when it was sampled.
   SimpleAggregatedMetricSample sample = 2;
 }
