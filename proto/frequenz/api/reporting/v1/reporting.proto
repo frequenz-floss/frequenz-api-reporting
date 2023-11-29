@@ -92,6 +92,11 @@ message TimeFilter {
 }
 
 // Resampling options for aggregated microgrid components data.
+// If data is resampled, all samples that fall in a left-closed time interval
+// determined by the resolution will be aggregated.
+// At the moment only mean aggregation is supported.
+// The timestamp of the aggregated sample corresponds to the oldest
+// possible timestamp of the time interval.
 message ResamplingOptions {
   // Optional resampling resolution for the data, represented in seconds.
   // If omitted, data will be returned in its original resolution.
@@ -396,8 +401,8 @@ message ListAggregatedMicrogridComponentsDataRequest {
   // General filter criteria for querying aggregated microgrid components data.
   message AggregationListFilter {
     // Optional resampling options like resolution for the data, represented in seconds.
-    // If omitted, data will be returned in its original representation,
-    // and the default resampling period will be one second.
+    // Data will always be resampled to ensure consistency of the aggregation.
+    // If omitted, data will be resampled with a default of one second
     ResamplingOptions resampling_options = 1;
 
     // Optional time-based filter criteria.
