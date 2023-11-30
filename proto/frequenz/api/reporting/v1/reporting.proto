@@ -1,0 +1,542 @@
+// protolint:disable MAX_LINE_LENGTH
+
+// Frequenz Reporting API
+//
+// Copyright:
+// Copyright 2023 Frequenz Energy-as-a-Service GmbH
+//
+// License:
+// MIT
+
+syntax = "proto3";
+
+package frequenz.api.reporting.v1;
+
+import "google/protobuf/timestamp.proto";
+
+import "frequenz/api/common/v1/metrics/metric_sample.proto";
+import "frequenz/api/common/v1/microgrid/components/components.proto";
+import "frequenz/api/common/v1/microgrid/microgrid.proto";
+import "frequenz/api/common/v1/pagination/pagination_info.proto";
+import "frequenz/api/common/v1/pagination/pagination_params.proto";
+
+// The Reporting service provides services for real-time and historical metrics monitoring
+// of various microgrid components like Batteries, EV Chargers, and Inverters.
+//
+// Utilize these APIs for tasks ranging from real-time metric streaming to complex,
+// formula-driven historical data aggregation. For detailed information on component
+// categories and the metrics they provide, please consult the referenced component categories
+// imported above.
+//
+service Reporting {
+  // Fetches historical metrics for a list of microgrid components.
+  //
+  // !!! note
+  //     This RPC endpoint retrieves historical metrics data for components of one or more
+  //     microgrids. Clients need to provide at least one microgrid ID and one component ID
+  //     to get a result.
+  rpc ListMicrogridComponentsData(ListMicrogridComponentsDataRequest)
+    returns (ListMicrogridComponentsDataResponse) {}
+
+  // Streams metrics for a list of microgrid components.
+  //
+  // !!! note
+  //     This RPC endpoint streams metrics data for components of one or more microgrids.
+  //     Clients need to provide at least one microgrid ID and one component ID
+  //     to get a result.
+  rpc ReceiveMicrogridComponentsDataStream(ReceiveMicrogridComponentsDataStreamRequest)
+    returns (stream ReceiveMicrogridComponentsDataStreamResponse) {}
+
+  // Fetches aggregated historical metrics based on user-defined formulas for a list of
+  // microgrid components.
+  //
+  // !!! note
+  //     This RPC endpoint retrieves aggregated historical metrics data based on user-defined
+  //     formulas for microgrid components. At least one formula must be provided for a valid query.
+  //     Formulas are provided on a per-microgrid basis.
+  rpc ListAggregatedMicrogridComponentsData(ListAggregatedMicrogridComponentsDataRequest)
+    returns (ListAggregatedMicrogridComponentsDataResponse) {}
+
+  // Streams aggregated metrics based on user-defined formulas for a list of microgrid
+  // components.
+  //
+  // !!! note
+  //     This RPC endpoint retrieves aggregated historical metrics data based on user-defined
+  //     formulas for microgrid components. At least one formula for one microgrid must be provided
+  //     for a valid result.
+  rpc ReceiveAggregatedMicrogridComponentsDataStream(ReceiveAggregatedMicrogridComponentsDataStreamRequest)
+    returns (ReceiveAggregatedMicrogridComponentsDataStreamResponse) {}
+}
+
+// Time-based filter for querying aggregated microgrid components data.
+//
+// !!! note
+//     Specifies the start and end time for the query. Both fields are optional, but
+//     their absence or presence has specific implications for the query results.
+//     Data will be returned as a set of rows, which each row containing a timestamp.
+//     This timestamp will be >= start and < end.
+message TimeFilter {
+  // Optional UTC start time for the query.
+  //
+  // !!! info
+  //     If not provided, the query defaults to the earliest available data for the
+  //     specified microgrid components.
+  google.protobuf.Timestamp start = 1;
+
+  // Optional UTC end time for the query.
+  //
+  // !!! info
+  //     If not provided, the query defaults to the most recent available data for the
+  //     specified microgrid components.
+  google.protobuf.Timestamp end = 2;
+}
+
+// Resampling options for aggregated microgrid components data.
+// If data is resampled, all samples that fall in a left-closed time interval
+// determined by the resolution will be aggregated.
+// At the moment only mean aggregation is supported.
+// The timestamp of the aggregated sample corresponds to the oldest
+// possible timestamp of the time interval.
+message ResamplingOptions {
+  // Optional resampling resolution for the data, represented in seconds.
+  // If omitted, data will be returned in its original resolution.
+  optional uint32 resolution = 1;
+}
+
+// Include options for filtering microgrid components data.
+//
+// !!! note
+//     Specifies which additional fields should be included in the response.
+//
+message IncludeOptions {
+  // Defines whether to include results in the response message.
+  enum FilterOption {
+    FILTER_OPTION_UNSPECIFIED = 0;
+    FILTER_OPTION_EXCLUDE = 1;
+    FILTER_OPTION_INCLUDE = 2;
+  }
+
+  // Optional bound inclusion. By default, bounds are not included in the response.
+  optional FilterOption bounds = 1;
+
+  // Optional operational state inclusion. By default, states are not included in the response.
+  optional FilterOption states = 2;
+}
+
+// Message defining the aggregation configuration for a custom formula within a specific microgrid.
+//
+// The AggregationConfig allows clients to specify how metrics should be aggregated across
+// microgrid components. It serves as the configuration guideline for any aggregation operation.
+//
+// !!! example
+//    To calculate the total voltage across three components in series with IDs 1, 2, and 3, the
+//     configuration could look like:
+//     {
+//       microgrid_id: 42,
+//       metric: DC_VOLTAGE_V,
+//       aggregation_formula: "#1 + #2 + #3"
+//     }
+//
+message AggregationConfig {
+  // ID of the microgrid for which the formula is being specified.
+  uint64 microgrid_id = 1;
+
+  // The metric that is to be aggregated using the specified formula.
+  //
+  // !!! caution
+  //     Ensure the chosen metric is supported by all relevant microgrid components.
+  //     Failure to meet these conditions might results in an aggregation error.
+  frequenz.api.common.v1.metrics.Metric metric = 2;
+
+  // The formula used for aggregating the component metric for this microgrid.
+  //
+  // !!! info
+  //     Two types of aggregation formulas are supported:
+  //     1. Aggregate functions: These are standard aggregation functions like `sum()` and `avg()`.
+  //        Example: `sum(#1,#2)`, `avg(#3,#4)`
+  //
+  //     2. Dedicated formulas: These support basic math operators while concatenating microgrid
+  //        component IDs.
+  //        Example: `#1 + #2 - #3`, `(#3 * #2) /# 1`
+  string aggregation_formula = 3;
+}
+
+// Defines a single aggregated metric sample, which represents a consolidated metric value
+// over a collection of microgrid components within a specific timeframe.
+//
+// This message serves to encapsulate aggregate metrics derived from multiple component
+// measurements. It is particularly useful in scenarios where an overall metric needs to be
+// calculated for a set of components. For instance, you could use it to represent the average
+// voltage across multiple sources within a microgrid or to calculate the average state of
+// charge of several batteries.
+//
+message SimpleAggregatedMetricSample {
+  // The UTC sample timestamp for the aggregated metrics.
+  //
+  // !!! info
+  //     This is the original timestamp of the samples that were aggregated.
+  google.protobuf.Timestamp sampled_at = 1;
+
+  // The aggregated value of the metric.
+  // float value = 2;
+  frequenz.api.common.v1.metrics.SimpleMetricSample sample = 2;
+}
+
+// Message defining the request format for fetching historical metrics, such as electrical
+// measurements, and other information for individual microgrid components.
+//
+// !!! note
+//     In addition to the raw metrics, the API can also return additional information
+//     like errors or operational states of the components during the specified time period.
+//
+message ListMicrogridComponentsDataRequest {
+  // General filter criteria for querying microgrid components data.
+  message ListFilter {
+    // Optional resampling options like resolution for the data, represented in seconds.
+    // If omitted, data will be returned in its original representation.
+    ResamplingOptions resampling_options = 1;
+
+    // Optional time-based filter criteria.
+    TimeFilter time_filter = 2;
+
+    // Include options specifying additional fields to be included in the response.
+    IncludeOptions include_options = 3;
+  }
+
+  // Encapsulates the microgrid ID and the component IDs within that microgrid for which
+  // the historical data should be retrieved.
+  //
+  // !!! note
+  //     Each entry in this repeated field associates a microgrid ID with its respective
+  //     component IDs. At least one such association must be provided for a valid request.
+  repeated frequenz.api.common.v1.microgrid.MicrogridComponentIDs microgrid_components = 1;
+
+  // List of metrics to return. Only the specified metrics will be returned.
+  //
+  // !!! note
+  //     At least one metric must be specified. Failure to do so will result in an empty response.
+  repeated frequenz.api.common.v1.metrics.Metric metrics = 2;
+
+  // General filter criteria apply to the data retrieval for all specified microgrid components.
+  //
+  // !!! note
+  //     The filter can specify a start time and end time, and/or resampling options.
+  //     It can also specify bounds, operational state, or errors to be returned.
+  ListFilter filter = 3;
+
+  // Pagination parameters to control the amount of data returned in a single response.
+  frequenz.api.common.v1.pagination.PaginationParams pagination_params = 4;
+}
+
+// Response containing historical microgrid component metrics in one or multiple microgrids
+//
+// Each microgrid's components are provided as timeseries data structures that encapsulate
+// metrics, bounds, errors and operational state and their associated timestamps for each component
+// within the specified time range.
+//
+// !!! example
+//     Example output structure:
+//     ```
+//     microgrids: [
+//       {
+//         microgrid_id: 1,
+//         components: [
+//           {
+//             component_id: 13,
+//             metric_samples: [
+//               /* list of metrics for multiple timestamps */
+//               { sampled_at: "2023-10-01T00:00:00Z", metric: "DC_VOLTAGE_V", sample: {...}, bounds: {...} },
+//               { sampled_at: "2023-10-01T00:00:00Z", metric: "DC_CURRENT_A", sample: {...}, bounds: {...} }
+//               { sampled_at: "2023-10-01T00:05:00Z", metric: "DC_VOLTAGE_V", sample: {...}, bounds: {...} },
+//               { sampled_at: "2023-10-01T00:05:00Z", metric: "DC_CURRENT_A", sample: {...}, bounds: {...} }
+//             ],
+//             states: [
+//               /* list of states for multiple timestamps */
+//               { sampled_at: "2023-10-01T00:00:13.12Z", states: [...], errors: [...], warnings: [...] },
+//               { sampled_at: "2023-10-01T00:02:22.01Z", states: [...], errors: [...], warnings: [...] },
+//               { sampled_at: "2023-10-01T00:05:02.32Z", states: [...], errors: [...], warnings: [...] },
+//             ]
+//           },
+//           {
+//             component_id: 243,
+//             metric_samples: [ ... ],
+//             states: [ ... ]
+//           },
+//         ]
+//       },
+//       {
+//         microgrid_id: 2,
+//         components: [ ... ]
+//       }
+//     ]
+//     ```
+//
+message ListMicrogridComponentsDataResponse {
+  // Contains the metric samples for a single microgrid organized by components.
+  message MicrogridData {
+    // Unique microgrid identifier.
+    uint64 microgrid_id = 1;
+
+    // A list of components with related metric timeseries data samples.
+    repeated frequenz.api.common.v1.microgrid.components.ComponentData components = 2;
+  }
+
+  // List of microgrids metrics timeseries data, organized per component.
+  repeated MicrogridData microgrids = 1;
+
+  // Metadata for pagination, including token for the next page to retrieve.
+  frequenz.api.common.v1.pagination.PaginationInfo pagination_info = 2;
+}
+
+// Request message for receiving stream of metrics, such as electrical
+// measurements, and other information for individual microgrid components.
+//
+// !!! note
+//     In addition to the raw metrics, the API can also return additional information
+//     like errors or operational states of the components during the specified time period.
+//
+message ReceiveMicrogridComponentsDataStreamRequest {
+  // General filter criteria for querying microgrid components data.
+  //
+  // !!! note
+  //     The filter criteria defined here are applied universally across all
+  //     specified microgrids and their respective components.
+  message StreamFilter {
+    // Optional resampling options like resolution for the data, represented in seconds.
+    // If omitted, data will be returned in its original representation.
+    ResamplingOptions resampling_options = 1;
+
+    // Include options specifying additional fields to be included in the response.
+    IncludeOptions include_options = 2;
+  }
+
+  // Encapsulates the microgrid ID and the component IDs within that microgrid for which
+  // the historical data should be retrieved.
+  //
+  // !!! note
+  //     Each entry in this repeated field associates a microgrid ID with its respective
+  //     component IDs. At least one such association must be provided for a valid request.
+  repeated frequenz.api.common.v1.microgrid.MicrogridComponentIDs microgrid_components = 1;
+
+  // List of metrics to return. Only the specified metrics will be returned.
+  //
+  // !!! note
+  //     At least one metric must be specified. Failure to do so will result in an empty response.
+  repeated frequenz.api.common.v1.metrics.Metric metrics = 2;
+
+  // General filter that applies to the data retrieval for all specified microgrids and components.
+  //
+  // !!! note
+  //     The filter can specify a list of metrics to be return but also specify bounds, operational
+  //     state, or errors to be returned.
+  StreamFilter filter = 3;
+}
+
+// Response containing a single data sample for one microgrid's components.
+//
+// !!! note
+//     The microgrid's components are provided as single data samples that
+//     encapsulate metrics, bounds, errors, and operational states along with their
+//     associated timestamps. Each response message covers a single microgrid.
+//     If multiple microgrids are provided in the request, expect sequential messages
+//     in the stream.
+//
+// !!! example
+//     Example output structure:
+//     ```
+//     {
+//       microgrid_id: 1,
+//       components: [
+//         {
+//           component_id: 13,
+//           metric_samples: [
+//             /* all metrics belong to the same timestamp */
+//             /* sample is type MetricSampleVariant */
+//             { sampled_at: "2023-10-01T00:00:00Z", metric: "DC_VOLTAGE_V", sample: {...}, bounds: {...} },
+//             { sampled_at: "2023-10-01T00:00:00Z", metric: "DC_CURRENT_A", sample: {...}, bounds: {...} }
+//           ],
+//           state: {
+//             sampled_at: "2023-10-01T00:00:13.12Z",
+//             states: ["COMPONENT_STATE_CHARGING", "CABLE_CONNECTED"],
+//             warnings: []
+//             errors: [],
+//           ]
+//         },
+//         {
+//           component_id: 59,
+//           metric_samples: [
+//             /* all metrics belong to the same timestamp */
+//             /* sample is type MetricSampleVariant */
+//             { sampled_at: "2023-10-01T00:00:00Z", metric: "DC_VOLTAGE_V", sample: {...}, bounds: {...} },
+//             { sampled_at: "2023-10-01T00:00:00Z", metric: "DC_CURRENT_A", sample: {...}, bounds: {...} }
+//           ],
+//           state: {
+//             sampled_at: "2023-10-01T00:00:13.12Z",
+//             states: ["COMPONENT_STATE_ERROR"],
+//             warnings: []
+//             errors: ["COMPONENT_ERROR_CODE_BATTERY_RELAY_ERROR"],
+//           ]
+//         }
+//       ]
+//     }
+//     ```
+//
+message ReceiveMicrogridComponentsDataStreamResponse {
+  // Microgrid ID for which the components and samples are reported.
+  uint64 microgrid_id = 1;
+
+  // List of components within this microgrid, each with its associated data samples.
+  repeated frequenz.api.common.v1.microgrid.components.ComponentData components = 2;
+}
+
+// Message defining the request format for fetching aggregated historical metrics
+// for a list of microgrid components. This request allows to specify custom
+// aggregation formulas, along with general filtering and pagination options.
+//
+// !!! note
+//         The aggregation follows the passive sign convention. Bounds, operational
+//         state, or errors are not applicable to aggregated data.
+//
+message ListAggregatedMicrogridComponentsDataRequest {
+  // General filter criteria for querying aggregated microgrid components data.
+  message AggregationListFilter {
+    // Optional resampling options like resolution for the data, represented in seconds.
+    // Data will always be resampled to ensure consistency of the aggregation.
+    // If omitted, data will be resampled with a default of one second
+    ResamplingOptions resampling_options = 1;
+
+    // Optional time-based filter criteria.
+    TimeFilter time_filter = 2;
+  }
+
+  // List of aggregation formulas, composed of a metric and related formula.
+  //
+  // !!! note
+  //     Each entry in the list consists of a pairs a metric and aggregation formula. Multiple such
+  //     aggregations can be specified for a list of microgrid components, allowing for different
+  //     metrics and formula combinations. At least one formula must be provided for a valid
+  //     request.
+  repeated AggregationConfig aggregation_configs = 1;
+
+  // General filter that applies to all formula aggregations provided.
+  AggregationListFilter filter = 2;
+
+  // Pagination parameters to control the amount of data returned in a single response.
+  frequenz.api.common.v1.pagination.PaginationParams pagination_params = 3;
+}
+
+// Message defining the response format for a request that fetches aggregated historical
+// metrics based on custom aggregation formulas.
+//
+// !!! note
+//     At least one formula and metric must have been specified in the corresponding request.
+//     The aggregation results for these metrics are returned in the samples field.
+//
+// !!! example
+//     Example output structure is the following:
+//     ```
+//     results: [
+//       {
+//         aggregation_config: {
+//           microgrid_id: 1,
+//           metric: "DC_VOLTAGE_V",
+//           aggregation_formula: "avg(3,5,6)"
+//         },
+//         samples: [
+//           { sampled_at: "2023-10-01T00:00:00Z", sample: { value: 220.1 } },
+//           { sampled_at: "2023-10-01T00:05:00Z", sample: { value: 215.2 } }
+//         ]
+//       },
+//       {
+//         aggregation_config: {
+//           microgrid_id: 2,
+//           metric: "DC_CURRENT_A",
+//           aggregation_formula: "sum(1,2,3,4)"
+//         },
+//         samples: [
+//           { sampled_at: "2023-10-01T00:00:00Z", sample: { value: 1310.7 } },
+//           { sampled_at: "2023-10-01T00:05:00Z", sample: { value: 1422.2 } }
+//         ]
+//       }
+//     ]
+//     ```
+//
+message ListAggregatedMicrogridComponentsDataResponse {
+  // Encapsulates the result of aggregating a metric.
+  message AggregatedResult {
+    // Metric and related formula provided for aggregation.
+    AggregationConfig aggregation_config = 1;
+
+    // A list of aggregated metrics.
+    repeated SimpleAggregatedMetricSample samples = 2;
+  }
+
+  // List of aggregated results, each corresponding to a metric and custom aggregation
+  // formula.
+  //
+  // !!! note
+  //     Each entry in this list contains the aggregation formula config and the
+  //     corresponding aggregated metric samples for the requested timeframe.
+  repeated AggregatedResult results = 1;
+
+  // Metadata for pagination, containing the token for the next page of results.
+  //
+  // !!! note
+  //     If `pagination_info` is populated, it implies that more data is available to fetch.
+  frequenz.api.common.v1.pagination.PaginationInfo pagination_info = 2;
+}
+
+// Message defining the request format for streaming aggregated historical metrics.
+// This request allows to specify custom aggregation formulas, along with general
+// filtering.
+//
+// At least one aggregation formula config must be provided. The aggregation
+// follows the passive sign convention.
+//
+message ReceiveAggregatedMicrogridComponentsDataStreamRequest {
+  // General filter criteria for querying microgrid components data.
+  message AggregationStreamFilter {
+    // Optional resampling options like resolution for the data, represented in seconds.
+    // If omitted, data will be returned in its original representation.
+    ResamplingOptions resampling_options = 1;
+  }
+
+  // List of pairs of metric and corresponding aggregation formula.
+  repeated AggregationConfig aggregation_configs = 1;
+
+  // General streaming filter that applies to all formula aggregations.
+  AggregationStreamFilter filter = 2;
+}
+
+// Message defining the response format for a stream that fetches aggregated real-time metrics
+// for the provided custom aggregation formulas.
+//
+// !!! note
+//     The formula and metric must have been specified in the corresponding request.
+//     A single aggregated sample for the metric is returned in the sample field. Each message
+//     covers a single formula. For multiple formulars provided in the request, expect sequential
+//     messages in the stream.
+//
+// !!! example
+//     Given a stream output, a single sample might be:
+//     ```
+//     {
+//       aggregation_config: {
+//         microgrid_id: 1,
+//         metric: "DC_VOLTAGE_V",
+//         aggregation_formula: "avg(1,2,3)"
+//       },
+//       sample {
+//         sampled_at: '2023-10-01T00:00:00Z',
+//         sample: { value: 42.5 }
+//       }
+//     }
+//     ```
+//
+message ReceiveAggregatedMicrogridComponentsDataStreamResponse {
+  // The metric and formula that has been used to aggregate the sample.
+  AggregationConfig aggregation_config = 1;
+
+  // Aggregated sample value and corresponding UTC timestamp when it was sampled.
+  SimpleAggregatedMetricSample sample = 2;
+}
