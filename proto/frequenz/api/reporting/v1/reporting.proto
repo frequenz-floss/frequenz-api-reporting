@@ -65,7 +65,7 @@ service Reporting {
   //     formulas for microgrid components. At least one formula for one microgrid must be provided
   //     for a valid result.
   rpc ReceiveAggregatedMicrogridComponentsDataStream(ReceiveAggregatedMicrogridComponentsDataStreamRequest)
-    returns (ReceiveAggregatedMicrogridComponentsDataStreamResponse) {}
+    returns (stream ReceiveAggregatedMicrogridComponentsDataStreamResponse) {}
 }
 
 // Time-based filter for querying aggregated microgrid components data.
