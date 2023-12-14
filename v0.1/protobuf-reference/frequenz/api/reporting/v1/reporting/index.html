@@ -1,0 +1,2594 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Frequenz gRPC API to aggregate component data from microgrids">
+      
+      
+        <meta name="author" content="Frequenz Energy-as-a-Service GmbH">
+      
+      
+      
+        <link rel="prev" href="../../../../../..">
+      
+      
+        <link rel="next" href="../../../../../../python-reference/frequenz/api/reporting/">
+      
+      
+      <link rel="icon" href="../../../../../../docs/_img/logo.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.3.1">
+    
+    
+      
+        <title>reporting.proto - Frequenz Reporting API</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../../assets/stylesheets/main.046329b4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../../assets/stylesheets/palette.85d0ee34.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../../../../../_css/style.css">
+    
+      <link rel="stylesheet" href="../../../../../../_css/mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../../../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#protocol-documentation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+          <aside class="md-banner md-banner--warning">
+            <div class="md-banner__inner md-grid md-typeset">
+              
+  You're not viewing the latest (stable) version.
+  <a href="../../../../../../..">
+    <strong>Click here to go to latest (stable) version</strong>
+  </a>
+
+            </div>
+            <script>var el=document.querySelector("[data-md-component=outdated]"),outdated=__md_get("__outdated",sessionStorage);!0===outdated&&el&&(el.hidden=!1)</script>
+          </aside>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../../.." title="Frequenz Reporting API" class="md-header__button md-logo" aria-label="Frequenz Reporting API" data-md-component="logo">
+      
+  <img src="../../../../../../docs/_img/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Frequenz Reporting API
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              reporting.proto
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/frequenz-floss/frequenz-api-reporting" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    frequenz-api-reporting
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+    
+  
+  Protobuf API Reference
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+    
+  
+
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../../python-reference/frequenz/api/reporting/" class="md-tabs__link">
+          
+  
+    
+  
+  Python API Reference
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../../CONTRIBUTING/" class="md-tabs__link">
+        
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../../.." title="Frequenz Reporting API" class="md-nav__button md-logo" aria-label="Frequenz Reporting API" data-md-component="logo">
+      
+  <img src="../../../../../../docs/_img/logo.png" alt="logo">
+
+    </a>
+    Frequenz Reporting API
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/frequenz-floss/frequenz-api-reporting" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    frequenz-api-reporting
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Protobuf API Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Protobuf API Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    frequenz
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            frequenz
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_1" checked>
+        
+          <label class="md-nav__link" for="__nav_2_1_1" id="__nav_2_1_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    api
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            api
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_1_1" checked>
+        
+          <label class="md-nav__link" for="__nav_2_1_1_1" id="__nav_2_1_1_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    reporting
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_2_1_1_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            reporting
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_1_1_1" checked>
+        
+          <label class="md-nav__link" for="__nav_2_1_1_1_1" id="__nav_2_1_1_1_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    v1
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_2_1_1_1_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1_1_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            v1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    reporting.proto
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    reporting.proto
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    Table of Contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frequenzapireportingv1reportingproto" class="md-nav__link">
+    frequenz/api/reporting/v1/reporting.proto
+  </a>
+  
+    <nav class="md-nav" aria-label="frequenz/api/reporting/v1/reporting.proto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aggregationconfig" class="md-nav__link">
+    AggregationConfig
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#includeoptions" class="md-nav__link">
+    IncludeOptions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listaggregatedmicrogridcomponentsdatarequest" class="md-nav__link">
+    ListAggregatedMicrogridComponentsDataRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listaggregatedmicrogridcomponentsdatarequestaggregationlistfilter" class="md-nav__link">
+    ListAggregatedMicrogridComponentsDataRequest.AggregationListFilter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listaggregatedmicrogridcomponentsdataresponse" class="md-nav__link">
+    ListAggregatedMicrogridComponentsDataResponse
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listaggregatedmicrogridcomponentsdataresponseaggregatedresult" class="md-nav__link">
+    ListAggregatedMicrogridComponentsDataResponse.AggregatedResult
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listmicrogridcomponentsdatarequest" class="md-nav__link">
+    ListMicrogridComponentsDataRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listmicrogridcomponentsdatarequestlistfilter" class="md-nav__link">
+    ListMicrogridComponentsDataRequest.ListFilter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listmicrogridcomponentsdataresponse" class="md-nav__link">
+    ListMicrogridComponentsDataResponse
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listmicrogridcomponentsdataresponsemicrogriddata" class="md-nav__link">
+    ListMicrogridComponentsDataResponse.MicrogridData
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receiveaggregatedmicrogridcomponentsdatastreamrequest" class="md-nav__link">
+    ReceiveAggregatedMicrogridComponentsDataStreamRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receiveaggregatedmicrogridcomponentsdatastreamrequestaggregationstreamfilter" class="md-nav__link">
+    ReceiveAggregatedMicrogridComponentsDataStreamRequest.AggregationStreamFilter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receiveaggregatedmicrogridcomponentsdatastreamresponse" class="md-nav__link">
+    ReceiveAggregatedMicrogridComponentsDataStreamResponse
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receivemicrogridcomponentsdatastreamrequest" class="md-nav__link">
+    ReceiveMicrogridComponentsDataStreamRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receivemicrogridcomponentsdatastreamrequeststreamfilter" class="md-nav__link">
+    ReceiveMicrogridComponentsDataStreamRequest.StreamFilter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receivemicrogridcomponentsdatastreamresponse" class="md-nav__link">
+    ReceiveMicrogridComponentsDataStreamResponse
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resamplingoptions" class="md-nav__link">
+    ResamplingOptions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simpleaggregatedmetricsample" class="md-nav__link">
+    SimpleAggregatedMetricSample
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timefilter" class="md-nav__link">
+    TimeFilter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#includeoptionsfilteroption" class="md-nav__link">
+    IncludeOptions.FilterOption
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reporting" class="md-nav__link">
+    Reporting
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scalar-value-types" class="md-nav__link">
+    Scalar Value Types
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Python API Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Python API Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    frequenz
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            frequenz
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1" >
+        
+          <label class="md-nav__link" for="__nav_3_1_1" id="__nav_3_1_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    api
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            api
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_1" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../../python-reference/frequenz/api/reporting/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    reporting
+  </span>
+  
+
+            </a>
+            
+              <label class="md-nav__link " for="__nav_3_1_1_1">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_1_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            reporting
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../python-reference/frequenz/api/reporting/conftest/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    conftest
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1_1_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../../python-reference/frequenz/api/reporting/v1/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    v1
+  </span>
+  
+
+            </a>
+            
+              <label class="md-nav__link " for="__nav_3_1_1_1_3">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_3_1_1_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            v1
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../python-reference/frequenz/api/reporting/v1/reporting_pb2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    reporting_pb2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../python-reference/frequenz/api/reporting/v1/reporting_pb2_grpc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    reporting_pb2_grpc
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../CONTRIBUTING/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contributing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    Table of Contents
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frequenzapireportingv1reportingproto" class="md-nav__link">
+    frequenz/api/reporting/v1/reporting.proto
+  </a>
+  
+    <nav class="md-nav" aria-label="frequenz/api/reporting/v1/reporting.proto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aggregationconfig" class="md-nav__link">
+    AggregationConfig
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#includeoptions" class="md-nav__link">
+    IncludeOptions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listaggregatedmicrogridcomponentsdatarequest" class="md-nav__link">
+    ListAggregatedMicrogridComponentsDataRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listaggregatedmicrogridcomponentsdatarequestaggregationlistfilter" class="md-nav__link">
+    ListAggregatedMicrogridComponentsDataRequest.AggregationListFilter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listaggregatedmicrogridcomponentsdataresponse" class="md-nav__link">
+    ListAggregatedMicrogridComponentsDataResponse
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listaggregatedmicrogridcomponentsdataresponseaggregatedresult" class="md-nav__link">
+    ListAggregatedMicrogridComponentsDataResponse.AggregatedResult
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listmicrogridcomponentsdatarequest" class="md-nav__link">
+    ListMicrogridComponentsDataRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listmicrogridcomponentsdatarequestlistfilter" class="md-nav__link">
+    ListMicrogridComponentsDataRequest.ListFilter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listmicrogridcomponentsdataresponse" class="md-nav__link">
+    ListMicrogridComponentsDataResponse
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listmicrogridcomponentsdataresponsemicrogriddata" class="md-nav__link">
+    ListMicrogridComponentsDataResponse.MicrogridData
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receiveaggregatedmicrogridcomponentsdatastreamrequest" class="md-nav__link">
+    ReceiveAggregatedMicrogridComponentsDataStreamRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receiveaggregatedmicrogridcomponentsdatastreamrequestaggregationstreamfilter" class="md-nav__link">
+    ReceiveAggregatedMicrogridComponentsDataStreamRequest.AggregationStreamFilter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receiveaggregatedmicrogridcomponentsdatastreamresponse" class="md-nav__link">
+    ReceiveAggregatedMicrogridComponentsDataStreamResponse
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receivemicrogridcomponentsdatastreamrequest" class="md-nav__link">
+    ReceiveMicrogridComponentsDataStreamRequest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receivemicrogridcomponentsdatastreamrequeststreamfilter" class="md-nav__link">
+    ReceiveMicrogridComponentsDataStreamRequest.StreamFilter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receivemicrogridcomponentsdatastreamresponse" class="md-nav__link">
+    ReceiveMicrogridComponentsDataStreamResponse
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resamplingoptions" class="md-nav__link">
+    ResamplingOptions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simpleaggregatedmetricsample" class="md-nav__link">
+    SimpleAggregatedMetricSample
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timefilter" class="md-nav__link">
+    TimeFilter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#includeoptionsfilteroption" class="md-nav__link">
+    IncludeOptions.FilterOption
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reporting" class="md-nav__link">
+    Reporting
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scalar-value-types" class="md-nav__link">
+    Scalar Value Types
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="protocol-documentation">Protocol Documentation<a class="headerlink" href="#protocol-documentation" title="Permanent link">¤</a></h1>
+<p><a name="top"></a></p>
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">¤</a></h2>
+<ul>
+<li>
+<p><a href="#frequenz_api_reporting_v1_reporting-proto">frequenz/api/reporting/v1/reporting.proto</a></p>
+<ul>
+<li><a href="#frequenz-api-reporting-v1-AggregationConfig">AggregationConfig</a></li>
+<li><a href="#frequenz-api-reporting-v1-IncludeOptions">IncludeOptions</a></li>
+<li><a href="#frequenz-api-reporting-v1-ListAggregatedMicrogridComponentsDataRequest">ListAggregatedMicrogridComponentsDataRequest</a></li>
+<li><a href="#frequenz-api-reporting-v1-ListAggregatedMicrogridComponentsDataRequest-AggregationListFilter">ListAggregatedMicrogridComponentsDataRequest.AggregationListFilter</a></li>
+<li><a href="#frequenz-api-reporting-v1-ListAggregatedMicrogridComponentsDataResponse">ListAggregatedMicrogridComponentsDataResponse</a></li>
+<li><a href="#frequenz-api-reporting-v1-ListAggregatedMicrogridComponentsDataResponse-AggregatedResult">ListAggregatedMicrogridComponentsDataResponse.AggregatedResult</a></li>
+<li><a href="#frequenz-api-reporting-v1-ListMicrogridComponentsDataRequest">ListMicrogridComponentsDataRequest</a></li>
+<li><a href="#frequenz-api-reporting-v1-ListMicrogridComponentsDataRequest-ListFilter">ListMicrogridComponentsDataRequest.ListFilter</a></li>
+<li><a href="#frequenz-api-reporting-v1-ListMicrogridComponentsDataResponse">ListMicrogridComponentsDataResponse</a></li>
+<li><a href="#frequenz-api-reporting-v1-ListMicrogridComponentsDataResponse-MicrogridData">ListMicrogridComponentsDataResponse.MicrogridData</a></li>
+<li><a href="#frequenz-api-reporting-v1-ReceiveAggregatedMicrogridComponentsDataStreamRequest">ReceiveAggregatedMicrogridComponentsDataStreamRequest</a></li>
+<li><a href="#frequenz-api-reporting-v1-ReceiveAggregatedMicrogridComponentsDataStreamRequest-AggregationStreamFilter">ReceiveAggregatedMicrogridComponentsDataStreamRequest.AggregationStreamFilter</a></li>
+<li><a href="#frequenz-api-reporting-v1-ReceiveAggregatedMicrogridComponentsDataStreamResponse">ReceiveAggregatedMicrogridComponentsDataStreamResponse</a></li>
+<li><a href="#frequenz-api-reporting-v1-ReceiveMicrogridComponentsDataStreamRequest">ReceiveMicrogridComponentsDataStreamRequest</a></li>
+<li><a href="#frequenz-api-reporting-v1-ReceiveMicrogridComponentsDataStreamRequest-StreamFilter">ReceiveMicrogridComponentsDataStreamRequest.StreamFilter</a></li>
+<li><a href="#frequenz-api-reporting-v1-ReceiveMicrogridComponentsDataStreamResponse">ReceiveMicrogridComponentsDataStreamResponse</a></li>
+<li><a href="#frequenz-api-reporting-v1-ResamplingOptions">ResamplingOptions</a></li>
+<li><a href="#frequenz-api-reporting-v1-SimpleAggregatedMetricSample">SimpleAggregatedMetricSample</a></li>
+<li>
+<p><a href="#frequenz-api-reporting-v1-TimeFilter">TimeFilter</a></p>
+</li>
+<li>
+<p><a href="#frequenz-api-reporting-v1-IncludeOptions-FilterOption">IncludeOptions.FilterOption</a></p>
+</li>
+<li>
+<p><a href="#frequenz-api-reporting-v1-Reporting">Reporting</a></p>
+</li>
+</ul>
+</li>
+<li>
+<p><a href="#scalar-value-types">Scalar Value Types</a></p>
+</li>
+</ul>
+<p><a name="frequenz_api_reporting_v1_reporting-proto"></a></p>
+<p align="right"><a href="#top">Top</a></p>
+
+<h2 id="frequenzapireportingv1reportingproto">frequenz/api/reporting/v1/reporting.proto<a class="headerlink" href="#frequenzapireportingv1reportingproto" title="Permanent link">¤</a></h2>
+<p><a name="frequenz-api-reporting-v1-AggregationConfig"></a></p>
+<h3 id="aggregationconfig">AggregationConfig<a class="headerlink" href="#aggregationconfig" title="Permanent link">¤</a></h3>
+<p>Message defining the aggregation configuration for a custom formula within a specific microgrid.</p>
+<p>The AggregationConfig allows clients to specify how metrics should be aggregated across
+microgrid components. It serves as the configuration guideline for any aggregation operation.</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+</div>
+<p>To calculate the total voltage across three components in series with IDs 1, 2, and 3, the
+    configuration could look like:
+    {
+      microgrid_id: 42,
+      metric: DC_VOLTAGE_V,
+      aggregation_formula: &#34;#1 &#43; #2 &#43; #3&#34;
+    }</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>microgrid_id</td>
+<td><a href="#uint64">uint64</a></td>
+<td></td>
+<td>ID of the microgrid for which the formula is being specified.</td>
+</tr>
+<tr>
+<td>metric</td>
+<td><a href="#frequenz-api-common-v1-metrics-Metric">frequenz.api.common.v1.metrics.Metric</a></td>
+<td></td>
+<td>The metric that is to be aggregated using the specified formula.</td>
+</tr>
+</tbody>
+</table>
+<p>!!! caution Ensure the chosen metric is supported by all relevant microgrid components. Failure to meet these conditions might results in an aggregation error. |
+| aggregation_formula | <a href="#string">string</a> |  | The formula used for aggregating the component metric for this microgrid.</p>
+<p>!!! info Two types of aggregation formulas are supported: 1. Aggregate functions: These are standard aggregation functions like <code>sum()</code> and <code>avg()</code>. Example: <code>sum(#1,#2)</code>, <code>avg(#3,#4)</code></p>
+<ol>
+<li>Dedicated formulas: These support basic math operators while concatenating microgrid component IDs. Example: <code>#1 &amp;#43; #2 - #3</code>, <code>(#3 * #2) /# 1</code> |</li>
+</ol>
+<p><a name="frequenz-api-reporting-v1-IncludeOptions"></a></p>
+<h3 id="includeoptions">IncludeOptions<a class="headerlink" href="#includeoptions" title="Permanent link">¤</a></h3>
+<p>Include options for filtering microgrid components data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Specifies which additional fields should be included in the response.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bounds</td>
+<td><a href="#frequenz-api-reporting-v1-IncludeOptions-FilterOption">IncludeOptions.FilterOption</a></td>
+<td>optional</td>
+<td>Optional bound inclusion. By default, bounds are not included in the response.</td>
+</tr>
+<tr>
+<td>states</td>
+<td><a href="#frequenz-api-reporting-v1-IncludeOptions-FilterOption">IncludeOptions.FilterOption</a></td>
+<td>optional</td>
+<td>Optional operational state inclusion. By default, states are not included in the response.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="frequenz-api-reporting-v1-ListAggregatedMicrogridComponentsDataRequest"></a></p>
+<h3 id="listaggregatedmicrogridcomponentsdatarequest">ListAggregatedMicrogridComponentsDataRequest<a class="headerlink" href="#listaggregatedmicrogridcomponentsdatarequest" title="Permanent link">¤</a></h3>
+<p>Message defining the request format for fetching aggregated historical metrics
+for a list of microgrid components. This request allows to specify custom
+aggregation formulas, along with general filtering and pagination options.</p>
+<div class="admonition note">
+<p class="admonition-title">Note<p>The aggregation follows the passive sign convention. Bounds, operational
+state, or errors are not applicable to aggregated data.</p>
+</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aggregation_configs</td>
+<td><a href="#frequenz-api-reporting-v1-AggregationConfig">AggregationConfig</a></td>
+<td>repeated</td>
+<td>List of aggregation formulas, composed of a metric and related formula.</td>
+</tr>
+</tbody>
+</table>
+<p>!!! note Each entry in the list consists of a pairs a metric and aggregation formula. Multiple such aggregations can be specified for a list of microgrid components, allowing for different metrics and formula combinations. At least one formula must be provided for a valid request. |
+| filter | <a href="#frequenz-api-reporting-v1-ListAggregatedMicrogridComponentsDataRequest-AggregationListFilter">ListAggregatedMicrogridComponentsDataRequest.AggregationListFilter</a> |  | General filter that applies to all formula aggregations provided. |
+| pagination_params | <a href="#frequenz-api-common-v1-pagination-PaginationParams">frequenz.api.common.v1.pagination.PaginationParams</a> |  | Pagination parameters to control the amount of data returned in a single response. |</p>
+<p><a name="frequenz-api-reporting-v1-ListAggregatedMicrogridComponentsDataRequest-AggregationListFilter"></a></p>
+<h3 id="listaggregatedmicrogridcomponentsdatarequestaggregationlistfilter">ListAggregatedMicrogridComponentsDataRequest.AggregationListFilter<a class="headerlink" href="#listaggregatedmicrogridcomponentsdatarequestaggregationlistfilter" title="Permanent link">¤</a></h3>
+<p>General filter criteria for querying aggregated microgrid components data.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>resampling_options</td>
+<td><a href="#frequenz-api-reporting-v1-ResamplingOptions">ResamplingOptions</a></td>
+<td></td>
+<td>Optional resampling options like resolution for the data, represented in seconds. Data will always be resampled to ensure consistency of the aggregation. If omitted, data will be resampled with a default of one second</td>
+</tr>
+<tr>
+<td>time_filter</td>
+<td><a href="#frequenz-api-reporting-v1-TimeFilter">TimeFilter</a></td>
+<td></td>
+<td>Optional time-based filter criteria.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="frequenz-api-reporting-v1-ListAggregatedMicrogridComponentsDataResponse"></a></p>
+<h3 id="listaggregatedmicrogridcomponentsdataresponse">ListAggregatedMicrogridComponentsDataResponse<a class="headerlink" href="#listaggregatedmicrogridcomponentsdataresponse" title="Permanent link">¤</a></h3>
+<p>Message defining the response format for a request that fetches aggregated historical
+metrics based on custom aggregation formulas.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>At least one formula and metric must have been specified in the corresponding request.
+The aggregation results for these metrics are returned in the samples field.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p>Example output structure is the following:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>results: [
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  {
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    aggregation_config: {
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>      microgrid_id: 1,
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>      metric: &amp;#34;DC_VOLTAGE_V&amp;#34;,
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>      aggregation_formula: &amp;#34;avg(3,5,6)&amp;#34;
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    },
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    samples: [
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>      { sampled_at: &amp;#34;2023-10-01T00:00:00Z&amp;#34;, sample: { value: 220.1 } },
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>      { sampled_at: &amp;#34;2023-10-01T00:05:00Z&amp;#34;, sample: { value: 215.2 } }
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    ]
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>  },
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>  {
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    aggregation_config: {
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>      microgrid_id: 2,
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>      metric: &amp;#34;DC_CURRENT_A&amp;#34;,
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>      aggregation_formula: &amp;#34;sum(1,2,3,4)&amp;#34;
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    },
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    samples: [
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>      { sampled_at: &amp;#34;2023-10-01T00:00:00Z&amp;#34;, sample: { value: 1310.7 } },
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>      { sampled_at: &amp;#34;2023-10-01T00:05:00Z&amp;#34;, sample: { value: 1422.2 } }
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    ]
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>  }
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>]
+</span></code></pre></div></p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>results</td>
+<td><a href="#frequenz-api-reporting-v1-ListAggregatedMicrogridComponentsDataResponse-AggregatedResult">ListAggregatedMicrogridComponentsDataResponse.AggregatedResult</a></td>
+<td>repeated</td>
+<td>List of aggregated results, each corresponding to a metric and custom aggregation formula.</td>
+</tr>
+</tbody>
+</table>
+<p>!!! note Each entry in this list contains the aggregation formula config and the corresponding aggregated metric samples for the requested timeframe. |
+| pagination_info | <a href="#frequenz-api-common-v1-pagination-PaginationInfo">frequenz.api.common.v1.pagination.PaginationInfo</a> |  | Metadata for pagination, containing the token for the next page of results.</p>
+<p>!!! note If <code>pagination_info</code> is populated, it implies that more data is available to fetch. |</p>
+<p><a name="frequenz-api-reporting-v1-ListAggregatedMicrogridComponentsDataResponse-AggregatedResult"></a></p>
+<h3 id="listaggregatedmicrogridcomponentsdataresponseaggregatedresult">ListAggregatedMicrogridComponentsDataResponse.AggregatedResult<a class="headerlink" href="#listaggregatedmicrogridcomponentsdataresponseaggregatedresult" title="Permanent link">¤</a></h3>
+<p>Encapsulates the result of aggregating a metric.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aggregation_config</td>
+<td><a href="#frequenz-api-reporting-v1-AggregationConfig">AggregationConfig</a></td>
+<td></td>
+<td>Metric and related formula provided for aggregation.</td>
+</tr>
+<tr>
+<td>samples</td>
+<td><a href="#frequenz-api-reporting-v1-SimpleAggregatedMetricSample">SimpleAggregatedMetricSample</a></td>
+<td>repeated</td>
+<td>A list of aggregated metrics.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="frequenz-api-reporting-v1-ListMicrogridComponentsDataRequest"></a></p>
+<h3 id="listmicrogridcomponentsdatarequest">ListMicrogridComponentsDataRequest<a class="headerlink" href="#listmicrogridcomponentsdatarequest" title="Permanent link">¤</a></h3>
+<p>Message defining the request format for fetching historical metrics, such as electrical
+measurements, and other information for individual microgrid components.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In addition to the raw metrics, the API can also return additional information
+like errors or operational states of the components during the specified time period.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>microgrid_components</td>
+<td><a href="#frequenz-api-common-v1-microgrid-MicrogridComponentIDs">frequenz.api.common.v1.microgrid.MicrogridComponentIDs</a></td>
+<td>repeated</td>
+<td>Encapsulates the microgrid ID and the component IDs within that microgrid for which the historical data should be retrieved.</td>
+</tr>
+</tbody>
+</table>
+<p>!!! note Each entry in this repeated field associates a microgrid ID with its respective component IDs. At least one such association must be provided for a valid request. |
+| metrics | <a href="#frequenz-api-common-v1-metrics-Metric">frequenz.api.common.v1.metrics.Metric</a> | repeated | List of metrics to return. Only the specified metrics will be returned.</p>
+<p>!!! note At least one metric must be specified. Failure to do so will result in an empty response. |
+| filter | <a href="#frequenz-api-reporting-v1-ListMicrogridComponentsDataRequest-ListFilter">ListMicrogridComponentsDataRequest.ListFilter</a> |  | General filter criteria apply to the data retrieval for all specified microgrid components.</p>
+<p>!!! note The filter can specify a start time and end time, and/or resampling options. It can also specify bounds, operational state, or errors to be returned. |
+| pagination_params | <a href="#frequenz-api-common-v1-pagination-PaginationParams">frequenz.api.common.v1.pagination.PaginationParams</a> |  | Pagination parameters to control the amount of data returned in a single response. |</p>
+<p><a name="frequenz-api-reporting-v1-ListMicrogridComponentsDataRequest-ListFilter"></a></p>
+<h3 id="listmicrogridcomponentsdatarequestlistfilter">ListMicrogridComponentsDataRequest.ListFilter<a class="headerlink" href="#listmicrogridcomponentsdatarequestlistfilter" title="Permanent link">¤</a></h3>
+<p>General filter criteria for querying microgrid components data.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>resampling_options</td>
+<td><a href="#frequenz-api-reporting-v1-ResamplingOptions">ResamplingOptions</a></td>
+<td></td>
+<td>Optional resampling options like resolution for the data, represented in seconds. If omitted, data will be returned in its original representation.</td>
+</tr>
+<tr>
+<td>time_filter</td>
+<td><a href="#frequenz-api-reporting-v1-TimeFilter">TimeFilter</a></td>
+<td></td>
+<td>Optional time-based filter criteria.</td>
+</tr>
+<tr>
+<td>include_options</td>
+<td><a href="#frequenz-api-reporting-v1-IncludeOptions">IncludeOptions</a></td>
+<td></td>
+<td>Include options specifying additional fields to be included in the response.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="frequenz-api-reporting-v1-ListMicrogridComponentsDataResponse"></a></p>
+<h3 id="listmicrogridcomponentsdataresponse">ListMicrogridComponentsDataResponse<a class="headerlink" href="#listmicrogridcomponentsdataresponse" title="Permanent link">¤</a></h3>
+<p>Response containing historical microgrid component metrics in one or multiple microgrids</p>
+<p>Each microgrid&#39;s components are provided as timeseries data structures that encapsulate
+metrics, bounds, errors and operational state and their associated timestamps for each component
+within the specified time range.</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p>Example output structure:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>microgrids: [
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  {
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    microgrid_id: 1,
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    components: [
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>      {
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        component_id: 13,
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        metric_samples: [
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>          /* list of metrics for multiple timestamps */
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>          { sampled_at: &amp;#34;2023-10-01T00:00:00Z&amp;#34;, metric: &amp;#34;DC_VOLTAGE_V&amp;#34;, sample: {...}, bounds: {...} },
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>          { sampled_at: &amp;#34;2023-10-01T00:00:00Z&amp;#34;, metric: &amp;#34;DC_CURRENT_A&amp;#34;, sample: {...}, bounds: {...} }
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>          { sampled_at: &amp;#34;2023-10-01T00:05:00Z&amp;#34;, metric: &amp;#34;DC_VOLTAGE_V&amp;#34;, sample: {...}, bounds: {...} },
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>          { sampled_at: &amp;#34;2023-10-01T00:05:00Z&amp;#34;, metric: &amp;#34;DC_CURRENT_A&amp;#34;, sample: {...}, bounds: {...} }
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>        ],
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>        states: [
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>          /* list of states for multiple timestamps */
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>          { sampled_at: &amp;#34;2023-10-01T00:00:13.12Z&amp;#34;, states: [...], errors: [...], warnings: [...] },
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>          { sampled_at: &amp;#34;2023-10-01T00:02:22.01Z&amp;#34;, states: [...], errors: [...], warnings: [...] },
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>          { sampled_at: &amp;#34;2023-10-01T00:05:02.32Z&amp;#34;, states: [...], errors: [...], warnings: [...] },
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>        ]
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>      },
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>      {
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>        component_id: 243,
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>        metric_samples: [ ... ],
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>        states: [ ... ]
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>      },
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>    ]
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>  },
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>  {
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>    microgrid_id: 2,
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>    components: [ ... ]
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>  }
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>]
+</span></code></pre></div></p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>microgrids</td>
+<td><a href="#frequenz-api-reporting-v1-ListMicrogridComponentsDataResponse-MicrogridData">ListMicrogridComponentsDataResponse.MicrogridData</a></td>
+<td>repeated</td>
+<td>List of microgrids metrics timeseries data, organized per component.</td>
+</tr>
+<tr>
+<td>pagination_info</td>
+<td><a href="#frequenz-api-common-v1-pagination-PaginationInfo">frequenz.api.common.v1.pagination.PaginationInfo</a></td>
+<td></td>
+<td>Metadata for pagination, including token for the next page to retrieve.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="frequenz-api-reporting-v1-ListMicrogridComponentsDataResponse-MicrogridData"></a></p>
+<h3 id="listmicrogridcomponentsdataresponsemicrogriddata">ListMicrogridComponentsDataResponse.MicrogridData<a class="headerlink" href="#listmicrogridcomponentsdataresponsemicrogriddata" title="Permanent link">¤</a></h3>
+<p>Contains the metric samples for a single microgrid organized by components.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>microgrid_id</td>
+<td><a href="#uint64">uint64</a></td>
+<td></td>
+<td>Unique microgrid identifier.</td>
+</tr>
+<tr>
+<td>components</td>
+<td><a href="#frequenz-api-common-v1-microgrid-components-ComponentData">frequenz.api.common.v1.microgrid.components.ComponentData</a></td>
+<td>repeated</td>
+<td>A list of components with related metric timeseries data samples.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="frequenz-api-reporting-v1-ReceiveAggregatedMicrogridComponentsDataStreamRequest"></a></p>
+<h3 id="receiveaggregatedmicrogridcomponentsdatastreamrequest">ReceiveAggregatedMicrogridComponentsDataStreamRequest<a class="headerlink" href="#receiveaggregatedmicrogridcomponentsdatastreamrequest" title="Permanent link">¤</a></h3>
+<p>Message defining the request format for streaming aggregated historical metrics.
+This request allows to specify custom aggregation formulas, along with general
+filtering.</p>
+<p>At least one aggregation formula config must be provided. The aggregation
+follows the passive sign convention.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aggregation_configs</td>
+<td><a href="#frequenz-api-reporting-v1-AggregationConfig">AggregationConfig</a></td>
+<td>repeated</td>
+<td>List of pairs of metric and corresponding aggregation formula.</td>
+</tr>
+<tr>
+<td>filter</td>
+<td><a href="#frequenz-api-reporting-v1-ReceiveAggregatedMicrogridComponentsDataStreamRequest-AggregationStreamFilter">ReceiveAggregatedMicrogridComponentsDataStreamRequest.AggregationStreamFilter</a></td>
+<td></td>
+<td>General streaming filter that applies to all formula aggregations.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="frequenz-api-reporting-v1-ReceiveAggregatedMicrogridComponentsDataStreamRequest-AggregationStreamFilter"></a></p>
+<h3 id="receiveaggregatedmicrogridcomponentsdatastreamrequestaggregationstreamfilter">ReceiveAggregatedMicrogridComponentsDataStreamRequest.AggregationStreamFilter<a class="headerlink" href="#receiveaggregatedmicrogridcomponentsdatastreamrequestaggregationstreamfilter" title="Permanent link">¤</a></h3>
+<p>General filter criteria for querying microgrid components data.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>resampling_options</td>
+<td><a href="#frequenz-api-reporting-v1-ResamplingOptions">ResamplingOptions</a></td>
+<td></td>
+<td>Optional resampling options like resolution for the data, represented in seconds. If omitted, data will be returned in its original representation.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="frequenz-api-reporting-v1-ReceiveAggregatedMicrogridComponentsDataStreamResponse"></a></p>
+<h3 id="receiveaggregatedmicrogridcomponentsdatastreamresponse">ReceiveAggregatedMicrogridComponentsDataStreamResponse<a class="headerlink" href="#receiveaggregatedmicrogridcomponentsdatastreamresponse" title="Permanent link">¤</a></h3>
+<p>Message defining the response format for a stream that fetches aggregated real-time metrics
+for the provided custom aggregation formulas.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The formula and metric must have been specified in the corresponding request.
+A single aggregated sample for the metric is returned in the sample field. Each message
+covers a single formula. For multiple formulars provided in the request, expect sequential
+messages in the stream.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p>Given a stream output, a single sample might be:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>{
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  aggregation_config: {
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    microgrid_id: 1,
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    metric: &amp;#34;DC_VOLTAGE_V&amp;#34;,
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    aggregation_formula: &amp;#34;avg(1,2,3)&amp;#34;
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>  },
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>  sample {
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    sampled_at: &amp;#39;2023-10-01T00:00:00Z&amp;#39;,
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    sample: { value: 42.5 }
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>  }
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>}
+</span></code></pre></div></p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aggregation_config</td>
+<td><a href="#frequenz-api-reporting-v1-AggregationConfig">AggregationConfig</a></td>
+<td></td>
+<td>The metric and formula that has been used to aggregate the sample.</td>
+</tr>
+<tr>
+<td>sample</td>
+<td><a href="#frequenz-api-reporting-v1-SimpleAggregatedMetricSample">SimpleAggregatedMetricSample</a></td>
+<td></td>
+<td>Aggregated sample value and corresponding UTC timestamp when it was sampled.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="frequenz-api-reporting-v1-ReceiveMicrogridComponentsDataStreamRequest"></a></p>
+<h3 id="receivemicrogridcomponentsdatastreamrequest">ReceiveMicrogridComponentsDataStreamRequest<a class="headerlink" href="#receivemicrogridcomponentsdatastreamrequest" title="Permanent link">¤</a></h3>
+<p>Request message for receiving stream of metrics, such as electrical
+measurements, and other information for individual microgrid components.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In addition to the raw metrics, the API can also return additional information
+like errors or operational states of the components during the specified time period.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>microgrid_components</td>
+<td><a href="#frequenz-api-common-v1-microgrid-MicrogridComponentIDs">frequenz.api.common.v1.microgrid.MicrogridComponentIDs</a></td>
+<td>repeated</td>
+<td>Encapsulates the microgrid ID and the component IDs within that microgrid for which the historical data should be retrieved.</td>
+</tr>
+</tbody>
+</table>
+<p>!!! note Each entry in this repeated field associates a microgrid ID with its respective component IDs. At least one such association must be provided for a valid request. |
+| metrics | <a href="#frequenz-api-common-v1-metrics-Metric">frequenz.api.common.v1.metrics.Metric</a> | repeated | List of metrics to return. Only the specified metrics will be returned.</p>
+<p>!!! note At least one metric must be specified. Failure to do so will result in an empty response. |
+| filter | <a href="#frequenz-api-reporting-v1-ReceiveMicrogridComponentsDataStreamRequest-StreamFilter">ReceiveMicrogridComponentsDataStreamRequest.StreamFilter</a> |  | General filter that applies to the data retrieval for all specified microgrids and components.</p>
+<p>!!! note The filter can specify a list of metrics to be return but also specify bounds, operational state, or errors to be returned. |</p>
+<p><a name="frequenz-api-reporting-v1-ReceiveMicrogridComponentsDataStreamRequest-StreamFilter"></a></p>
+<h3 id="receivemicrogridcomponentsdatastreamrequeststreamfilter">ReceiveMicrogridComponentsDataStreamRequest.StreamFilter<a class="headerlink" href="#receivemicrogridcomponentsdatastreamrequeststreamfilter" title="Permanent link">¤</a></h3>
+<p>General filter criteria for querying microgrid components data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The filter criteria defined here are applied universally across all
+specified microgrids and their respective components.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>resampling_options</td>
+<td><a href="#frequenz-api-reporting-v1-ResamplingOptions">ResamplingOptions</a></td>
+<td></td>
+<td>Optional resampling options like resolution for the data, represented in seconds. If omitted, data will be returned in its original representation.</td>
+</tr>
+<tr>
+<td>include_options</td>
+<td><a href="#frequenz-api-reporting-v1-IncludeOptions">IncludeOptions</a></td>
+<td></td>
+<td>Include options specifying additional fields to be included in the response.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="frequenz-api-reporting-v1-ReceiveMicrogridComponentsDataStreamResponse"></a></p>
+<h3 id="receivemicrogridcomponentsdatastreamresponse">ReceiveMicrogridComponentsDataStreamResponse<a class="headerlink" href="#receivemicrogridcomponentsdatastreamresponse" title="Permanent link">¤</a></h3>
+<p>Response containing a single data sample for one microgrid&#39;s components.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The microgrid&#39;s components are provided as single data samples that
+encapsulate metrics, bounds, errors, and operational states along with their
+associated timestamps. Each response message covers a single microgrid.
+If multiple microgrids are provided in the request, expect sequential messages
+in the stream.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p>Example output structure:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>{
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  microgrid_id: 1,
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  components: [
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    {
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>      component_id: 13,
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>      metric_samples: [
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>        /* all metrics belong to the same timestamp */
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>        /* sample is type MetricSampleVariant */
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>        { sampled_at: &amp;#34;2023-10-01T00:00:00Z&amp;#34;, metric: &amp;#34;DC_VOLTAGE_V&amp;#34;, sample: {...}, bounds: {...} },
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>        { sampled_at: &amp;#34;2023-10-01T00:00:00Z&amp;#34;, metric: &amp;#34;DC_CURRENT_A&amp;#34;, sample: {...}, bounds: {...} }
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>      ],
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>      state: {
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>        sampled_at: &amp;#34;2023-10-01T00:00:13.12Z&amp;#34;,
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>        states: [&amp;#34;COMPONENT_STATE_CHARGING&amp;#34;, &amp;#34;CABLE_CONNECTED&amp;#34;],
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>        warnings: []
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>        errors: [],
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>      ]
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>    },
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>    {
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>      component_id: 59,
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>      metric_samples: [
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>        /* all metrics belong to the same timestamp */
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>        /* sample is type MetricSampleVariant */
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>        { sampled_at: &amp;#34;2023-10-01T00:00:00Z&amp;#34;, metric: &amp;#34;DC_VOLTAGE_V&amp;#34;, sample: {...}, bounds: {...} },
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>        { sampled_at: &amp;#34;2023-10-01T00:00:00Z&amp;#34;, metric: &amp;#34;DC_CURRENT_A&amp;#34;, sample: {...}, bounds: {...} }
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>      ],
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>      state: {
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>        sampled_at: &amp;#34;2023-10-01T00:00:13.12Z&amp;#34;,
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>        states: [&amp;#34;COMPONENT_STATE_ERROR&amp;#34;],
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>        warnings: []
+</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>        errors: [&amp;#34;COMPONENT_ERROR_CODE_BATTERY_RELAY_ERROR&amp;#34;],
+</span><span id="__span-3-32"><a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a>      ]
+</span><span id="__span-3-33"><a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a>    }
+</span><span id="__span-3-34"><a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a>  ]
+</span><span id="__span-3-35"><a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a>}
+</span></code></pre></div></p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>microgrid_id</td>
+<td><a href="#uint64">uint64</a></td>
+<td></td>
+<td>Microgrid ID for which the components and samples are reported.</td>
+</tr>
+<tr>
+<td>components</td>
+<td><a href="#frequenz-api-common-v1-microgrid-components-ComponentData">frequenz.api.common.v1.microgrid.components.ComponentData</a></td>
+<td>repeated</td>
+<td>List of components within this microgrid, each with its associated data samples.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="frequenz-api-reporting-v1-ResamplingOptions"></a></p>
+<h3 id="resamplingoptions">ResamplingOptions<a class="headerlink" href="#resamplingoptions" title="Permanent link">¤</a></h3>
+<p>Resampling options for aggregated microgrid components data.
+If data is resampled, all samples that fall in a left-closed time interval
+determined by the resolution will be aggregated.
+At the moment only mean aggregation is supported.
+The timestamp of the aggregated sample corresponds to the oldest
+possible timestamp of the time interval.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>resolution</td>
+<td><a href="#uint32">uint32</a></td>
+<td>optional</td>
+<td>Optional resampling resolution for the data, represented in seconds. If omitted, data will be returned in its original resolution.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="frequenz-api-reporting-v1-SimpleAggregatedMetricSample"></a></p>
+<h3 id="simpleaggregatedmetricsample">SimpleAggregatedMetricSample<a class="headerlink" href="#simpleaggregatedmetricsample" title="Permanent link">¤</a></h3>
+<p>Defines a single aggregated metric sample, which represents a consolidated metric value
+over a collection of microgrid components within a specific timeframe.</p>
+<p>This message serves to encapsulate aggregate metrics derived from multiple component
+measurements. It is particularly useful in scenarios where an overall metric needs to be
+calculated for a set of components. For instance, you could use it to represent the average
+voltage across multiple sources within a microgrid or to calculate the average state of
+charge of several batteries.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sampled_at</td>
+<td><a href="#google-protobuf-Timestamp">google.protobuf.Timestamp</a></td>
+<td></td>
+<td>The UTC sample timestamp for the aggregated metrics.</td>
+</tr>
+</tbody>
+</table>
+<p>!!! info This is the original timestamp of the samples that were aggregated. |
+| sample | <a href="#frequenz-api-common-v1-metrics-SimpleMetricSample">frequenz.api.common.v1.metrics.SimpleMetricSample</a> |  | The aggregated value of the metric. float value = 2; |</p>
+<p><a name="frequenz-api-reporting-v1-TimeFilter"></a></p>
+<h3 id="timefilter">TimeFilter<a class="headerlink" href="#timefilter" title="Permanent link">¤</a></h3>
+<p>Time-based filter for querying aggregated microgrid components data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Specifies the start and end time for the query. Both fields are optional, but
+their absence or presence has specific implications for the query results.
+Data will be returned as a set of rows, which each row containing a timestamp.
+This timestamp will be &gt;= start and &lt; end.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Label</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>start</td>
+<td><a href="#google-protobuf-Timestamp">google.protobuf.Timestamp</a></td>
+<td></td>
+<td>Optional UTC start time for the query.</td>
+</tr>
+</tbody>
+</table>
+<p>!!! info If not provided, the query defaults to the earliest available data for the specified microgrid components. |
+| end | <a href="#google-protobuf-Timestamp">google.protobuf.Timestamp</a> |  | Optional UTC end time for the query.</p>
+<p>!!! info If not provided, the query defaults to the most recent available data for the specified microgrid components. |</p>
+<p><a name="frequenz-api-reporting-v1-IncludeOptions-FilterOption"></a></p>
+<h3 id="includeoptionsfilteroption">IncludeOptions.FilterOption<a class="headerlink" href="#includeoptionsfilteroption" title="Permanent link">¤</a></h3>
+<p>Defines whether to include results in the response message.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Number</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FILTER_OPTION_UNSPECIFIED</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>FILTER_OPTION_EXCLUDE</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>FILTER_OPTION_INCLUDE</td>
+<td>2</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><a name="frequenz-api-reporting-v1-Reporting"></a></p>
+<h3 id="reporting">Reporting<a class="headerlink" href="#reporting" title="Permanent link">¤</a></h3>
+<p>The Reporting service provides services for real-time and historical metrics monitoring
+of various microgrid components like Batteries, EV Chargers, and Inverters.</p>
+<p>Utilize these APIs for tasks ranging from real-time metric streaming to complex,
+formula-driven historical data aggregation. For detailed information on component
+categories and the metrics they provide, please consult the referenced component categories
+imported above.</p>
+<table>
+<thead>
+<tr>
+<th>Method Name</th>
+<th>Request Type</th>
+<th>Response Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ListMicrogridComponentsData</td>
+<td><a href="#frequenz-api-reporting-v1-ListMicrogridComponentsDataRequest">ListMicrogridComponentsDataRequest</a></td>
+<td><a href="#frequenz-api-reporting-v1-ListMicrogridComponentsDataResponse">ListMicrogridComponentsDataResponse</a></td>
+<td>Fetches historical metrics for a list of microgrid components.</td>
+</tr>
+</tbody>
+</table>
+<p>!!! note This RPC endpoint retrieves historical metrics data for components of one or more microgrids. Clients need to provide at least one microgrid ID and one component ID to get a result. |
+| ReceiveMicrogridComponentsDataStream | <a href="#frequenz-api-reporting-v1-ReceiveMicrogridComponentsDataStreamRequest">ReceiveMicrogridComponentsDataStreamRequest</a> | <a href="#frequenz-api-reporting-v1-ReceiveMicrogridComponentsDataStreamResponse">ReceiveMicrogridComponentsDataStreamResponse</a> stream | Streams metrics for a list of microgrid components.</p>
+<p>!!! note This RPC endpoint streams metrics data for components of one or more microgrids. Clients need to provide at least one microgrid ID and one component ID to get a result. |
+| ListAggregatedMicrogridComponentsData | <a href="#frequenz-api-reporting-v1-ListAggregatedMicrogridComponentsDataRequest">ListAggregatedMicrogridComponentsDataRequest</a> | <a href="#frequenz-api-reporting-v1-ListAggregatedMicrogridComponentsDataResponse">ListAggregatedMicrogridComponentsDataResponse</a> | Fetches aggregated historical metrics based on user-defined formulas for a list of microgrid components.</p>
+<p>!!! note This RPC endpoint retrieves aggregated historical metrics data based on user-defined formulas for microgrid components. At least one formula must be provided for a valid query. Formulas are provided on a per-microgrid basis. |
+| ReceiveAggregatedMicrogridComponentsDataStream | <a href="#frequenz-api-reporting-v1-ReceiveAggregatedMicrogridComponentsDataStreamRequest">ReceiveAggregatedMicrogridComponentsDataStreamRequest</a> | <a href="#frequenz-api-reporting-v1-ReceiveAggregatedMicrogridComponentsDataStreamResponse">ReceiveAggregatedMicrogridComponentsDataStreamResponse</a> stream | Streams aggregated metrics based on user-defined formulas for a list of microgrid components.</p>
+<p>!!! note This RPC endpoint retrieves aggregated historical metrics data based on user-defined formulas for microgrid components. At least one formula for one microgrid must be provided for a valid result. |</p>
+<h2 id="scalar-value-types">Scalar Value Types<a class="headerlink" href="#scalar-value-types" title="Permanent link">¤</a></h2>
+<table>
+<thead>
+<tr>
+<th>.proto Type</th>
+<th>Notes</th>
+<th>C++</th>
+<th>Java</th>
+<th>Python</th>
+<th>Go</th>
+<th>C#</th>
+<th>PHP</th>
+<th>Ruby</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a name="double" /> double</td>
+<td></td>
+<td>double</td>
+<td>double</td>
+<td>float</td>
+<td>float64</td>
+<td>double</td>
+<td>float</td>
+<td>Float</td>
+</tr>
+<tr>
+<td><a name="float" /> float</td>
+<td></td>
+<td>float</td>
+<td>float</td>
+<td>float</td>
+<td>float32</td>
+<td>float</td>
+<td>float</td>
+<td>Float</td>
+</tr>
+<tr>
+<td><a name="int32" /> int32</td>
+<td>Uses variable-length encoding. Inefficient for encoding negative numbers – if your field is likely to have negative values, use sint32 instead.</td>
+<td>int32</td>
+<td>int</td>
+<td>int</td>
+<td>int32</td>
+<td>int</td>
+<td>integer</td>
+<td>Bignum or Fixnum (as required)</td>
+</tr>
+<tr>
+<td><a name="int64" /> int64</td>
+<td>Uses variable-length encoding. Inefficient for encoding negative numbers – if your field is likely to have negative values, use sint64 instead.</td>
+<td>int64</td>
+<td>long</td>
+<td>int/long</td>
+<td>int64</td>
+<td>long</td>
+<td>integer/string</td>
+<td>Bignum</td>
+</tr>
+<tr>
+<td><a name="uint32" /> uint32</td>
+<td>Uses variable-length encoding.</td>
+<td>uint32</td>
+<td>int</td>
+<td>int/long</td>
+<td>uint32</td>
+<td>uint</td>
+<td>integer</td>
+<td>Bignum or Fixnum (as required)</td>
+</tr>
+<tr>
+<td><a name="uint64" /> uint64</td>
+<td>Uses variable-length encoding.</td>
+<td>uint64</td>
+<td>long</td>
+<td>int/long</td>
+<td>uint64</td>
+<td>ulong</td>
+<td>integer/string</td>
+<td>Bignum or Fixnum (as required)</td>
+</tr>
+<tr>
+<td><a name="sint32" /> sint32</td>
+<td>Uses variable-length encoding. Signed int value. These more efficiently encode negative numbers than regular int32s.</td>
+<td>int32</td>
+<td>int</td>
+<td>int</td>
+<td>int32</td>
+<td>int</td>
+<td>integer</td>
+<td>Bignum or Fixnum (as required)</td>
+</tr>
+<tr>
+<td><a name="sint64" /> sint64</td>
+<td>Uses variable-length encoding. Signed int value. These more efficiently encode negative numbers than regular int64s.</td>
+<td>int64</td>
+<td>long</td>
+<td>int/long</td>
+<td>int64</td>
+<td>long</td>
+<td>integer/string</td>
+<td>Bignum</td>
+</tr>
+<tr>
+<td><a name="fixed32" /> fixed32</td>
+<td>Always four bytes. More efficient than uint32 if values are often greater than 2^28.</td>
+<td>uint32</td>
+<td>int</td>
+<td>int</td>
+<td>uint32</td>
+<td>uint</td>
+<td>integer</td>
+<td>Bignum or Fixnum (as required)</td>
+</tr>
+<tr>
+<td><a name="fixed64" /> fixed64</td>
+<td>Always eight bytes. More efficient than uint64 if values are often greater than 2^56.</td>
+<td>uint64</td>
+<td>long</td>
+<td>int/long</td>
+<td>uint64</td>
+<td>ulong</td>
+<td>integer/string</td>
+<td>Bignum</td>
+</tr>
+<tr>
+<td><a name="sfixed32" /> sfixed32</td>
+<td>Always four bytes.</td>
+<td>int32</td>
+<td>int</td>
+<td>int</td>
+<td>int32</td>
+<td>int</td>
+<td>integer</td>
+<td>Bignum or Fixnum (as required)</td>
+</tr>
+<tr>
+<td><a name="sfixed64" /> sfixed64</td>
+<td>Always eight bytes.</td>
+<td>int64</td>
+<td>long</td>
+<td>int/long</td>
+<td>int64</td>
+<td>long</td>
+<td>integer/string</td>
+<td>Bignum</td>
+</tr>
+<tr>
+<td><a name="bool" /> bool</td>
+<td></td>
+<td>bool</td>
+<td>boolean</td>
+<td>boolean</td>
+<td>bool</td>
+<td>bool</td>
+<td>boolean</td>
+<td>TrueClass/FalseClass</td>
+</tr>
+<tr>
+<td><a name="string" /> string</td>
+<td>A string must always contain UTF-8 encoded or 7-bit ASCII text.</td>
+<td>string</td>
+<td>String</td>
+<td>str/unicode</td>
+<td>string</td>
+<td>string</td>
+<td>string</td>
+<td>String (UTF-8)</td>
+</tr>
+<tr>
+<td><a name="bytes" /> bytes</td>
+<td>May contain any arbitrary sequence of bytes.</td>
+<td>string</td>
+<td>ByteString</td>
+<td>str</td>
+<td>[]byte</td>
+<td>ByteString</td>
+<td>string</td>
+<td>String (ASCII-8BIT)</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../../../../.." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home" rel="prev">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Home
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../../../../python-reference/frequenz/api/reporting/" class="md-footer__link md-footer__link--next" aria-label="Next: Index" rel="next">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Index
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2023 Frequenz Energy-as-a-Service GmbH
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/frequenz-floss" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/frequenz-com" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../../../../..", "features": ["content.code.annotate", "content.code.copy", "navigation.indexes", "navigation.instant", "navigation.footer", "navigation.tabs", "navigation.top", "navigation.tracking", "toc.follow"], "search": "../../../../../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../../../../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
+      
+    
+  </body>
+</html>
