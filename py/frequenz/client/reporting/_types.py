@@ -27,7 +27,65 @@ from google.protobuf import timestamp_pb2
 _logger = logging.getLogger(__name__)
 
 
-# # From common metric api
+class Metric(Enum):
+    for name, member in metric_sample_pb2.Metric.__members__.items():
+        locals()[name] = member.value
+
+Metric = type(
+    'Metric',
+    (Enum,),
+    {
+        name.replace("METRIC_", ""): member.value
+        for name, member in metric_sample_pb2.Metric.__members__.items():
+    }
+)
+
+
+def enum_from_protobuf(protobuf_enum):
+    """
+    Dynamically creates an Enum class from a protobuf enum, removing an
+    uppercase prefix from the member names based on the enum class name,
+    and adds conversion methods.
+
+    Args:
+        protobuf_enum: The protobuf enum class.
+
+    Returns:
+        A new Enum class.
+    """
+    # Prefix to remove (uppercase enum class name)
+    prefix_to_remove = protobuf_enum.__name__.upper() + "_"
+
+    # Modify the enum members based on the prefix
+    enum_members = {
+        name.replace(prefix_to_remove, ""): member.value
+        for name, member in protobuf_enum.__members__.items()
+    }
+
+    @classmethod
+    def from_pb(cls, value):
+        """Method to convert from protobuf enum value to Enum"""
+        if not any(m.value == value for m in cls):
+            _logger.warning("Unknown value %s. Returning UNSPECIFIED.", value)
+            return cls.UNSPECIFIED
+        return cls(value)
+
+    def to_pb(self):
+        """Method to convert from Enum to protobuf enum value"""
+        return protobuf_enum.ValueType(self.value)
+
+    enum_members['from_pb'] = from_pb
+    enum_members['to_pb'] = to_pb
+
+    return type(
+        protobuf_enum.__name__,
+        (Enum,),
+        enum_members
+    )
+
+# Example usage
+Metric = create_enum_from_protobuf(metric_sample_pb2.Metric)
+ComponentStateCode = create_enum_from_protobuf(microgrid_components_components_pb2.ComponentStateCode)
 
 
 class Metric(enum.Enum):
