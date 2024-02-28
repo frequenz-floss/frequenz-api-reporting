@@ -13,10 +13,9 @@ from typing import List, Optional
 
 from frequenz.api.reporting.v1 import reporting_pb2
 from frequenz.api.common.v1.metrics import metric_sample_pb2, bounds_pb2
-from frequenz.api.common.v1.microgrid import (
-    microgrid_components_components_pb2,
-    microgrid_pb2,
-)
+from frequenz.api.common.v1.microgrid import microgrid_pb2
+from frequenz.api.common.v1.microgrid.components import components_pb2
+
 from frequenz.api.common.v1.pagination import (
     pagination_params_pb2,
     pagination_info_pb2,
@@ -36,7 +35,7 @@ class Metric(enum.Enum):
     """
 
     # Default value
-    UNSPECIFIED = metric_sample_pb2.Metric.UNSPECIFIED
+    UNSPECIFIED = metric_sample_pb2.Metric.METRIC_UNSPECIFIED
 
     # DC electricity metrics
     DC_VOLTAGE = metric_sample_pb2.Metric.METRIC_DC_VOLTAGE
@@ -181,8 +180,8 @@ class Metric(enum.Enum):
     INVERTER_TEMPERATURE = metric_sample_pb2.Metric.METRIC_INVERTER_TEMPERATURE
 
     # EV charging station metrics
-    EV_CHARGING_TEMPERATURE = (
-        metric_sample_pb2.Metric.METRIC_EV_CHARGING_TEMPERATURE
+    EV_CHARGER_TEMPERATURE = (
+        metric_sample_pb2.Metric.METRIC_EV_CHARGER_TEMPERATURE
     )
 
     # General sensor metrics
@@ -472,7 +471,7 @@ class ComponentData:
 
     @classmethod
     def from_pb(
-        cls, component_data: microgrid_components_components_pb2.ComponentData
+        cls, component_data: components_pb2.ComponentData
     ) -> ComponentData:
         """Convert a protobuf ComponentData to ComponentData object.
         Args:
@@ -486,15 +485,15 @@ class ComponentData:
             states=[ComponentState.from_pb(state) for state in component_data.states],
         )
 
-    def to_pb(self) -> microgrid_components_components_pb2.ComponentData:
+    def to_pb(self) -> components_pb2.ComponentData:
         """Convert a ComponentData object to protobuf ComponentData.
         Returns:
             Protobuf message corresponding to the ComponentData object.
         """
-        return microgrid_components_components_pb2.ComponentData(
+        return components_pb2.ComponentData(
             component_id=self.component_id.states,
-            metric=[microgrid_components_components_pb2.MetricSample.ValueType(metric_sample.value) for metric_sample in self.metric_samples] if self.metric_samples else None,
-            states=[microgrid_components_components_pb2.ComponentState.ValueType(state.value) for state in self.states] if self.states else None,
+            metric=[components_pb2.MetricSample.ValueType(metric_sample.value) for metric_sample in self.metric_samples] if self.metric_samples else None,
+            states=[components_pb2.ComponentState.ValueType(state.value) for state in self.states] if self.states else None,
         )
 
 
@@ -505,113 +504,113 @@ class ComponentStateCode(enum.Enum):
 
     # Default value
     UNSPECIFIED = (
-        microgrid_components_components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_UNSPECIFIED
+        components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_UNSPECIFIED
     )
 
     # Component is in unknonwn or undefined condition
     UNKNOWN = (
-        microgrid_components_components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_UNKNOWN
+        components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_UNKNOWN
     )
 
     # Component is temporarily unavailable
     UNAVAILABLE = (
-        microgrid_components_components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_UNAVAILABLE
+        components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_UNAVAILABLE
     )
 
     # Component is switching off
     SWITCHING_OFF = (
-        microgrid_components_components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_SWITCHING_OFF
+        components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_SWITCHING_OFF
     )
 
     # Component has sucessfully switched off
     OFF = (
-        microgrid_components_components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_OFF
+        components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_OFF
     )
 
     # Component is switching on
     SWITCHING_ON = (
-        microgrid_components_components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_SWITCHING_ON
+        components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_SWITCHING_ON
     )
 
     # Component is in standby mode
     STANDBY = (
-        microgrid_components_components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_STANDBY
+        components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_STANDBY
     )
 
     # Component is fully operational and ready
     READY = (
-        microgrid_components_components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_READY
+        components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_READY
     )
 
     # Component is actively consuming energy
     CHARGING = (
-        microgrid_components_components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_CHARGING
+        components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_CHARGING
     )
 
     # Component is actively releasing energy
     DISCHARGING = (
-        microgrid_components_components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_DISCHARGING
+        components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_DISCHARGING
     )
 
     # Component is in error state and may need attention
     ERROR = (
-        microgrid_components_components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_ERROR
+        components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_ERROR
     )
 
     # EV charging cable unplugged
     EV_CHARGING_CABLE_UNPLUGGED = (
-        microgrid_components_components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_EV_CHARGING_CABLE_UNPLUGGED
+        components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_EV_CHARGING_CABLE_UNPLUGGED
     )
 
     # EV charging cable plugged into charging station
     EV_CHARGING_CABLE_PLUGGED_AT_STATION = (
-        microgrid_components_components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_EV_CHARGING_CABLE_PLUGGED_AT_STATION
+        components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_EV_CHARGING_CABLE_PLUGGED_AT_STATION
     )
 
     # EV charging cable plugged into vehicle
     EV_CHARGING_CABLE_PLUGGED_AT_EV = (
-        microgrid_components_components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_EV_CHARGING_CABLE_PLUGGED_AT_EV
+        components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_EV_CHARGING_CABLE_PLUGGED_AT_EV
     )
 
     # EV charging cable locked at charging station
     EV_CHARGING_CABLE_LOCKED_AT_STATION = (
-        microgrid_components_components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_EV_CHARGING_CABLE_LOCKED_AT_STATION
+        components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_EV_CHARGING_CABLE_LOCKED_AT_STATION
     )
 
     # EV charging cable locked at vehicle
     EV_CHARGING_CABLE_LOCKED_AT_EV = (
-        microgrid_components_components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_EV_CHARGING_CABLE_LOCKED_AT_EV
+        components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_EV_CHARGING_CABLE_LOCKED_AT_EV
     )
 
     # Relay is in open state
     RELAY_OPEN = (
-        microgrid_components_components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_RELAY_OPEN
+        components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_RELAY_OPEN
     )
 
     # Relay is in closed state
     RELAY_CLOSED = (
-        microgrid_components_components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_RELAY_CLOSED
+        components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_RELAY_CLOSED
     )
 
     # Precharger circuit is open
     PRECHARGER_OPEN = (
-        microgrid_components_components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_PRECHARGER_OPEN
+        components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_PRECHARGER_OPEN
     )
 
     # Precharger in precharging state
     PRECHARGER_PRECHARGING = (
-        microgrid_components_components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_PRECHARGER_PRECHARGING
+        components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_PRECHARGER_PRECHARGING
     )
 
     # Precharger circuit is closed
     PRECHARGER_CLOSED = (
-        microgrid_components_components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_PRECHARGER_CLOSED
+        components_pb2.ComponentStateCode.COMPONENT_STATE_CODE_PRECHARGER_CLOSED
     )
 
     @classmethod
     def from_pb(
         cls,
-        component_state_code: microgrid_components_components_pb2.ComponentStateCode.ValueType,
+        component_state_code: components_pb2.ComponentStateCode.ValueType,
     ) -> ComponentStateCode:
         """Convert a protobuf ComponentStateCode value to ComponentStateCode enum.
         Args:
@@ -630,13 +629,13 @@ class ComponentStateCode(enum.Enum):
 
     def to_pb(
         self,
-    ) -> microgrid_components_components_pb2.ComponentStateCode.ValueType:
+    ) -> components_pb2.ComponentStateCode.ValueType:
         """Convert a ComponentStateCode object to protobuf ComponentStateCode.
         Returns:
             Protobuf message corresponding to the ComponentStateCode object.
         """
         return (
-            microgrid_components_components_pb2.ComponentStateCode.ValueType(
+            components_pb2.ComponentStateCode.ValueType(
                 self.value
             )
         )
@@ -649,173 +648,173 @@ class ComponentErrorCode(enum.Enum):
 
     # Default value
     UNSPECIFIED = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_UNSPECIFIED
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_UNSPECIFIED
     )
 
     # Component is reporting unknonwn or undefined error
     UNKNOWN = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_UNKNOWN
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_UNKNOWN
     )
 
     # Component should not be switched on
     SWITCH_ON_FAULT = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_SWITCH_ON_FAULT
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_SWITCH_ON_FAULT
     )
 
     # Component is operating under the minimum rated voltage
     UNDERVOLTAGE = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_UNDERVOLTAGE
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_UNDERVOLTAGE
     )
 
     # Component is operating above the maximum rated voltage
     OVERVOLTAGE = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_OVERVOLTAGE
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_OVERVOLTAGE
     )
 
     # Component's consumption current is above the maximum rated value during charging
     OVERCURRENT_CHARGING = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_OVERCURRENT_CHARGING
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_OVERCURRENT_CHARGING
     )
 
     # Component's consumption current is above the maximum rated value during discharging
     OVERCURRENT_DISCHARGING = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_OVERCURRENT_DISCHARGING
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_OVERCURRENT_DISCHARGING
     )
 
     # Component is operating above maximum rated temperature
     OVERTEMPERATURE = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_OVERTEMPERATURE
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_OVERTEMPERATURE
     )
 
     # Component is operating below minimum rated temperature
     UNDERTEMPERATURE = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_UNDERTEMPERATURE
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_UNDERTEMPERATURE
     )
 
     # Component is exposed to high humity above maximum rated value
     HIGH_HUMIDITY = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_HIGH_HUMIDITY
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_HIGH_HUMIDITY
     )
 
     # Component's fuse has blown
     FUSE_ERROR = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_FUSE_ERROR
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_FUSE_ERROR
     )
 
     # Component's precharge unit has failed
     PRECHARGE_ERROR = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_PRECHARGE_ERROR
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_PRECHARGE_ERROR
     )
 
     # Plausibility issues within the system involving this component
     PLAUSIBILITY_ERROR = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_PLAUSIBILITY_ERROR
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_PLAUSIBILITY_ERROR
     )
 
     # System shutdown due to undervolatge involving this component
     UNDERVOLTAGE_SHUTDOWN = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_UNDERVOLTAGE_SHUTDOWN
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_UNDERVOLTAGE_SHUTDOWN
     )
 
     # Unexpected pilot failure in EV
-    UNEXPECTED_PILOT_FAILURE = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_UNEXPECTED_PILOT_FAILURE
-    )
+#    UNEXPECTED_PILOT_FAILURE = (
+#        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_UNEXPECTED_PILOT_FAILURE
+#    )
 
     # Fault current detected in component
     FAULT_CURRENT = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_FAULT_CURRENT
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_FAULT_CURRENT
     )
 
     # Short circuit detected in component
     SHORT_CIRCUIT = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_SHORT_CIRCUIT
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_SHORT_CIRCUIT
     )
 
     # Configuration error related to component
     CONFIG_ERROR = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_CONFIG_ERROR
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_CONFIG_ERROR
     )
 
     # Illegal state requested for component
     ILLEGAL_COMPONENT_STATE_CODE_REQUESTED = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_ILLEGAL_COMPONENT_STATE_CODE_REQUESTED
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_ILLEGAL_COMPONENT_STATE_CODE_REQUESTED
     )
 
     # Hardware of component inaccessible
     HARDWARE_INACCESSIBLE = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_HARDWARE_INACCESSIBLE
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_HARDWARE_INACCESSIBLE
     )
 
     # Internal error in component
     INTERNAL = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_INTERNAL
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_INTERNAL
     )
 
     # Component is unauthorized to perform the last requested action
     UNAUTHORIZED = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_UNAUTHORIZED
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_UNAUTHORIZED
     )
 
     # EV cable was abruptly unplugged from charging station
     EV_CHARGING_CABLE_UNPLUGGED_FROM_STATION = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_EV_CHARGING_CABLE_UNPLUGGED_FROM_STATION
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_EV_CHARGING_CABLE_UNPLUGGED_FROM_STATION
     )
 
     # EV cable was abruptly unplugged from vehicle
     EV_CHARGING_CABLE_UNPLUGGED_FROM_EV = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_EV_CHARGING_CABLE_UNPLUGGED_FROM_EV
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_EV_CHARGING_CABLE_UNPLUGGED_FROM_EV
     )
 
     # EV cable lock failure
     EV_CHARGING_CABLE_LOCK_FAILED = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_EV_CHARGING_CABLE_LOCK_FAILED
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_EV_CHARGING_CABLE_LOCK_FAILED
     )
 
     # EV cable invalid
     EV_CHARGING_CABLE_INVALID = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_EV_CHARGING_CABLE_INVALID
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_EV_CHARGING_CABLE_INVALID
     )
 
     # Incompatible EV plug
     EV_CONSUMER_INCOMPATIBLE = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_EV_CONSUMER_INCOMPATIBLE
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_EV_CONSUMER_INCOMPATIBLE
     )
 
     # Battery system imbalance
     BATTERY_IMBALANCE = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_BATTERY_IMBALANCE
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_BATTERY_IMBALANCE
     )
 
     # Battery low state of health (SOH)
     BATTERY_LOW_SOH = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_BATTERY_LOW_SOH
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_BATTERY_LOW_SOH
     )
 
     # Battery block error
     BATTERY_BLOCK_ERROR = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_BATTERY_BLOCK_ERROR
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_BATTERY_BLOCK_ERROR
     )
 
     # Battery relay error
     BATTERY_RELAY_ERROR = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_BATTERY_RELAY_ERROR
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_BATTERY_RELAY_ERROR
     )
 
     # Indicating that battery calibration is needed
     BATTERY_CALIBRATION_NEEDED = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_BATTERY_CALIBRATION_NEEDED
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_BATTERY_CALIBRATION_NEEDED
     )
 
     # Relays have reached cycle limit
     RELAY_CYCLE_LIMIT_REACHED = (
-        microgrid_components_components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_RELAY_CYCLE_LIMIT_REACHED
+        components_pb2.ComponentErrorCode.COMPONENT_ERROR_CODE_RELAY_CYCLE_LIMIT_REACHED
     )
 
     @classmethod
     def from_pb(
         cls,
-        component_error_code: microgrid_components_components_pb2.ComponentErrorCode.ValueType,
+        component_error_code: components_pb2.ComponentErrorCode.ValueType,
     ) -> ComponentErrorCode:
         """Convert a protobuf ComponentErrorCode value to ComponentErrorCode enum.
         Args:
@@ -834,13 +833,13 @@ class ComponentErrorCode(enum.Enum):
 
     def to_pb(
         self,
-    ) -> microgrid_components_components_pb2.ComponentErrorCode.ValueType:
+    ) -> components_pb2.ComponentErrorCode.ValueType:
         """Convert a ComponentErrorCode object to protobuf ComponentErrorCode.
         Returns:
             Protobuf message corresponding to the ComponentErrorCode object.
         """
         return (
-            microgrid_components_components_pb2.ComponentErrorCode.ValueType(
+            components_pb2.ComponentErrorCode.ValueType(
                 self.value
             )
         )
@@ -866,7 +865,7 @@ class ComponentState:
     @classmethod
     def from_pb(
         cls,
-        component_state: microgrid_components_components_pb2.ComponentState,
+        component_state: components_pb2.ComponentState,
     ) -> ComponentState:
         """Convert a protobuf ComponentState to ComponentState object.
         Args:
@@ -890,16 +889,16 @@ class ComponentState:
             ],
         )
 
-    def to_pb(self) -> microgrid_components_components_pb2.ComponentState:
+    def to_pb(self) -> components_pb2.ComponentState:
         """Convert a ComponentState object to protobuf ComponentState.
         Returns:
             Protobuf message corresponding to the ComponentState object.
         """
-        return microgrid_components_components_pb2.ComponentState(
+        return components_pb2.ComponentState(
             sampled_at=timestamp_pb2.Timestamp().FromDatetime(self.sampled_at),
-            states=[microgrid_components_components_pb2.ComponentStateCode.ValueType(state.value) for state in self.states] if self.states else None,
-            warnings=[microgrid_components_components_pb2.ComponentErrorCode.ValueType(warning.value) for warning in self.warnings] if self.warnings else None,
-            errors=[microgrid_components_components_pb2.ComponentErrorCode.ValueType(error.value) for error in self.errors] if self.errors else None,
+            states=[components_pb2.ComponentStateCode.ValueType(state.value) for state in self.states] if self.states else None,
+            warnings=[components_pb2.ComponentErrorCode.ValueType(warning.value) for warning in self.warnings] if self.warnings else None,
+            errors=[components_pb2.ComponentErrorCode.ValueType(error.value) for error in self.errors] if self.errors else None,
         )
 
 
@@ -1084,13 +1083,13 @@ class FilterOption(enum.Enum):
     """
 
     # Default value
-    UNSPECIFIED = reporting_pb2.FilterOption.FILTER_OPTION_UNSPECIFIED
+    UNSPECIFIED = reporting_pb2.IncludeOptions.FilterOption.FILTER_OPTION_UNSPECIFIED
 
     # Filter by microgrid ID
-    EXCLUDE = reporting_pb2.FilterOption.FILTER_OPTION_EXCLUDE
+    EXCLUDE = reporting_pb2.IncludeOptions.FilterOption.FILTER_OPTION_EXCLUDE
 
     # Filter by component ID
-    INCLUDE = reporting_pb2.FilterOption.FILTER_OPTION_INCLUDE
+    INCLUDE = reporting_pb2.IncludeOptions.FilterOption.FILTER_OPTION_INCLUDE
 
     @classmethod
     def from_pb(
@@ -1339,7 +1338,7 @@ class MicrogridData:
         """
         return reporting_pb2.MicrogridData(
             microgrid_id=self.microgrid_id,
-            components=[microgrid_components_components_pb2.ComponentData.ValueType(component.value) for component in self.components] if self.components else None,
+            components=[components_pb2.ComponentData.ValueType(component.value) for component in self.components] if self.components else None,
         )
 
 

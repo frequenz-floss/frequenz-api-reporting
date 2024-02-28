@@ -13,7 +13,7 @@ from frequenz.api.reporting.v1 import (
 from frequenz.channels import Receiver
 from frequenz.client.base.grpc_streaming_helper import GrpcStreamingHelper
 
-from _types import (
+from ._types import (
     Metric,
     MetricSample,
     MetricSampleVariant,
@@ -91,7 +91,7 @@ class Client:
         )
 
         stream_key = tuple(
-            tuple(microgrid_components) + tuple(metrics) + filter
+            [microgrid_id] + component_ids + metrics + [filter]
         )
 
         if stream_key not in self._microgrid_component_data_streams:
