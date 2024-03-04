@@ -26,7 +26,9 @@ classifiers = [
 ]
 requires-python = ">= 3.11, < 4"
 dependencies = [
-  "frequenz-api-common >= 0.5.1, < 0.6.0",
+  "frequenz-api-common >= 0.5.5, < 0.6.0",
+  "frequenz-channels >= 0.16.0, < 0.17.0",
+  "frequenz-client-base >= 0.1.0, < 0.2",
   "googleapis-common-protos >= 1.56.2, < 2",
   "grpcio >= 1.51.1, < 2",
 ]
