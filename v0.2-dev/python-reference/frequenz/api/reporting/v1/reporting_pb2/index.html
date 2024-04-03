@@ -4377,8 +4377,8 @@ in the stream.</p>
 If data is resampled, all samples that fall in a left-closed time interval
 determined by the resolution will be aggregated.
 At the moment only mean aggregation is supported.
-The timestamp of the aggregated sample corresponds to the oldest
-possible timestamp of the time interval.</p>
+The timestamp for each aggregated sample represents the beginning of its corresponding
+time interval, marking the earliest point from which data was aggregated.</p>
 
 
   
@@ -4550,8 +4550,7 @@ This timestamp will be &gt;= start and &lt; end.</p>
 
             <details class="quote">
               <summary>Source code in <code>frequenz/api/reporting/v1/reporting_pb2.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-34">34</a></span>
-<span class="normal"><a href="#__codelineno-0-35">35</a></span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-35">35</a></span>
 <span class="normal"><a href="#__codelineno-0-36">36</a></span>
 <span class="normal"><a href="#__codelineno-0-37">37</a></span>
 <span class="normal"><a href="#__codelineno-0-38">38</a></span>
@@ -4588,8 +4587,7 @@ This timestamp will be &gt;= start and &lt; end.</p>
 <span class="normal"><a href="#__codelineno-0-69">69</a></span>
 <span class="normal"><a href="#__codelineno-0-70">70</a></span>
 <span class="normal"><a href="#__codelineno-0-71">71</a></span>
-<span class="normal"><a href="#__codelineno-0-72">72</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_INCLUDEOPTIONS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">545</span>
-</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_INCLUDEOPTIONS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">838</span>
+<span class="normal"><a href="#__codelineno-0-72">72</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_INCLUDEOPTIONS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">838</span>
 </span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_INCLUDEOPTIONS_FILTEROPTION&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">717</span>
 </span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_INCLUDEOPTIONS_FILTEROPTION&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">816</span>
 </span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_AGGREGATIONCONFIG&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">840</span>

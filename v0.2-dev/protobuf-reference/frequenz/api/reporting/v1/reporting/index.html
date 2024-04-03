@@ -2146,8 +2146,8 @@ in the stream.</p>
 If data is resampled, all samples that fall in a left-closed time interval
 determined by the resolution will be aggregated.
 At the moment only mean aggregation is supported.
-The timestamp of the aggregated sample corresponds to the oldest
-possible timestamp of the time interval.</p>
+The timestamp for each aggregated sample represents the beginning of its corresponding
+time interval, marking the earliest point from which data was aggregated.</p>
 <table>
 <thead>
 <tr>
