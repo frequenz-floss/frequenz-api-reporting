@@ -829,8 +829,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#simpleaggregatedmetricsample" class="md-nav__link">
-    SimpleAggregatedMetricSample
+  <a href="#simpleaggregatedmetricvalue" class="md-nav__link">
+    SimpleAggregatedMetricValue
   </a>
   
 </li>
@@ -1417,8 +1417,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#simpleaggregatedmetricsample" class="md-nav__link">
-    SimpleAggregatedMetricSample
+  <a href="#simpleaggregatedmetricvalue" class="md-nav__link">
+    SimpleAggregatedMetricValue
   </a>
   
 </li>
@@ -1498,7 +1498,7 @@
 <li><a href="#frequenz-api-reporting-v1-ReceiveMicrogridComponentsDataStreamRequest-StreamFilter">ReceiveMicrogridComponentsDataStreamRequest.StreamFilter</a></li>
 <li><a href="#frequenz-api-reporting-v1-ReceiveMicrogridComponentsDataStreamResponse">ReceiveMicrogridComponentsDataStreamResponse</a></li>
 <li><a href="#frequenz-api-reporting-v1-ResamplingOptions">ResamplingOptions</a></li>
-<li><a href="#frequenz-api-reporting-v1-SimpleAggregatedMetricSample">SimpleAggregatedMetricSample</a></li>
+<li><a href="#frequenz-api-reporting-v1-SimpleAggregatedMetricValue">SimpleAggregatedMetricValue</a></li>
 <li>
 <p><a href="#frequenz-api-reporting-v1-TimeFilter">TimeFilter</a></p>
 </li>
@@ -1732,7 +1732,7 @@ The aggregation results for these metrics are returned in the samples field.</p>
 </tr>
 <tr>
 <td>samples</td>
-<td><a href="#frequenz-api-reporting-v1-SimpleAggregatedMetricSample">SimpleAggregatedMetricSample</a></td>
+<td><a href="#frequenz-api-reporting-v1-SimpleAggregatedMetricValue">SimpleAggregatedMetricValue</a></td>
 <td>repeated</td>
 <td>A list of aggregated metrics.</td>
 </tr>
@@ -1995,7 +1995,7 @@ messages in the stream.</p>
 </tr>
 <tr>
 <td>sample</td>
-<td><a href="#frequenz-api-reporting-v1-SimpleAggregatedMetricSample">SimpleAggregatedMetricSample</a></td>
+<td><a href="#frequenz-api-reporting-v1-SimpleAggregatedMetricValue">SimpleAggregatedMetricValue</a></td>
 <td></td>
 <td>Aggregated sample value and corresponding UTC timestamp when it was sampled.</td>
 </tr>
@@ -2166,8 +2166,8 @@ time interval, marking the earliest point from which data was aggregated.</p>
 </tr>
 </tbody>
 </table>
-<p><a name="frequenz-api-reporting-v1-SimpleAggregatedMetricSample"></a></p>
-<h3 id="simpleaggregatedmetricsample">SimpleAggregatedMetricSample<a class="headerlink" href="#simpleaggregatedmetricsample" title="Permanent link">¤</a></h3>
+<p><a name="frequenz-api-reporting-v1-SimpleAggregatedMetricValue"></a></p>
+<h3 id="simpleaggregatedmetricvalue">SimpleAggregatedMetricValue<a class="headerlink" href="#simpleaggregatedmetricvalue" title="Permanent link">¤</a></h3>
 <p>Defines a single aggregated metric sample, which represents a consolidated metric value
 over a collection of microgrid components within a specific timeframe.</p>
 <p>This message serves to encapsulate aggregate metrics derived from multiple component
@@ -2194,7 +2194,7 @@ charge of several batteries.</p>
 </tbody>
 </table>
 <p>!!! info This is the original timestamp of the samples that were aggregated. |
-| sample | <a href="#frequenz-api-common-v1-metrics-SimpleMetricSample">frequenz.api.common.v1.metrics.SimpleMetricSample</a> |  | The aggregated value of the metric. float value = 2; |</p>
+| sample | <a href="#frequenz-api-common-v1-metrics-SimpleMetricValue">frequenz.api.common.v1.metrics.SimpleMetricValue</a> |  | The aggregated value of the metric. float value = 2; |</p>
 <p><a name="frequenz-api-reporting-v1-TimeFilter"></a></p>
 <h3 id="timefilter">TimeFilter<a class="headerlink" href="#timefilter" title="Permanent link">¤</a></h3>
 <p>Time-based filter for querying aggregated microgrid components data.</p>
