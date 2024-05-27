@@ -3868,6 +3868,30 @@ If omitted, data will be returned in its original representation.</p>
 
 </div>
 
+<div class="doc doc-object doc-attribute">
+
+
+
+<h8 id="frequenz.api.reporting.v1.reporting_pb2.ReceiveAggregatedMicrogridComponentsDataStreamRequest.AggregationStreamFilter.time_filter" class="doc doc-heading">
+          <span class="doc doc-object-name doc-attribute-name">time_filter</span>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#frequenz.api.reporting.v1.reporting_pb2.ReceiveAggregatedMicrogridComponentsDataStreamRequest.AggregationStreamFilter.time_filter" class="headerlink" title="Permanent link">¤</a></h8>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">time_filter</span><span class="p">:</span> <span class="n"><span title="frequenz.api.reporting.v1.reporting_pb2.global___TimeFilter">global___TimeFilter</span></span>
+</span></code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Optional time-based filter criteria.
+If omitted, data will start streaming from the timestamp that the request was received.</p>
+  </div>
+
+</div>
+
 
 
 
@@ -4198,6 +4222,30 @@ specified microgrids and their respective components.</p>
   
       <p>Optional resampling options like resolution for the data, represented in seconds.
 If omitted, data will be returned in its original representation.</p>
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h8 id="frequenz.api.reporting.v1.reporting_pb2.ReceiveMicrogridComponentsDataStreamRequest.StreamFilter.time_filter" class="doc doc-heading">
+          <span class="doc doc-object-name doc-attribute-name">time_filter</span>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#frequenz.api.reporting.v1.reporting_pb2.ReceiveMicrogridComponentsDataStreamRequest.StreamFilter.time_filter" class="headerlink" title="Permanent link">¤</a></h8>
+<div class="doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">time_filter</span><span class="p">:</span> <span class="n"><span title="frequenz.api.reporting.v1.reporting_pb2.global___TimeFilter">global___TimeFilter</span></span>
+</span></code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Optional time-based filter criteria.
+If omitted, data will start streaming from the timestamp that the request was received.</p>
   </div>
 
 </div>
@@ -4603,27 +4651,27 @@ This timestamp will be &gt;= start and &lt; end.</p>
 </span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTMICROGRIDCOMPONENTSDATARESPONSE_MICROGRIDDATA&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">1899</span>
 </span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTMICROGRIDCOMPONENTSDATARESPONSE_MICROGRIDDATA&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2016</span>
 </span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEMICROGRIDCOMPONENTSDATASTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2019</span>
-</span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEMICROGRIDCOMPONENTSDATASTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2468</span>
+</span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEMICROGRIDCOMPONENTSDATASTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2528</span>
 </span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEMICROGRIDCOMPONENTSDATASTREAMREQUEST_STREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2312</span>
-</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEMICROGRIDCOMPONENTSDATASTREAMREQUEST_STREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2468</span>
-</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEMICROGRIDCOMPONENTSDATASTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2471</span>
-</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEMICROGRIDCOMPONENTSDATASTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2619</span>
-</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTAGGREGATEDMICROGRIDCOMPONENTSDATAREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2622</span>
-</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTAGGREGATEDMICROGRIDCOMPONENTSDATAREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">3094</span>
-</span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTAGGREGATEDMICROGRIDCOMPONENTSDATAREQUEST_AGGREGATIONLISTFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2937</span>
-</span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTAGGREGATEDMICROGRIDCOMPONENTSDATAREQUEST_AGGREGATIONLISTFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">3094</span>
-</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTAGGREGATEDMICROGRIDCOMPONENTSDATARESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">3097</span>
-</span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTAGGREGATEDMICROGRIDCOMPONENTSDATARESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">3496</span>
-</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTAGGREGATEDMICROGRIDCOMPONENTSDATARESPONSE_AGGREGATEDRESULT&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">3331</span>
-</span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTAGGREGATEDMICROGRIDCOMPONENTSDATARESPONSE_AGGREGATEDRESULT&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">3496</span>
-</span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEAGGREGATEDMICROGRIDCOMPONENTSDATASTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">3499</span>
-</span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEAGGREGATEDMICROGRIDCOMPONENTSDATASTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">3852</span>
-</span><span id="__span-0-66"><a id="__codelineno-0-66" name="__codelineno-0-66"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEAGGREGATEDMICROGRIDCOMPONENTSDATASTREAMREQUEST_AGGREGATIONSTREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">3753</span>
-</span><span id="__span-0-67"><a id="__codelineno-0-67" name="__codelineno-0-67"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEAGGREGATEDMICROGRIDCOMPONENTSDATASTREAMREQUEST_AGGREGATIONSTREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">3852</span>
-</span><span id="__span-0-68"><a id="__codelineno-0-68" name="__codelineno-0-68"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEAGGREGATEDMICROGRIDCOMPONENTSDATASTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">3855</span>
-</span><span id="__span-0-69"><a id="__codelineno-0-69" name="__codelineno-0-69"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEAGGREGATEDMICROGRIDCOMPONENTSDATASTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">4057</span>
-</span><span id="__span-0-70"><a id="__codelineno-0-70" name="__codelineno-0-70"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_REPORTING&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">4060</span>
-</span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_REPORTING&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">4833</span>
+</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEMICROGRIDCOMPONENTSDATASTREAMREQUEST_STREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2528</span>
+</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEMICROGRIDCOMPONENTSDATASTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2531</span>
+</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEMICROGRIDCOMPONENTSDATASTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">2679</span>
+</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTAGGREGATEDMICROGRIDCOMPONENTSDATAREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2682</span>
+</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTAGGREGATEDMICROGRIDCOMPONENTSDATAREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">3154</span>
+</span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTAGGREGATEDMICROGRIDCOMPONENTSDATAREQUEST_AGGREGATIONLISTFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">2997</span>
+</span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTAGGREGATEDMICROGRIDCOMPONENTSDATAREQUEST_AGGREGATIONLISTFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">3154</span>
+</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTAGGREGATEDMICROGRIDCOMPONENTSDATARESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">3157</span>
+</span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTAGGREGATEDMICROGRIDCOMPONENTSDATARESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">3556</span>
+</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTAGGREGATEDMICROGRIDCOMPONENTSDATARESPONSE_AGGREGATEDRESULT&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">3391</span>
+</span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_LISTAGGREGATEDMICROGRIDCOMPONENTSDATARESPONSE_AGGREGATEDRESULT&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">3556</span>
+</span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEAGGREGATEDMICROGRIDCOMPONENTSDATASTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">3559</span>
+</span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEAGGREGATEDMICROGRIDCOMPONENTSDATASTREAMREQUEST&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">3973</span>
+</span><span id="__span-0-66"><a id="__codelineno-0-66" name="__codelineno-0-66"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEAGGREGATEDMICROGRIDCOMPONENTSDATASTREAMREQUEST_AGGREGATIONSTREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">3814</span>
+</span><span id="__span-0-67"><a id="__codelineno-0-67" name="__codelineno-0-67"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEAGGREGATEDMICROGRIDCOMPONENTSDATASTREAMREQUEST_AGGREGATIONSTREAMFILTER&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">3973</span>
+</span><span id="__span-0-68"><a id="__codelineno-0-68" name="__codelineno-0-68"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEAGGREGATEDMICROGRIDCOMPONENTSDATASTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">3976</span>
+</span><span id="__span-0-69"><a id="__codelineno-0-69" name="__codelineno-0-69"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_RECEIVEAGGREGATEDMICROGRIDCOMPONENTSDATASTREAMRESPONSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">4178</span>
+</span><span id="__span-0-70"><a id="__codelineno-0-70" name="__codelineno-0-70"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_REPORTING&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_start</span><span class="o">=</span><span class="mi">4181</span>
+</span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71"></a>  <span class="n">_globals</span><span class="p">[</span><span class="s1">&#39;_REPORTING&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">_serialized_end</span><span class="o">=</span><span class="mi">4954</span>
 </span><span id="__span-0-72"><a id="__codelineno-0-72" name="__codelineno-0-72"></a><span class="c1"># @@protoc_insertion_point(module_scope)</span>
 </span></code></pre></div></td></tr></table></div>
             </details>

@@ -1948,6 +1948,12 @@ follows the passive sign convention.</p>
 <td></td>
 <td>Optional resampling options like resolution for the data, represented in seconds. If omitted, data will be returned in its original representation.</td>
 </tr>
+<tr>
+<td>time_filter</td>
+<td><a href="#frequenz-api-reporting-v1-TimeFilter">TimeFilter</a></td>
+<td></td>
+<td>Optional time-based filter criteria. If omitted, data will start streaming from the timestamp that the request was received.</td>
+</tr>
 </tbody>
 </table>
 <p><a name="frequenz-api-reporting-v1-ReceiveAggregatedMicrogridComponentsDataStreamResponse"></a></p>
@@ -2062,6 +2068,12 @@ specified microgrids and their respective components.</p>
 <td><a href="#frequenz-api-reporting-v1-IncludeOptions">IncludeOptions</a></td>
 <td></td>
 <td>Include options specifying additional fields to be included in the response.</td>
+</tr>
+<tr>
+<td>time_filter</td>
+<td><a href="#frequenz-api-reporting-v1-TimeFilter">TimeFilter</a></td>
+<td></td>
+<td>Optional time-based filter criteria. If omitted, data will start streaming from the timestamp that the request was received.</td>
 </tr>
 </tbody>
 </table>
