@@ -53,7 +53,6 @@ dependencies = [
    # guarantee for grpcio, so unless we find one in the future, we'll assume
    # major version jumps are not compatible
    "grpcio >= 1.68.1, < 2", # Do not widen beyond 2!
-   "grpcio-tools == 1.68.1", # Do not widen beyond 2!
 ]
 dynamic = ["version"]
 
