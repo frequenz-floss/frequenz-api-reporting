@@ -25,7 +25,7 @@
 #     - changed-files:
 #       - any-glob-to-any-file:
 #         - "src/**/*.py"
-#       - all-glob-to-all-file:
+#       - all-globs-to-all-files:
 #         - "!src/__init__.py"
 #
 # Please have in mind that that the part:xxx labels need to
