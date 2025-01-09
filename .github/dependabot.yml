@@ -20,6 +20,13 @@ updates:
     # dependency, as major updates are expected to be breaking, it is better to
     # manage them individually.
     groups:
+      protobuf:
+        patterns:
+          - "protobuf"
+      grpcio:
+        patterns:
+          - "grpcio"
+          - "grpcio-tools"
       required:
         dependency-type: "production"
         update-types:
