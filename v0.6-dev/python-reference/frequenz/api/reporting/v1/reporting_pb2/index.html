@@ -2450,6 +2450,9 @@ microgrid components. It serves as the configuration guideline for any aggregati
    component IDs.
    Example: <code>#1 + #2 - #3</code>, <code>(#3 * #2) /# 1</code></li>
 </ol>
+<p>Additionally, metric connection identifiers can be used in the formula, for components
+that e.g. provide the same metric from multiple connections/sensors.
+Example: <code>sum(#1[connection0], #2, #3)</code>, <code>#1[connection0] + #2[connection1]</code></p>
 </div>
     </div>
 

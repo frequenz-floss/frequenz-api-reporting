@@ -1567,8 +1567,9 @@ microgrid components. It serves as the configuration guideline for any aggregati
 | aggregation_formula | <a href="#string">string</a> |  | The formula used for aggregating the component metric for this microgrid.</p>
 <p>!!! info Two types of aggregation formulas are supported: 1. Aggregate functions: These are standard aggregation functions like <code>sum()</code> and <code>avg()</code>. Example: <code>sum(#1,#2)</code>, <code>avg(#3,#4)</code></p>
 <ol>
-<li>Dedicated formulas: These support basic math operators while concatenating microgrid component IDs. Example: <code>#1 &amp;#43; #2 - #3</code>, <code>(#3 * #2) /# 1</code> |</li>
+<li>Dedicated formulas: These support basic math operators while concatenating microgrid component IDs. Example: <code>#1 &amp;#43; #2 - #3</code>, <code>(#3 * #2) /# 1</code></li>
 </ol>
+<p>Additionally, metric connection identifiers can be used in the formula, for components that e.g. provide the same metric from multiple connections/sensors. Example: <code>sum(#1[connection0], #2, #3)</code>, <code>#1[connection0] &amp;#43; #2[connection1]</code> |</p>
 <p><a name="frequenz-api-reporting-v1-IncludeOptions"></a></p>
 <h3 id="includeoptions">IncludeOptions<a class="headerlink" href="#includeoptions" title="Permanent link">¤</a></h3>
 <p>Include options for filtering microgrid components data.</p>
