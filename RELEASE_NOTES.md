@@ -2,13 +2,11 @@
 
 ## Summary
 
-- `List*` endpoints have been removed.
-- `MetricSourceOptions` have been renamed to `MetricConnections`, and moved out of the filter message.
+<!-- Here goes a general summary of what this release is about -->
 
 ## Upgrading
 
-- Servers should remove the list endpoint implementations, clients should use the streaming endpoints.
-- Metric source info can be found directly on the request, instead of in the filter object.
+<!-- Here goes notes on how to upgrade from previous versions, including deprecations and what they should be replaced with -->
 
 ## New Features
 
