@@ -139,6 +139,10 @@ message AggregationConfig {
   //     2. Dedicated formulas: These support basic math operators while concatenating microgrid
   //        component IDs.
   //        Example: `#1 + #2 - #3`, `(#3 * #2) /# 1`
+  //
+  //     Additionally, metric connection identifiers can be used in the formula, for components
+  //     that e.g. provide the same metric from multiple connections/sensors.
+  //     Example: `sum(#1[connection0], #2, #3)`, `#1[connection0] + #2[connection1]`
   string aggregation_formula = 3;
 }
 
