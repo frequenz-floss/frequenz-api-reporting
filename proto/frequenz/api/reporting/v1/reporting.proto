@@ -94,8 +94,8 @@ message TimeFilter {
   // Optional UTC end time for the query.
   //
   // !!! info
-  //     If not provided, the query defaults to the most recent available data for the
-  //     specified microgrid components.
+  //     If not provided, the query will retrieve the requested data and continue
+  //     streaming all new data as it becomes available.
   google.protobuf.Timestamp end = 2;
 }
 
