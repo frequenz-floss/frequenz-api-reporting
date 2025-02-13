@@ -17,6 +17,7 @@ import "google/protobuf/timestamp.proto";
 import "frequenz/api/common/v1/metrics/metric_sample.proto";
 import "frequenz/api/common/v1/microgrid/components/components.proto";
 import "frequenz/api/common/v1/microgrid/microgrid.proto";
+import "frequenz/api/common/v1/microgrid/sensors/sensors.proto";
 import "frequenz/api/common/v1/pagination/pagination_info.proto";
 import "frequenz/api/common/v1/pagination/pagination_params.proto";
 
@@ -47,6 +48,32 @@ service Reporting {
   //     for a valid result.
   rpc ReceiveAggregatedMicrogridComponentsDataStream(ReceiveAggregatedMicrogridComponentsDataStreamRequest)
     returns (stream ReceiveAggregatedMicrogridComponentsDataStreamResponse) {}
+
+  // Streams metrics for a list of microgrid sensors.
+  //
+  // !!! note
+  //     This RPC endpoint streams metrics data for sensors of one or more microgrids.
+  //     Clients need to provide at least one microgrid ID and one sensor ID
+  //     to get a result.
+  rpc ReceiveMicrogridSensorsDataStream(ReceiveMicrogridSensorsDataStreamRequest)
+    returns (stream ReceiveMicrogridSensorsDataStreamResponse) {}
+
+  // Streams aggregated metrics based on user-defined formulas for a list of microgrid
+  // sensors.
+  //
+  // !!! note
+  //     This RPC endpoint retrieves aggregated historical metrics data based on user-defined
+  //     formulas for microgrid sensors. At least one formula for one microgrid must be provided
+  //     for a valid result.
+  rpc ReceiveAggregatedMicrogridSensorsDataStream(ReceiveAggregatedMicrogridSensorsDataStreamRequest)
+    returns (stream ReceiveAggregatedMicrogridSensorsDataStreamResponse) {}
+}
+
+// Defines whether to include results in the response message.
+enum FilterOption {
+  FILTER_OPTION_UNSPECIFIED = 0;
+  FILTER_OPTION_EXCLUDE = 1;
+  FILTER_OPTION_INCLUDE = 2;
 }
 
 // Time-based filter for querying aggregated microgrid components data.
@@ -82,26 +109,6 @@ message ResamplingOptions {
   // Optional resampling resolution for the data, represented in seconds.
   // If omitted, data will be returned in its original resolution.
   optional uint32 resolution = 1;
-}
-
-// Include options for filtering microgrid components data.
-//
-// !!! note
-//     Specifies which additional fields should be included in the response.
-//
-message IncludeOptions {
-  // Defines whether to include results in the response message.
-  enum FilterOption {
-    FILTER_OPTION_UNSPECIFIED = 0;
-    FILTER_OPTION_EXCLUDE = 1;
-    FILTER_OPTION_INCLUDE = 2;
-  }
-
-  // Optional bound inclusion. By default, bounds are not included in the response.
-  optional FilterOption bounds = 1;
-
-  // Optional operational state inclusion. By default, states are not included in the response.
-  optional FilterOption states = 2;
 }
 
 // Message defining the aggregation configuration for a custom formula within a specific microgrid.
@@ -237,6 +244,19 @@ message MetricConnections {
 //     like errors or operational states of the components during the specified time period.
 //
 message ReceiveMicrogridComponentsDataStreamRequest {
+  // Include options for filtering microgrid components data.
+  //
+  // !!! note
+  //     Specifies which additional fields should be included in the response.
+  //
+  message IncludeOptions {
+    // Optional bound inclusion. By default, bounds are not included in the response.
+    optional FilterOption bounds = 1;
+
+    // Optional operational state inclusion. By default, states are not included in the response.
+    optional FilterOption states = 2;
+  }
+
   // General filter criteria for querying microgrid components data.
   //
   // !!! note
@@ -406,6 +426,125 @@ message ReceiveAggregatedMicrogridComponentsDataStreamRequest {
 //     ```
 //
 message ReceiveAggregatedMicrogridComponentsDataStreamResponse {
+  // The metric and formula that has been used to aggregate the sample.
+  AggregationConfig aggregation_config = 1;
+
+  // Aggregated sample value and corresponding UTC timestamp when it was sampled.
+  SimpleAggregatedMetricValue sample = 2;
+}
+
+// Request message for receiving a stream of metrics, such as electrical
+// measurements, and other information for individual microgrid sensors.
+//
+// !!! note
+//     In addition to the raw metrics, the API can also return additional information
+//     like errors or operational states of the sensors during the specified time period.
+//
+message ReceiveMicrogridSensorsDataStreamRequest {
+  // Include options for filtering microgrid sensors data.
+  //
+  // !!! note
+  //     Specifies which additional fields should be included in the response.
+  //
+  message IncludeOptions {
+    // Optional operational state inclusion. By default, states are not included in the response.
+    optional FilterOption states = 1;
+  }
+
+  // General filter criteria for querying microgrid sensors data.
+  //
+  // !!! note
+  //     The filter criteria defined here are applied universally across all
+  //     specified microgrids and their respective sensors.
+  message StreamFilter {
+    // Optional resampling options like resolution for the data, represented in seconds.
+    // If omitted, data will be returned in its original representation.
+    ResamplingOptions resampling_options = 1;
+
+    // Include options specifying additional fields to be included in the response.
+    IncludeOptions include_options = 2;
+
+    // Optional time-based filter criteria.
+    // If omitted, data will start streaming from the timestamp that the request was received.
+    TimeFilter time_filter = 3;
+  }
+  // Encapsulates the microgrid ID and the sensor IDs within that microgrid for which
+  // the historical data should be retrieved.
+  //
+  // !!! note
+  //     Each entry in this repeated field associates a microgrid ID with its respective
+  //     sensor IDs. At least one such association must be provided for a valid request.
+  repeated frequenz.api.common.v1.microgrid.MicrogridSensorIDs microgrid_sensors = 1;
+
+  // List of metrics to receive data for, each possibly with connection filters.
+  //
+  // !!! note
+  //     At least one metric must be specified. Each metric can have an optional list of connections.
+  //     If connections are provided for a metric, only data from those connections will be returned.
+  //     If no connections are provided for a metric, data from all connections will be returned for that metric.
+  repeated MetricConnections metrics = 2;
+
+  // General filter that applies to the data retrieval for all specified microgrids and sensors.
+  //
+  // !!! note
+  //     The filter can specify a list of metrics to be return but also specify bounds, operational
+  //     state, or errors to be returned.
+  StreamFilter filter = 3;
+}
+
+// Response containing a single data sample for one microgrid's sensors.
+//
+// !!! note
+//     The microgrid's sensors are provided as single data samples that
+//     encapsulate metrics, bounds, errors, and operational states along with their
+//     associated timestamps. Each response message covers a single microgrid.
+//     If multiple microgrids are provided in the request, expect sequential messages
+//     in the stream.
+//
+message ReceiveMicrogridSensorsDataStreamResponse {
+  // Microgrid ID for which the sensors and samples are reported.
+  uint64 microgrid_id = 1;
+
+  // List of sensors within this microgrid, each with its associated data samples.
+  repeated frequenz.api.common.v1.microgrid.sensors.SensorData sensors = 2;
+}
+
+// Message defining the request format for streaming aggregated historical metrics.
+// This request allows to specify custom aggregation formulas, along with general
+// filtering.
+//
+// At least one aggregation formula config must be provided. The aggregation
+// follows the passive sign convention.
+//
+message ReceiveAggregatedMicrogridSensorsDataStreamRequest {
+  // General filter criteria for querying microgrid sensors data.
+  message AggregationStreamFilter {
+    // Optional resampling options like resolution for the data, represented in seconds.
+    // If omitted, data will be returned in its original representation.
+    ResamplingOptions resampling_options = 1;
+
+    // Optional time-based filter criteria.
+    // If omitted, data will start streaming from the timestamp that the request was received.
+    TimeFilter time_filter = 2;
+  }
+
+  // List of pairs of metric and corresponding aggregation formula.
+  repeated AggregationConfig aggregation_configs = 1;
+
+  // General streaming filter that applies to all formula aggregations.
+  AggregationStreamFilter filter = 2;
+}
+
+// Message defining the response format for a stream that fetches aggregated real-time metrics
+// for the provided custom aggregation formulas.
+//
+// !!! note
+//     The formula and metric must have been specified in the corresponding request.
+//     A single aggregated sample for the metric is returned in the sample field. Each message
+//     covers a single formula. For multiple formulars provided in the request, expect sequential
+//     messages in the stream.
+//
+message ReceiveAggregatedMicrogridSensorsDataStreamResponse {
   // The metric and formula that has been used to aggregate the sample.
   AggregationConfig aggregation_config = 1;
 
