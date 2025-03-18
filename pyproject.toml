@@ -6,13 +6,9 @@ requires = [
   "setuptools == 75.8.0",
   "setuptools_scm[toml] == 8.1.0",
   "frequenz-repo-config[api] == 0.11.0",
-  # We need to pin the protobuf, grpcio and  grpcio-tools dependencies to make
-  # sure the code is generated using the minimum supported versions, as older
-  # versions can't work with code that was generated with newer versions.
-  # https://protobuf.dev/support/cross-version-runtime-guarantee/#backwards
   "protobuf == 5.29.3",
-  "grpcio-tools == 1.70.0",
-  "grpcio == 1.70.0",
+  "grpcio-tools >= 1.71.0, < 2",
+  "grpcio >= 1.71.0, < 2",
 
 ]
 build-backend = "setuptools.build_meta"
@@ -52,7 +48,7 @@ dependencies = [
   # We couldn't find any document with a spec about the cross-version runtime
   # guarantee for grpcio, so unless we find one in the future, we'll assume
   # major version jumps are not compatible
-  "grpcio >= 1.70.0, < 2", # Do not widen beyond 2!
+  "grpcio >= 1.71.0, < 2", # Do not widen beyond 2!
 ]
 dynamic = ["version"]
 
