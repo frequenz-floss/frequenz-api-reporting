@@ -89,14 +89,14 @@ message TimeFilter {
   // !!! info
   //     If not provided, the query defaults to the earliest available data for the
   //     specified microgrid components.
-  google.protobuf.Timestamp start = 1;
+  google.protobuf.Timestamp start_time = 1;
 
   // Optional UTC end time for the query.
   //
   // !!! info
   //     If not provided, the query will retrieve the requested data and continue
   //     streaming all new data as it becomes available.
-  google.protobuf.Timestamp end = 2;
+  google.protobuf.Timestamp end_time = 2;
 }
 
 // Resampling options for aggregated microgrid components data.
@@ -167,7 +167,7 @@ message SimpleAggregatedMetricValue {
   //
   // !!! info
   //     This is the original timestamp of the samples that were aggregated.
-  google.protobuf.Timestamp sampled_at = 1;
+  google.protobuf.Timestamp sample_time = 1;
 
   // The aggregated value of the metric.
   // float value = 2;
@@ -337,11 +337,11 @@ message ReceiveMicrogridComponentsDataStreamRequest {
 //           metric_samples: [
 //             /* all metrics belong to the same timestamp */
 //             /* sample is type MetricSampleVariant */
-//             { sampled_at: "2023-10-01T00:00:00Z", metric: "DC_VOLTAGE_V", sample: {...}, bounds: {...} },
-//             { sampled_at: "2023-10-01T00:00:00Z", metric: "DC_CURRENT_A", sample: {...}, bounds: {...} }
+//             { sample_time: "2023-10-01T00:00:00Z", metric: "DC_VOLTAGE_V", sample: {...}, bounds: {...} },
+//             { sample_time: "2023-10-01T00:00:00Z", metric: "DC_CURRENT_A", sample: {...}, bounds: {...} }
 //           ],
 //           state: {
-//             sampled_at: "2023-10-01T00:00:13.12Z",
+//             sample_time: "2023-10-01T00:00:13.12Z",
 //             states: ["COMPONENT_STATE_CHARGING", "CABLE_CONNECTED"],
 //             warnings: []
 //             errors: [],
@@ -352,11 +352,11 @@ message ReceiveMicrogridComponentsDataStreamRequest {
 //           metric_samples: [
 //             /* all metrics belong to the same timestamp */
 //             /* sample is type MetricSampleVariant */
-//             { sampled_at: "2023-10-01T00:00:00Z", metric: "DC_VOLTAGE_V", sample: {...}, bounds: {...} },
-//             { sampled_at: "2023-10-01T00:00:00Z", metric: "DC_CURRENT_A", sample: {...}, bounds: {...} }
+//             { sample_time: "2023-10-01T00:00:00Z", metric: "DC_VOLTAGE_V", sample: {...}, bounds: {...} },
+//             { sample_time: "2023-10-01T00:00:00Z", metric: "DC_CURRENT_A", sample: {...}, bounds: {...} }
 //           ],
 //           state: {
-//             sampled_at: "2023-10-01T00:00:13.12Z",
+//             sample_time: "2023-10-01T00:00:13.12Z",
 //             states: ["COMPONENT_STATE_ERROR"],
 //             warnings: []
 //             errors: ["COMPONENT_ERROR_CODE_BATTERY_RELAY_ERROR"],
@@ -419,7 +419,7 @@ message ReceiveAggregatedMicrogridComponentsDataStreamRequest {
 //         aggregation_formula: "avg(1,2,3)"
 //       },
 //       sample {
-//         sampled_at: '2023-10-01T00:00:00Z',
+//         sample_time: '2023-10-01T00:00:00Z',
 //         sample: { value: 42.5 }
 //       }
 //     }
