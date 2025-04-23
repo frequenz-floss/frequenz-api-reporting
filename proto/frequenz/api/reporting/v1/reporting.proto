@@ -195,7 +195,7 @@ message SimpleAggregatedMetricValue {
 //     `Metrics` message to specify the `VOLTAGE` metric and set `connections` to `["dc_battery_1"]`
 //     for the DC string connected to a battery.
 //
-//     ```json
+//     ```
 //     {
 //       "metric": "VOLTAGE",
 //       "connections": ["dc_battery_1"]
@@ -227,7 +227,7 @@ message MetricConnections {
   // !!! example
   //     For a metric that can come from multiple DC strings in a PV array, you might specify:
   //
-  //     ```json
+  //     ```
   //     {
   //       "connections": ["dc_string_1", "dc_string_2"]
   //     }
