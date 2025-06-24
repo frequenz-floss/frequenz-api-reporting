@@ -56,6 +56,12 @@ By providing an array of key metrics and aggregation features, it accommodates v
 use-cases and empowers users to make well-informed decisions in different operational
 contexts.
 
+## Formula Syntax
+
+The syntax and implementation of the aggregation formulas supported by this API are defined in a separate project:
+the [Frequenz Microgrid Formula Engine](https://github.com/frequenz-floss/frequenz-microgrid-formula-engine-rs?tab=readme-ov-file#frequenz-microgrid-formula-engine-rs).
+For details on how to write and structure formulas, including supported functions and operators, refer to its README.
+
 ## Contributing
 
 If you want to know how to build this project and contribute to it, please
