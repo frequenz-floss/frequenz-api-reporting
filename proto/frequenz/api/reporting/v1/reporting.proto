@@ -18,8 +18,6 @@ import "frequenz/api/common/v1/metrics/metric_sample.proto";
 import "frequenz/api/common/v1/microgrid/components/components.proto";
 import "frequenz/api/common/v1/microgrid/microgrid.proto";
 import "frequenz/api/common/v1/microgrid/sensors/sensors.proto";
-import "frequenz/api/common/v1/pagination/pagination_info.proto";
-import "frequenz/api/common/v1/pagination/pagination_params.proto";
 
 // The Reporting service provides services for real-time and historical metrics monitoring
 // of various microgrid components like Batteries, EV Chargers, and Inverters.
