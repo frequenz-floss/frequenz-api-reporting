@@ -2,11 +2,14 @@
 
 ## Summary
 
-<!-- Here goes a general summary of what this release is about -->
+- The frequenz-api-common dependency has been updated to v0.8.0
+- The reporting API now uses v1alpha8 of the common API, which comes with some breaking changes
 
 ## Upgrading
 
-<!-- Here goes notes on how to upgrade from previous versions, including deprecations and what they should be replaced with -->
+- The `MicrogridComponentIDs` message is now called `MicrogridElectricalComponentIDs`
+- The `ComponentData` message is now called `ElectricalComponentTelemetry`
+- The `SensorData` message is now called `SensorTelemetry`
 
 ## New Features
 

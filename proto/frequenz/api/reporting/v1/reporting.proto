@@ -14,10 +14,10 @@ package frequenz.api.reporting.v1;
 
 import "google/protobuf/timestamp.proto";
 
-import "frequenz/api/common/v1/metrics/metric_sample.proto";
-import "frequenz/api/common/v1/microgrid/components/components.proto";
-import "frequenz/api/common/v1/microgrid/microgrid.proto";
-import "frequenz/api/common/v1/microgrid/sensors/sensors.proto";
+import "frequenz/api/common/v1alpha8/metrics/metrics.proto";
+import "frequenz/api/common/v1alpha8/microgrid/electrical_components/electrical_components.proto";
+import "frequenz/api/common/v1alpha8/microgrid/microgrid.proto";
+import "frequenz/api/common/v1alpha8/microgrid/sensors/sensors.proto";
 
 // The Reporting service provides services for real-time and historical metrics monitoring
 // of various microgrid components like Batteries, EV Chargers, and Inverters.
@@ -132,7 +132,7 @@ message AggregationConfig {
   // !!! caution
   //     Ensure the chosen metric is supported by all relevant microgrid components.
   //     Failure to meet these conditions might results in an aggregation error.
-  frequenz.api.common.v1.metrics.Metric metric = 2;
+  frequenz.api.common.v1alpha8.metrics.Metric metric = 2;
 
   // The formula used for aggregating the component metric for this microgrid.
   //
@@ -169,7 +169,7 @@ message SimpleAggregatedMetricValue {
 
   // The aggregated value of the metric.
   // float value = 2;
-  frequenz.api.common.v1.metrics.SimpleMetricValue sample = 2;
+  frequenz.api.common.v1alpha8.metrics.SimpleMetricValue sample = 2;
 }
 
 // Message defining a metric to receive data for, optionally filtering by connections.
@@ -205,7 +205,7 @@ message MetricConnections {
   //
   // If `connections` are specified, only data for this metric from those connections will be returned.
   // If no `connections` are specified, data from all connections for this metric will be returned.
-  frequenz.api.common.v1.metrics.Metric metric = 1;
+  frequenz.api.common.v1alpha8.metrics.Metric metric = 1;
 
   // An optional list of connections to filter the data for the specified metric.
   //
@@ -279,7 +279,7 @@ message ReceiveMicrogridComponentsDataStreamRequest {
   // !!! note
   //     Each entry in this repeated field associates a microgrid ID with its respective
   //     component IDs. At least one such association must be provided for a valid request.
-  repeated frequenz.api.common.v1.microgrid.MicrogridComponentIDs microgrid_components = 1;
+  repeated frequenz.api.common.v1alpha8.microgrid.MicrogridElectricalComponentIDs microgrid_components = 1;
 
   // List of metrics to receive data for, each possibly with connection filters.
   //
@@ -369,7 +369,7 @@ message ReceiveMicrogridComponentsDataStreamResponse {
   uint64 microgrid_id = 1;
 
   // List of components within this microgrid, each with its associated data samples.
-  repeated frequenz.api.common.v1.microgrid.components.ComponentData components = 2;
+  repeated frequenz.api.common.v1alpha8.microgrid.electrical_components.ElectricalComponentTelemetry components = 2;
 }
 
 // Message defining the request format for streaming aggregated historical metrics.
@@ -472,7 +472,7 @@ message ReceiveMicrogridSensorsDataStreamRequest {
   // !!! note
   //     Each entry in this repeated field associates a microgrid ID with its respective
   //     sensor IDs. At least one such association must be provided for a valid request.
-  repeated frequenz.api.common.v1.microgrid.MicrogridSensorIDs microgrid_sensors = 1;
+  repeated frequenz.api.common.v1alpha8.microgrid.MicrogridSensorIDs microgrid_sensors = 1;
 
   // List of metrics to receive data for, each possibly with connection filters.
   //
@@ -504,7 +504,7 @@ message ReceiveMicrogridSensorsDataStreamResponse {
   uint64 microgrid_id = 1;
 
   // List of sensors within this microgrid, each with its associated data samples.
-  repeated frequenz.api.common.v1.microgrid.sensors.SensorData sensors = 2;
+  repeated frequenz.api.common.v1alpha8.microgrid.sensors.SensorTelemetry sensors = 2;
 }
 
 // Message defining the request format for streaming aggregated historical metrics.
