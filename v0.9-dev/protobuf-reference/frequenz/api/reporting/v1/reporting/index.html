@@ -1732,7 +1732,7 @@ microgrid components. It serves as the configuration guideline for any aggregati
 </tr>
 <tr>
 <td>metric</td>
-<td><a href="#frequenz-api-common-v1-metrics-Metric">frequenz.api.common.v1.metrics.Metric</a></td>
+<td><a href="#frequenz-api-common-v1alpha8-metrics-Metric">frequenz.api.common.v1alpha8.metrics.Metric</a></td>
 <td></td>
 <td>The metric that is to be aggregated using the specified formula.</td>
 </tr>
@@ -1785,7 +1785,7 @@ for the DC string connected to a battery.</p>
 <tbody>
 <tr>
 <td>metric</td>
-<td><a href="#frequenz-api-common-v1-metrics-Metric">frequenz.api.common.v1.metrics.Metric</a></td>
+<td><a href="#frequenz-api-common-v1alpha8-metrics-Metric">frequenz.api.common.v1alpha8.metrics.Metric</a></td>
 <td></td>
 <td>The metric for which data is requested.</td>
 </tr>
@@ -2021,7 +2021,7 @@ like errors or operational states of the components during the specified time pe
 <tbody>
 <tr>
 <td>microgrid_components</td>
-<td><a href="#frequenz-api-common-v1-microgrid-MicrogridComponentIDs">frequenz.api.common.v1.microgrid.MicrogridComponentIDs</a></td>
+<td><a href="#frequenz-api-common-v1alpha8-microgrid-MicrogridElectricalComponentIDs">frequenz.api.common.v1alpha8.microgrid.MicrogridElectricalComponentIDs</a></td>
 <td>repeated</td>
 <td>Encapsulates the microgrid ID and the component IDs within that microgrid for which the historical data should be retrieved.</td>
 </tr>
@@ -2172,7 +2172,7 @@ in the stream.</p>
 </tr>
 <tr>
 <td>components</td>
-<td><a href="#frequenz-api-common-v1-microgrid-components-ComponentData">frequenz.api.common.v1.microgrid.components.ComponentData</a></td>
+<td><a href="#frequenz-api-common-v1alpha8-microgrid-electrical_components-ElectricalComponentTelemetry">frequenz.api.common.v1alpha8.microgrid.electrical_components.ElectricalComponentTelemetry</a></td>
 <td>repeated</td>
 <td>List of components within this microgrid, each with its associated data samples.</td>
 </tr>
@@ -2199,7 +2199,7 @@ like errors or operational states of the sensors during the specified time perio
 <tbody>
 <tr>
 <td>microgrid_sensors</td>
-<td><a href="#frequenz-api-common-v1-microgrid-MicrogridSensorIDs">frequenz.api.common.v1.microgrid.MicrogridSensorIDs</a></td>
+<td><a href="#frequenz-api-common-v1alpha8-microgrid-MicrogridSensorIDs">frequenz.api.common.v1alpha8.microgrid.MicrogridSensorIDs</a></td>
 <td>repeated</td>
 <td>Encapsulates the microgrid ID and the sensor IDs within that microgrid for which the historical data should be retrieved.</td>
 </tr>
@@ -2302,7 +2302,7 @@ in the stream.</p>
 </tr>
 <tr>
 <td>sensors</td>
-<td><a href="#frequenz-api-common-v1-microgrid-sensors-SensorData">frequenz.api.common.v1.microgrid.sensors.SensorData</a></td>
+<td><a href="#frequenz-api-common-v1alpha8-microgrid-sensors-SensorTelemetry">frequenz.api.common.v1alpha8.microgrid.sensors.SensorTelemetry</a></td>
 <td>repeated</td>
 <td>List of sensors within this microgrid, each with its associated data samples.</td>
 </tr>
@@ -2362,7 +2362,7 @@ charge of several batteries.</p>
 </tbody>
 </table>
 <p>!!! info This is the original timestamp of the samples that were aggregated. |
-| sample | <a href="#frequenz-api-common-v1-metrics-SimpleMetricValue">frequenz.api.common.v1.metrics.SimpleMetricValue</a> |  | The aggregated value of the metric. float value = 2; |</p>
+| sample | <a href="#frequenz-api-common-v1alpha8-metrics-SimpleMetricValue">frequenz.api.common.v1alpha8.metrics.SimpleMetricValue</a> |  | The aggregated value of the metric. float value = 2; |</p>
 <p><a name="frequenz-api-reporting-v1-TimeFilter"></a></p>
 <h3 id="timefilter">TimeFilter<a class="headerlink" href="#timefilter" title="Permanent link">¤</a></h3>
 <p>Time-based filter for querying aggregated microgrid components data.</p>
