@@ -2,14 +2,14 @@
 
 ## Summary
 
-- Dependency versions have been bumped, see "Upgrading" for specifics
-- Renaming of time filter fields, see "Upgrading" for specifics
+- The frequenz-api-common dependency has been updated to v0.8.0
+- The reporting API now uses v1alpha8 of the common API, which comes with some breaking changes
 
 ## Upgrading
 
-- The minimum allowed version of `protobuf` and `grpcio` has been updated to 6.31.1 and 1.72.1 respectively, you might also need to bump your dependencies accordingly.
-- The fields `start` and `end` in `TimeFilter` have been renamed to `start_time` and `end_time` respectively. Apps that implement this API should take care.
-- Widen dependency range for `frequenz-api-common` to also support v0.8.x.
+- The `MicrogridComponentIDs` message is now called `MicrogridElectricalComponentIDs`
+- The `ComponentData` message is now called `ElectricalComponentTelemetry`
+- The `SensorData` message is now called `SensorTelemetry`
 
 ## New Features
 
