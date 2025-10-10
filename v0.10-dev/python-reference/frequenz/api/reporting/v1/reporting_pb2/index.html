@@ -2817,7 +2817,9 @@
 
 
 
+
   <div class="doc doc-children">
+
 
 
 
@@ -2855,6 +2857,7 @@ microgrid components. It serves as the configuration guideline for any aggregati
       metric: DC_VOLTAGE_V,
       aggregation_formula: "#1 + #2 + #3"
     }</p>
+
 
 
 
@@ -2968,6 +2971,7 @@ Failure to meet these conditions might results in an aggregation error.</p>
 
 
 
+
   </div>
 
     </div>
@@ -2998,6 +3002,7 @@ Failure to meet these conditions might results in an aggregation error.</p>
 
 
 
+
               <details class="quote">
                 <summary>Source code in <code>frequenz/api/reporting/v1/reporting_pb2.py</code></summary>
                 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-44">44</a></span>
@@ -3009,6 +3014,7 @@ Failure to meet these conditions might results in an aggregation error.</p>
 
 
   <div class="doc doc-children">
+
 
 
 
@@ -3068,6 +3074,7 @@ for the DC string connected to a battery.</p>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>}
 </span></code></pre></div>
 </div>
+
 
 
 
@@ -3162,6 +3169,7 @@ If no <code>connections</code> are specified, data from all connections for this
 
 
 
+
   </div>
 
     </div>
@@ -3189,6 +3197,7 @@ This request allows to specify custom aggregation formulas, along with general
 filtering.</p>
 <p>At least one aggregation formula config must be provided. The aggregation
 follows the passive sign convention.</p>
+
 
 
 
@@ -3256,6 +3265,7 @@ follows the passive sign convention.</p>
     </div>
 
 </div>
+
 <h5 id="frequenz.api.reporting.v1.reporting_pb2.ReceiveAggregatedMicrogridComponentsDataStreamRequest-classes">Classes<a href="#frequenz.api.reporting.v1.reporting_pb2.ReceiveAggregatedMicrogridComponentsDataStreamRequest-classes" class="headerlink" title="Permanent link">¤</a></h5>
 
 <div class="doc doc-object doc-class">
@@ -3275,6 +3285,7 @@ follows the passive sign convention.</p>
 
 
         <p>General filter criteria for querying microgrid components data.</p>
+
 
 
 
@@ -3347,6 +3358,7 @@ If omitted, data will start streaming from the timestamp that the request was re
 
 
 
+
   </div>
 
     </div>
@@ -3403,6 +3415,7 @@ messages in the stream.</p>
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>}
 </span></code></pre></div></p>
 </div>
+
 
 
 
@@ -3473,6 +3486,7 @@ messages in the stream.</p>
 
 
 
+
   </div>
 
     </div>
@@ -3500,6 +3514,7 @@ This request allows to specify custom aggregation formulas, along with general
 filtering.</p>
 <p>At least one aggregation formula config must be provided. The aggregation
 follows the passive sign convention.</p>
+
 
 
 
@@ -3567,6 +3582,7 @@ follows the passive sign convention.</p>
     </div>
 
 </div>
+
 <h5 id="frequenz.api.reporting.v1.reporting_pb2.ReceiveAggregatedMicrogridSensorsDataStreamRequest-classes">Classes<a href="#frequenz.api.reporting.v1.reporting_pb2.ReceiveAggregatedMicrogridSensorsDataStreamRequest-classes" class="headerlink" title="Permanent link">¤</a></h5>
 
 <div class="doc doc-object doc-class">
@@ -3586,6 +3602,7 @@ follows the passive sign convention.</p>
 
 
         <p>General filter criteria for querying microgrid sensors data.</p>
+
 
 
 
@@ -3658,6 +3675,7 @@ If omitted, data will start streaming from the timestamp that the request was re
 
 
 
+
   </div>
 
     </div>
@@ -3698,6 +3716,7 @@ A single aggregated sample for the metric is returned in the sample field. Each 
 covers a single formula. For multiple formulars provided in the request, expect sequential
 messages in the stream.</p>
 </div>
+
 
 
 
@@ -3768,6 +3787,7 @@ messages in the stream.</p>
 
 
 
+
   </div>
 
     </div>
@@ -3797,6 +3817,7 @@ measurements, and other information for individual microgrid components.</p>
 <p>In addition to the raw metrics, the API can also return additional information
 like errors or operational states of the components during the specified time period.</p>
 </div>
+
 
 
 
@@ -3924,6 +3945,7 @@ component IDs. At least one such association must be provided for a valid reques
     </div>
 
 </div>
+
 <h5 id="frequenz.api.reporting.v1.reporting_pb2.ReceiveMicrogridComponentsDataStreamRequest-classes">Classes<a href="#frequenz.api.reporting.v1.reporting_pb2.ReceiveMicrogridComponentsDataStreamRequest-classes" class="headerlink" title="Permanent link">¤</a></h5>
 
 <div class="doc doc-object doc-class">
@@ -3947,6 +3969,7 @@ component IDs. At least one such association must be provided for a valid reques
 <p class="admonition-title">Note</p>
 <p>Specifies which additional fields should be included in the response.</p>
 </div>
+
 
 
 
@@ -4017,6 +4040,7 @@ component IDs. At least one such association must be provided for a valid reques
 
 
 
+
   </div>
 
     </div>
@@ -4045,6 +4069,7 @@ component IDs. At least one such association must be provided for a valid reques
 <p>The filter criteria defined here are applied universally across all
 specified microgrids and their respective components.</p>
 </div>
+
 
 
 
@@ -4141,6 +4166,7 @@ If omitted, data will start streaming from the timestamp that the request was re
 
 
 
+
   </div>
 
     </div>
@@ -4231,6 +4257,7 @@ in the stream.</p>
 
 
 
+
   <div class="doc doc-children">
 
 
@@ -4293,6 +4320,7 @@ in the stream.</p>
 
 
 
+
   </div>
 
     </div>
@@ -4322,6 +4350,7 @@ measurements, and other information for individual microgrid sensors.</p>
 <p>In addition to the raw metrics, the API can also return additional information
 like errors or operational states of the sensors during the specified time period.</p>
 </div>
+
 
 
 
@@ -4432,6 +4461,7 @@ sensor IDs. At least one such association must be provided for a valid request.<
     </div>
 
 </div>
+
 <h5 id="frequenz.api.reporting.v1.reporting_pb2.ReceiveMicrogridSensorsDataStreamRequest-classes">Classes<a href="#frequenz.api.reporting.v1.reporting_pb2.ReceiveMicrogridSensorsDataStreamRequest-classes" class="headerlink" title="Permanent link">¤</a></h5>
 
 <div class="doc doc-object doc-class">
@@ -4455,6 +4485,7 @@ sensor IDs. At least one such association must be provided for a valid request.<
 <p class="admonition-title">Note</p>
 <p>Specifies which additional fields should be included in the response.</p>
 </div>
+
 
 
 
@@ -4501,6 +4532,7 @@ sensor IDs. At least one such association must be provided for a valid request.<
 
 
 
+
   </div>
 
     </div>
@@ -4529,6 +4561,7 @@ sensor IDs. At least one such association must be provided for a valid request.<
 <p>The filter criteria defined here are applied universally across all
 specified microgrids and their respective sensors.</p>
 </div>
+
 
 
 
@@ -4625,6 +4658,7 @@ If omitted, data will start streaming from the timestamp that the request was re
 
 
 
+
   </div>
 
     </div>
@@ -4665,6 +4699,7 @@ associated timestamps. Each response message covers a single microgrid.
 If multiple microgrids are provided in the request, expect sequential messages
 in the stream.</p>
 </div>
+
 
 
 
@@ -4735,6 +4770,7 @@ in the stream.</p>
 
 
 
+
   </div>
 
     </div>
@@ -4763,6 +4799,7 @@ determined by the resolution will be aggregated.
 At the moment only mean aggregation is supported.
 The timestamp for each aggregated sample represents the beginning of its corresponding
 time interval, marking the earliest point from which data was aggregated.</p>
+
 
 
 
@@ -4810,6 +4847,7 @@ If omitted, data will be returned in its original resolution.</p>
 
 
 
+
   </div>
 
     </div>
@@ -4839,6 +4877,7 @@ measurements. It is particularly useful in scenarios where an overall metric nee
 calculated for a set of components. For instance, you could use it to represent the average
 voltage across multiple sources within a microgrid or to calculate the average state of
 charge of several batteries.</p>
+
 
 
 
@@ -4914,6 +4953,7 @@ float value = 2;</p>
 
 
 
+
   </div>
 
     </div>
@@ -4944,6 +4984,7 @@ their absence or presence has specific implications for the query results.
 Data will be returned as a set of rows, which each row containing a timestamp.
 This timestamp will be &gt;= start and &lt; end.</p>
 </div>
+
 
 
 
@@ -5082,6 +5123,7 @@ specified microgrid components.</p>
     </div>
 
 </div>
+
 
 
 
