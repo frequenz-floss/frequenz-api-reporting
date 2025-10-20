@@ -2,14 +2,12 @@
 
 ## Summary
 
-- The frequenz-api-common dependency has been updated to v0.8.0
-- The reporting API now uses v1alpha8 of the common API, which comes with some breaking changes
+- The changes introduced in v0.9.0 have been reverted. `frequenz.api.reporting.v1` now serves the `frequenz.api.common.v1` definitions.
+- A new protobuf package has been introduced, `frequenz.api.reporting.v2`, in which the `frequenz.api.common.v1alpha8` adaptations can be found.
 
 ## Upgrading
 
-- The `MicrogridComponentIDs` message is now called `MicrogridElectricalComponentIDs`
-- The `ComponentData` message is now called `ElectricalComponentTelemetry`
-- The `SensorData` message is now called `SensorTelemetry`
+<!-- Here goes notes on how to upgrade from previous versions, including deprecations and what they should be replaced with -->
 
 ## New Features
 
