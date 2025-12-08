@@ -2,8 +2,7 @@
 
 ## Summary
 
-- The changes introduced in v0.9.0 have been reverted. `frequenz.api.reporting.v1` now serves the `frequenz.api.common.v1` definitions.
-- A new protobuf package has been introduced, `frequenz.api.reporting.v1alpha10`, in which the `frequenz.api.common.v1alpha8` adaptations can be found.
+- The behavior of the TimeFilter has changed, and its documentation has been updated accordingly.
 
 ## Upgrading
 
