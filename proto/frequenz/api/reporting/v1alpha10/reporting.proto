@@ -74,26 +74,30 @@ enum FilterOption {
   FILTER_OPTION_INCLUDE = 2;
 }
 
-// Time-based filter for querying aggregated microgrid components data.
+// Time-filter defining the historical window and real-time behaviour of the stream.
 //
-// !!! note
-//     Specifies the start and end time for the query. Both fields are optional, but
-//     their absence or presence has specific implications for the query results.
-//     Data will be returned as a set of rows, which each row containing a timestamp.
-//     This timestamp will be >= start and < end.
+// Semantics:
+//   - If `end_time` is provided, it MUST be ≤ the current server time. The
+//     server streams all samples t where start_time ≤ t < end_time and
+//     then closes the stream.
+//
+//   - If `end_time` is omitted, the server streams all historical samples
+//     t ≥ start_time (if provided) and then continues streaming new samples
+//     in real time. The stream remains open indefinitely.
+//
+//   - If `start_time` is omitted:
+//         – and `end_time` is omitted: the stream produces no historical data
+//           and begins streaming real-time samples only.
+//         – and `end_time` is provided: the historical window is empty and
+//           the stream closes immediately.
+//
+// Validation rules:
+//   - end_time > now() → INVALID_ARGUMENT
 message TimeFilter {
   // Optional UTC start time for the query.
-  //
-  // !!! info
-  //     If not provided, the query defaults to the earliest available data for the
-  //     specified microgrid components.
   google.protobuf.Timestamp start_time = 1;
 
   // Optional UTC end time for the query.
-  //
-  // !!! info
-  //     If not provided, the query will retrieve the requested data and continue
-  //     streaming all new data as it becomes available.
   google.protobuf.Timestamp end_time = 2;
 }
 

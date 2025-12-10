@@ -112,6 +112,8 @@ plugins:
             show_source: true
             show_symbol_type_toc: true
             signature_crossrefs: true
+            docstring_options:
+              warn_missing_types: false
           import:
             # See https://mkdocstrings.github.io/python/usage/#import for details
             - https://docs.python.org/3/objects.inv
