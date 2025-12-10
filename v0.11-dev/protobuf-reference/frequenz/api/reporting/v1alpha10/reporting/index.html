@@ -2559,14 +2559,27 @@ charge of several batteries.</p>
 | sample | <a href="#frequenz-api-common-v1alpha8-metrics-SimpleMetricValue">frequenz.api.common.v1alpha8.metrics.SimpleMetricValue</a> |  | The aggregated value of the metric. float value = 2; |</p>
 <p><a name="frequenz-api-reporting-v1alpha10-TimeFilter"></a></p>
 <h3 id="timefilter">TimeFilter<a class="headerlink" href="#timefilter" title="Permanent link">¤</a></h3>
-<p>Time-based filter for querying aggregated microgrid components data.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Specifies the start and end time for the query. Both fields are optional, but
-their absence or presence has specific implications for the query results.
-Data will be returned as a set of rows, which each row containing a timestamp.
-This timestamp will be &gt;= start and &lt; end.</p>
-</div>
+<p>Time-filter defining the historical window and real-time behaviour of the stream.</p>
+<p>Semantics:
+  - If <code>end_time</code> is provided, it MUST be ≤ the current server time. The
+    server streams all samples t where start_time ≤ t &lt; end_time and
+    then closes the stream.</p>
+<ul>
+<li>
+<p>If <code>end_time</code> is omitted, the server streams all historical samples
+    t ≥ start_time (if provided) and then continues streaming new samples
+    in real time. The stream remains open indefinitely.</p>
+</li>
+<li>
+<p>If <code>start_time</code> is omitted:
+        – and <code>end_time</code> is omitted: the stream produces no historical data
+          and begins streaming real-time samples only.
+        – and <code>end_time</code> is provided: the historical window is empty and
+          the stream closes immediately.</p>
+</li>
+</ul>
+<p>Validation rules:
+  - end_time &gt; now() → INVALID_ARGUMENT</p>
 <table>
 <thead>
 <tr>
@@ -2583,11 +2596,14 @@ This timestamp will be &gt;= start and &lt; end.</p>
 <td></td>
 <td>Optional UTC start time for the query.</td>
 </tr>
+<tr>
+<td>end_time</td>
+<td><a href="#google-protobuf-Timestamp">google.protobuf.Timestamp</a></td>
+<td></td>
+<td>Optional UTC end time for the query.</td>
+</tr>
 </tbody>
 </table>
-<p>!!! info If not provided, the query defaults to the earliest available data for the specified microgrid components. |
-| end_time | <a href="#google-protobuf-Timestamp">google.protobuf.Timestamp</a> |  | Optional UTC end time for the query.</p>
-<p>!!! info If not provided, the query will retrieve the requested data and continue streaming all new data as it becomes available. |</p>
 <p><a name="frequenz-api-reporting-v1alpha10-FilterOption"></a></p>
 <h3 id="filteroption">FilterOption<a class="headerlink" href="#filteroption" title="Permanent link">¤</a></h3>
 <p>Defines whether to include results in the response message.</p>
