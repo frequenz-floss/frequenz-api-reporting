@@ -123,6 +123,13 @@ import "frequenz/api/common/v1alpha8/microgrid/sensors/sensors.proto";
 // Unless explicitly requested, optional data MUST NOT be assumed to be
 // present in responses.
 //
+// !!! important "Authentication"
+//     All requests to the Reporting service must be signed. The key identifier
+//     and signature must be included in the request metadata (gRPC metadata
+//     / HTTP headers). The signature must be computed using the HMAC-SHA256
+//     algorithm and secret key. All requests to this service must be made
+//     over TLS (HTTPS).
+//
 service Reporting {
   // Streams metrics for a list of microgrid components.
   //
