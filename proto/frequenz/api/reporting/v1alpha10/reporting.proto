@@ -130,16 +130,16 @@ import "frequenz/api/common/v1alpha8/microgrid/sensors/sensors.proto";
 //     algorithm and secret key. All requests to this service must be made
 //     over TLS (HTTPS).
 //
-service Reporting {
+service ReportingService {
   // Streams metrics for a list of microgrid components.
   //
   // !!! note
   //     This RPC endpoint streams metrics data for electrical components of one
   //     or more microgrids. Clients need to provide at least one microgrid
   //     ID and one electrical component ID to get a result.
-  rpc ReceiveMicrogridComponentsDataStream
-      (ReceiveMicrogridComponentsDataStreamRequest)
-    returns (stream ReceiveMicrogridComponentsDataStreamResponse) {}
+  rpc ReceiveMicrogridElectricalComponentsDataStream
+      (ReceiveMicrogridElectricalComponentsDataStreamRequest)
+    returns (stream ReceiveMicrogridElectricalComponentsDataStreamResponse) {}
 
   // Streams aggregated metrics based on user-defined formulas for a list of
   // microgrid electrical components.
@@ -148,9 +148,9 @@ service Reporting {
   //     This RPC endpoint retrieves aggregated historical metrics data based
   //     on user-defined formulas for microgrid electrical components. At least
   //     one formula for one microgrid must be provided for a valid result.
-  rpc ReceiveAggregatedMicrogridComponentsDataStream
-      (ReceiveAggregatedMicrogridComponentsDataStreamRequest)
-    returns (stream ReceiveAggregatedMicrogridComponentsDataStreamResponse) {}
+  rpc ReceiveAggregatedMicrogridElectricalComponentsDataStream
+      (ReceiveAggregatedMicrogridElectricalComponentsDataStreamRequest)
+    returns (stream ReceiveAggregatedMicrogridElectricalComponentsDataStreamResponse) {}
 
   // Streams metrics for a list of microgrid sensors.
   //
@@ -391,7 +391,7 @@ message MetricConnections {
 //     information like errors or operational states of the
 //     electrical components during the specified time period.
 //
-message ReceiveMicrogridComponentsDataStreamRequest {
+message ReceiveMicrogridElectricalComponentsDataStreamRequest {
   // Include options for filtering microgrid electrical components data.
   //
   // !!! note
@@ -546,7 +546,7 @@ message ReceiveMicrogridComponentsDataStreamRequest {
 //     }
 //     ```
 //
-message ReceiveMicrogridComponentsDataStreamResponse {
+message ReceiveMicrogridElectricalComponentsDataStreamResponse {
   // Microgrid ID for which the electrical components and samples are reported.
   uint64 microgrid_id = 1;
 
@@ -563,7 +563,7 @@ message ReceiveMicrogridComponentsDataStreamResponse {
 // general filtering. At least one aggregation formula config must be
 // provided. The aggregation follows the passive sign convention.
 //
-message ReceiveAggregatedMicrogridComponentsDataStreamRequest {
+message ReceiveAggregatedMicrogridElectricalComponentsDataStreamRequest {
   // General filter criteria for querying microgrid electrical components data.
   message AggregationStreamFilter {
     // Optional resampling options like resolution for the data, represented
@@ -610,7 +610,7 @@ message ReceiveAggregatedMicrogridComponentsDataStreamRequest {
 //     }
 //     ```
 //
-message ReceiveAggregatedMicrogridComponentsDataStreamResponse {
+message ReceiveAggregatedMicrogridElectricalComponentsDataStreamResponse {
   // The metric and formula that has been used to aggregate the sample.
   AggregationConfig aggregation_config = 1;
 
