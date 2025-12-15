@@ -212,7 +212,8 @@ message TimeFilter {
   frequenz.api.common.v1alpha8.types.Interval interval = 1;
 }
 
-// Resampling options for aggregated microgrid components data.
+// Resampling options for aggregated microgrid electrical components or sensor
+// data.
 //
 // If data is resampled, all samples that fall in a left-closed time interval
 // determined by the resolution will be aggregated. At the moment only mean
@@ -230,12 +231,12 @@ message ResamplingOptions {
 // a specific microgrid.
 //
 // The AggregationConfig allows clients to specify how metrics should be
-// aggregated across microgrid components. It serves as the configuration
-// guideline for any aggregation operation.
+// aggregated across microgrid electrical components. It serves as the
+// configuration guideline for any aggregation operation.
 //
 // !!! example
-//    To calculate the total voltage across three components in series with
-//    IDs 1, 2, and 3, the configuration could look like:
+//    To calculate the total voltage across three electrical components in
+//    series with IDs 1, 2, and 3, the configuration could look like:
 //
 //     ```json
 //     {
@@ -253,8 +254,8 @@ message AggregationConfig {
   //
   // !!! caution "Supported metrics"
   //     Ensure the chosen metric is supported by all relevant microgrid
-  //     components. Failure to meet these conditions might results in an
-  //     aggregation error.
+  //     electrical components. Failure to meet these conditions might results
+  //     in an aggregation error.
   frequenz.api.common.v1alpha8.metrics.Metric metric = 2;
 
   // The formula used for aggregating the component metric for this microgrid.
@@ -266,12 +267,13 @@ message AggregationConfig {
   //        Example: `sum(#1,#2)`, `avg(#3,#4)`
   //
   //     2. Dedicated formulas: These support basic math operators while
-  //        concatenating microgrid component IDs.
+  //        concatenating microgrid electrical component IDs.
   //        Example: `#1 + #2 - #3`, `(#3 * #2) /# 1`
   //
   //     Additionally, metric connection identifiers can be used in the
-  //     formula, for components that e.g. provide the same metric from
-  //     multiple connections/sensors.
+  //     formula, for electrical components that e.g. provide the same metric
+  //     from multiple connections/sensors.
+  //
   //     Example:
   //     `sum(#1[connection0], #2, #3)`, `#1[connection0] + #2[connection1]`
   string aggregation_formula = 3;
@@ -374,15 +376,16 @@ message MetricConnections {
 }
 
 // Request message for receiving stream of metrics, such as electrical
-// measurements, and other information for individual microgrid components.
+// measurements, and other information for individual microgrid electrical
+// components.
 //
 // !!! note
 //     In addition to the raw metrics, the API can also return additional
-//     information like errors or operational states of the components during
-//     the specified time period.
+//     information like errors or operational states of the
+//     electrical components during the specified time period.
 //
 message ReceiveMicrogridComponentsDataStreamRequest {
-  // Include options for filtering microgrid components data.
+  // Include options for filtering microgrid electrical components data.
   //
   // !!! note
   //     Specifies which additional fields should be included in the response.
@@ -397,11 +400,11 @@ message ReceiveMicrogridComponentsDataStreamRequest {
     optional FilterOption states = 2;
   }
 
-  // General filter criteria for querying microgrid components data.
+  // General filter criteria for querying microgrid electrical components data.
   //
   // !!! note
   //     The filter criteria defined here are applied universally across all
-  //     specified microgrids and their respective components.
+  //     specified microgrids and their respective electrical components.
   message StreamFilter {
     // Optional resampling options like resolution for the data, represented
     // in seconds.
@@ -459,7 +462,7 @@ message ReceiveMicrogridComponentsDataStreamRequest {
   repeated MetricConnections metrics = 2;
 
   // General filter that applies to the data retrieval for all specified
-  // microgrids and components.
+  // microgrids and electrical components.
   //
   // !!! note
   //     The filter can specify a list of metrics to be return but also
@@ -467,14 +470,15 @@ message ReceiveMicrogridComponentsDataStreamRequest {
   StreamFilter filter = 3;
 }
 
-// Response containing a single data sample for one microgrid's components.
+// Response containing a single data sample for one microgrid's
+// electrical components.
 //
 // !!! note
-//     The microgrid's components are provided as single data samples that
-//     encapsulate metrics, bounds, errors, and operational states along with
-//     their associated timestamps. Each response message covers a single
-//     microgrid. If multiple microgrids are provided in the request, expect
-//     sequential messages in the stream.
+//     The microgrid's electrical components are provided as single data
+//     samples that encapsulate metrics, bounds, errors, and operational
+//     states along with their associated timestamps. Each response message
+//     covers a single microgrid. If multiple microgrids are provided in the
+//     request, expect sequential messages in the stream.
 //
 // !!! example
 //     Example output structure:
@@ -536,11 +540,11 @@ message ReceiveMicrogridComponentsDataStreamRequest {
 //     ```
 //
 message ReceiveMicrogridComponentsDataStreamResponse {
-  // Microgrid ID for which the components and samples are reported.
+  // Microgrid ID for which the electrical components and samples are reported.
   uint64 microgrid_id = 1;
 
-  // List of components within this microgrid, each with its associated data
-  // samples.
+  // List of electrical components within this microgrid, each with its
+  // associated data samples.
   repeated frequenz.api.common.v1alpha8.microgrid.electrical_components.
       ElectricalComponentTelemetry components = 2;
 }
@@ -553,7 +557,7 @@ message ReceiveMicrogridComponentsDataStreamResponse {
 // provided. The aggregation follows the passive sign convention.
 //
 message ReceiveAggregatedMicrogridComponentsDataStreamRequest {
-  // General filter criteria for querying microgrid components data.
+  // General filter criteria for querying microgrid electrical components data.
   message AggregationStreamFilter {
     // Optional resampling options like resolution for the data, represented
     // in seconds.
