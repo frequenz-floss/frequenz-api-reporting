@@ -10,7 +10,7 @@
 
 syntax = "proto3";
 
-package frequenz.api.reporting.v1alpha10;
+package frequenz.api.reporting.v1alpha11;
 
 import "google/protobuf/timestamp.proto";
 
@@ -191,6 +191,16 @@ enum FilterOption {
   FILTER_OPTION_INCLUDE = 2;
 }
 
+// Defines how multiple native samples are combined when downsampling
+// to a coarser resolution.
+enum DownsamplingMethod {
+  // UNSPECIFIED: Defaults to MEAN.
+  DOWNSAMPLING_METHOD_UNSPECIFIED = 0;
+
+  // MEAN: Arithmetic mean of all samples within the interval.
+  DOWNSAMPLING_METHOD_MEAN = 1;
+}
+
 // Time-filter defining the historical window and real-time behaviour of the
 // stream.
 //
@@ -219,19 +229,75 @@ message TimeFilter {
   frequenz.api.common.v1alpha8.types.Interval interval = 1;
 }
 
-// Resampling options for aggregated microgrid electrical components or sensor
-// data.
+// Resampling options for microgrid electrical component or sensor telemetry.
 //
-// If data is resampled, all samples that fall in a left-closed time interval
-// determined by the resolution will be aggregated. At the moment only mean
-// aggregation is supported. The timestamp for each aggregated sample
-// represents the beginning of its corresponding time interval, marking the
-// earliest point from which data was aggregated.
+// Resampling allows clients to request a regular, uniform time grid onto
+// which high-resolution telemetry samples are aggregated.
+//
+// The Reporting service operates on telemetry data that may be sampled at
+// sub-second resolution and whose sampling characteristics can differ
+// between microgrids, components, and metrics. Resampling therefore
+// materializes a fixed time grid and aggregates all telemetry samples whose
+// timestamps fall into each grid interval.
+//
+// The output time series contains at most one sample per interval. The
+// timestamp of each output sample equals the start of the corresponding
+// interval.
+//
+// !!! note "Sparse telemetry and fine-grained resolutions"
+//     If the requested resampling resolution is finer than the effective
+//     sampling density of the telemetry, some resampling intervals may
+//     contain no telemetry samples.
+//
+//     In such cases, the corresponding output sample will have no value
+//     set. The Reporting API does not interpolate, extrapolate, or carry
+//     values forward across intervals.
+//
+// !!! note "Resolution constraints"
+//     The service enforces an upper bound on the resampling resolution.
+//
+//     Resolutions larger than one calendar month are not supported, as
+//     they exceed the intended scope of telemetry resampling.
+//
+//     Typical and recommended resolutions include 5 minutes, 15 minutes,
+//     1 hour, and 1 day. Monthly resolution may be used for long-horizon
+//     analysis and backtesting.
+//
+// !!! note "Real-time streams"
+//     For open-ended streams, resampling windows advance according to
+//     wall-clock time. Window emission is time-driven, not event-driven.
+//     A window MAY be emitted even if no new telemetry samples arrive
+//     during the interval, depending on metric availability.
+//
+// !!! example "Example: Downsampling from 1-second to 15-minute intervals"
+//     The stored time series has a native resolution of Δt = 1 second.
+//     Resampling is requested with a resolution of ΔT = 15 minutes. In
+//     this case all native samples whose timestamps fall within an interval
+//     [t, t + Δt) contribute to the aggregated value for that interval. The
+//     timestamp of the aggregated sample is exactly t, the start of the
+//     interval.
+//
+//     For each interval k:
+//         Ik = [T0 + k·ΔT,  T0 + (k+1)·ΔT)
+//
+//     The aggregated value A_k is by default the arithmetic mean of all
+//     samples whose timestamps ts satisfy: ts ∈ Ik
+//
+//     The resampled series consists of points:
+//         (t = T0 + k·ΔT,  value = A_k)
 //
 message ResamplingOptions {
-  // Optional resampling resolution for the data, represented in seconds.
-  // If omitted, data will be returned in its original resolution.
+  // Optional resampling resolution for the output time grid, expressed in
+  // seconds. The resolution MUST NOT exceed the maximum supported resampling
+  // interval.
+  //
+  // If omitted, telemetry is returned in its original, event-driven form
+  // without resampling.
   optional uint32 resolution = 1;
+
+  // Optional aggregation method applied when downsampling.
+  // Defaults to DOWNSAMPLING_METHOD_MEAN when omitted.
+  DownsamplingMethod downsampling_method = 2;
 }
 
 // Message defining the aggregation configuration for a custom formula within
@@ -609,6 +675,11 @@ message ReceiveAggregatedMicrogridElectricalComponentsDataStreamRequest {
 //       }
 //     }
 //     ```
+//
+// !!! todo "we need to say when the sample value is unset in case of ..."
+// !!! todo ".. resampling without samples in e.g. realtime stream"
+// !!! todo "in this case resampled samples might be updated"
+// !!! todo "in case of historic data that might also happen"
 //
 message ReceiveAggregatedMicrogridElectricalComponentsDataStreamResponse {
   // The metric and formula that has been used to aggregate the sample.
