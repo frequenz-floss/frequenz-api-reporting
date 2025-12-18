@@ -3,6 +3,7 @@
 ## Summary
 
 - The behavior of the TimeFilter has changed, and its documentation has been updated accordingly.
+- Clarified resampling and streaming semantics in the Reporting API, including interval-based timestamps, empty values, and update (upsert) behavior for resampled streams.
 
 ## Upgrading
 
