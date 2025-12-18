@@ -93,7 +93,8 @@ import "frequenz/api/common/v1alpha8/microgrid/sensors/sensors.proto";
 // When resampling is enabled:
 //   • samples are grouped using left-closed, right-open time intervals,
 //   • all samples within a window are aggregated,
-//   • the resulting timestamp represents the start of the window.
+//   • the resulting timestamp represents the start of the resampling
+//     interval [t, t + ΔT)
 //   • every stream must be treated as an upsert stream keyed by
 //     (aggregation_config, sample.sample_time):
 //     - intervals may be emitted with an unset sample value, and
@@ -584,15 +585,13 @@ message ReceiveMicrogridElectricalComponentsDataStreamRequest {
   StreamFilter filter = 3;
 }
 
-// Response containing a single data sample for one microgrid's
-// electrical components.
+// Response containing telemetry data for one microgrid's electrical components.
 //
-// !!! note
-//     The microgrid's electrical components are provided as single data
-//     samples that encapsulate metrics, bounds, errors, and operational
-//     states along with their associated timestamps. Each response message
-//     covers a single microgrid. If multiple microgrids are provided in the
-//     request, expect sequential messages in the stream.
+// The microgrid's electrical components are provided as single data samples
+// that encapsulate metrics, bounds, errors, and operational states along
+// with their associated timestamps. Each response message covers a single
+// microgrid. If multiple microgrids are provided in the request, expect
+// sequential messages in the stream.
 //
 // !!! example
 //     Example output structure:
@@ -659,7 +658,6 @@ message ReceiveMicrogridElectricalComponentsDataStreamResponse {
 
   // List of electrical components within this microgrid, each with its
   // associated data samples.
-  // !!! todo "This can be empty. We might need to adjust the common definition"
   repeated frequenz.api.common.v1alpha8.microgrid.electrical_components.
       ElectricalComponentTelemetry components = 2;
 }
