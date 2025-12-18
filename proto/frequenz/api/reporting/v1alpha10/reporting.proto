@@ -186,6 +186,9 @@ service ReportingService {
 // whether optional data blocks (e.g. bounds, operational states) are emitted
 // in stream responses.
 //
+// If a FilterOption is omitted, the default behavior is equivalent to
+// FILTER_OPTION_EXCLUDE.
+//
 enum FilterOption {
   // UNSPECIFIED: Default unspecified value — must not be used.
   FILTER_OPTION_UNSPECIFIED = 0;
@@ -269,8 +272,8 @@ message TimeFilter {
 //     analysis and backtesting.
 //
 // !!! example "Example: Downsampling from 1-second to 15-minute intervals"
-//     The stored time series has a native resolution of Δt = 1 second.
-//     Resampling is requested with a resolution of ΔT = 15 minutes. In
+//     The stored time series has a effective sampling resolution of Δt = 1
+//     second. Resampling is requested with a resolution of ΔT = 15 minutes. In
 //     this case all native samples whose timestamps fall within an interval
 //     [t, t + Δt) contribute to the aggregated value for that interval. The
 //     timestamp of the aggregated sample is exactly t, the start of the
@@ -317,6 +320,9 @@ message ResamplingOptions {
 // The AggregationConfig allows clients to specify how metrics should be
 // aggregated across microgrid electrical components. It serves as the
 // configuration guideline for any aggregation operation.
+//
+// Aggregation formulas operate on exactly one metric per configuration.
+// Cross-metric aggregation is not supported.
 //
 // !!! example
 //    To calculate the total voltage across three electrical components in
