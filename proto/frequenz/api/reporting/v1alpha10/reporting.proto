@@ -587,65 +587,54 @@ message ReceiveMicrogridElectricalComponentsDataStreamRequest {
 
 // Response containing telemetry data for one microgrid's electrical components.
 //
-// The microgrid's electrical components are provided as single data samples
-// that encapsulate metrics, bounds, errors, and operational states along
-// with their associated timestamps. Each response message covers a single
-// microgrid. If multiple microgrids are provided in the request, expect
-// sequential messages in the stream.
+// The microgrid's electrical components are provided as telemetry samples that
+// encapsulate metrics, bounds, and operational states along with their
+// associated measurement timestamps.
 //
-// !!! example
-//     Example output structure:
+// Each response message covers a single microgrid. If multiple microgrids are
+// provided in the request, expect sequential messages in the stream.
+//
+// !!! example "Example output structure (resampling enabled)"
+//     This example shows telemetry for a single electrical component when
+//     resampling is enabled. All metric samples share the same `sample_time`,
+//     which represents the start of the resampling interval [t, t + ΔT).
+//     Metric values may be present if telemetry measurements contributed to
+//     the interval, or unset if no measurements were observed at the time of
+//     emission. State data is not resampled and always uses the origin time
+//     at which the state was observed.
 //     ```
 //     {
 //       microgrid_id: 1,
 //       components: [
 //         {
-//           component_id: 13,
+//           electrical_component_id: 13,
 //           metric_samples: [
-//             /* all metrics belong to the same timestamp */
-//             /* sample is type MetricSampleVariant */
 //             {
+//               // Interval start time (resampling enabled)
 //               sample_time: "2023-10-01T00:00:00Z",
-//               metric: "DC_VOLTAGE_V",
-//               sample: {...}, bounds: {...}
+//               metric: "METRIC_DC_VOLTAGE",
+//               value: {
+//                 // value present because telemetry contributed
+//                 simple_metric: { value: 720.5 }
+//               },
+//               bounds: { ... }
 //             },
 //             {
+//               // Same interval, but no telemetry contributed for this metric
 //               sample_time: "2023-10-01T00:00:00Z",
-//               metric: "DC_CURRENT_A",
-//               sample: {...},
-//               bounds: {...}
+//               metric: "METRIC_DC_CURRENT",
+//               // value intentionally unset
+//               bounds: { ... }
 //             }
 //           ],
-//           state: {
-//             sample_time: "2023-10-01T00:00:13.12Z",
-//             states: ["COMPONENT_STATE_CHARGING", "CABLE_CONNECTED"],
-//             warnings: []
-//             errors: [],
-//           ]
-//         },
-//         {
-//           component_id: 59,
-//           metric_samples: [
-//             /* all metrics belong to the same timestamp */
-//             /* sample is type MetricSampleVariant */
+//           state_snapshots: [
 //             {
-//               sample_time: "2023-10-01T00:00:00Z",
-//               metric: "DC_VOLTAGE_V",
-//               sample: {...},
-//               bounds: {...}
-//             },
-//             {
-//               sample_time: "2023-10-01T00:00:00Z",
-//               metric: "DC_CURRENT_A",
-//               sample: {...},
-//               bounds: {...}
+//               // State snapshots are not resampled and use origin time
+//               origin_time: "2023-10-01T00:00:13.12Z",
+//               states: ["ELECTRICAL_COMPONENT_STATE_CODE_CHARGING"],
+//               warnings: [],
+//               errors: []
 //             }
-//           ],
-//           state: {
-//             sample_time: "2023-10-01T00:00:13.12Z",
-//             states: ["COMPONENT_STATE_ERROR"],
-//             warnings: []
-//             errors: ["COMPONENT_ERROR_CODE_BATTERY_RELAY_ERROR"],
 //           ]
 //         }
 //       ]
@@ -658,6 +647,12 @@ message ReceiveMicrogridElectricalComponentsDataStreamResponse {
 
   // List of electrical components within this microgrid, each with its
   // associated data samples.
+  //
+  // !!! important "Empty values and updates"
+  //     When resampling is enabled, metric sample values MAY be unset for a
+  //     given resampling interval and MAY be updated later if additional
+  //     telemetry measurements arrive. Clients MUST be able to handle empty
+  //     values and updates.
   repeated frequenz.api.common.v1alpha8.microgrid.electrical_components.
       ElectricalComponentTelemetry components = 2;
 }
@@ -722,6 +717,12 @@ message ReceiveAggregatedMicrogridElectricalComponentsDataStreamResponse {
 
   // Aggregated sample value and corresponding UTC timestamp when it was
   // sampled.
+  //
+  // !!! important "Empty values and updates"
+  //     When resampling is enabled, metric sample values MAY be unset for a
+  //     given resampling interval and MAY be updated later if additional
+  //     telemetry measurements arrive. Clients MUST be able to handle empty
+  //     values and updates.
   SimpleAggregatedMetricValue sample = 2;
 }
 
@@ -765,6 +766,7 @@ message ReceiveMicrogridSensorsDataStreamRequest {
     // request was received.
     TimeFilter time_filter = 3;
   }
+
   // Encapsulates the microgrid ID and the sensor IDs within that microgrid
   // for which the historical data should be retrieved.
   //
@@ -796,12 +798,53 @@ message ReceiveMicrogridSensorsDataStreamRequest {
 
 // Response containing a single data sample for one microgrid's sensors.
 //
-// !!! note
-//     The microgrid's sensors are provided as single data samples that
-//     encapsulate metrics, bounds, errors, and operational states along with
-//     their associated timestamps. Each response message covers a single
-//     microgrid. If multiple microgrids are provided in the request, expect
-//     sequential messages in the stream.
+// The microgrid's sensors are provided as telemetry samples that encapsulate
+// metric measurements and sensor state snapshots along with their associated
+// timestamps.
+//
+// Each response message covers a single microgrid. If multiple microgrids are
+// provided in the request, expect sequential messages in the stream.
+//
+// !!! example "Example output structure (resampling enabled)"
+//     This example shows telemetry for a single sensor when resampling is
+//     enabled. Both metric samples share the same `sample_time`, which
+//     represents the start of the resampling interval. One metric has a value
+//     because telemetry contributed to the interval, while the other metric
+//     has no value set because no measurements were observed for that metric
+//     during the interval. The sensor state snapshot uses its own origin time.
+//
+//     ```
+//     {
+//       "microgrid_id": 1,
+//       "sensors": [
+//         {
+//           "sensor_id": 7,
+//           "metric_samples": [
+//             {
+//               "sample_time": "2023-10-01T00:00:00Z",
+//               "metric": "METRIC_TEMPERATURE_C",
+//               "value": {
+//                 "simple_metric": { "value": 21.4 }
+//               }
+//             },
+//             {
+//               "sample_time": "2023-10-01T00:00:00Z",
+//               "metric": "METRIC_HUMIDITY_PERCENT"
+//               // value intentionally unset: no telemetry in this interval
+//             }
+//           ],
+//           "state_snapshots": [
+//             {
+//               "origin_time": "2023-10-01T00:00:12.45Z",
+//               "states": ["SENSOR_STATE_OK"],
+//               "warnings": [],
+//               "errors": []
+//             }
+//           ]
+//         }
+//       ]
+//     }
+//     ```
 //
 message ReceiveMicrogridSensorsDataStreamResponse {
   // Microgrid ID for which the sensors and samples are reported.
@@ -809,6 +852,12 @@ message ReceiveMicrogridSensorsDataStreamResponse {
 
   // List of sensors within this microgrid, each with its associated data
   // samples.
+  //
+  // !!! important "Empty values and updates"
+  //     When resampling is enabled, metric sample values MAY be unset for a
+  //     given resampling interval and MAY be updated later if additional
+  //     telemetry measurements arrive. Clients MUST be able to handle empty
+  //     values and updates.
   repeated frequenz.api.common.v1alpha8.microgrid.sensors.SensorTelemetry
       sensors = 2;
 }
@@ -851,11 +900,45 @@ message ReceiveAggregatedMicrogridSensorsDataStreamRequest {
 //     formulars provided in the request, expect sequential
 //     messages in the stream.
 //
+// !!! example
+//     Example output structure (resampling enabled):
+//
+//     This example shows an aggregated sensor metric for a single resampling
+//     interval. The `sample_time` represents the start of the resampling
+//     interval [t, t + ΔT). The aggregated value is present because telemetry
+//     measurements from one or more sensors contributed to the interval.
+//
+//     If no telemetry measurements had contributed, the `sample` value would
+//     be unset. The same interval may be re-emitted later with an updated
+//     value if additional telemetry measurements arrive.
+//
+//     ```
+//     {
+//       "aggregation_config": {
+//         "microgrid_id": 1,
+//         "metric": "METRIC_TEMPERATURE_C",
+//         "aggregation_formula": "avg(#7,#9,#12)"
+//       },
+//       "sample": {
+//         "sample_time": "2023-10-01T00:00:00Z",
+//         "sample": {
+//           "simple_metric": { "value": 21.8 }
+//         }
+//       }
+//     }
+//     ```
+//
 message ReceiveAggregatedMicrogridSensorsDataStreamResponse {
   // The metric and formula that has been used to aggregate the sample.
   AggregationConfig aggregation_config = 1;
 
   // Aggregated sample value and corresponding UTC timestamp when it was
   // sampled.
+  //
+  // !!! important "Empty values and updates"
+  //     When resampling is enabled, metric sample values MAY be unset for a
+  //     given resampling interval and MAY be updated later if additional
+  //     telemetry measurements arrive. Clients MUST be able to handle empty
+  //     values and updates.
   SimpleAggregatedMetricValue sample = 2;
 }
