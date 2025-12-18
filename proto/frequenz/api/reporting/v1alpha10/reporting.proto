@@ -90,10 +90,15 @@ import "frequenz/api/common/v1alpha8/microgrid/sensors/sensors.proto";
 // Resampling applies uniformly to historical replay and real-time streaming
 // data.
 //
-// When resampling is enabled by default:
+// When resampling is enabled:
 //   • samples are grouped using left-closed, right-open time intervals,
 //   • all samples within a window are aggregated,
 //   • the resulting timestamp represents the start of the window.
+//   • every stream must be treated as an upsert stream keyed by
+//     (aggregation_config, sample.sample_time):
+//     - intervals may be emitted with an unset sample value, and
+//     - intervals may be re-emitted later with updated values due to
+//       late-arriving telemetry.
 //
 // If no resampling resolution is specified, data is returned in its original
 // resolution without modification.
@@ -712,11 +717,6 @@ message ReceiveAggregatedMicrogridElectricalComponentsDataStreamRequest {
 //       }
 //     }
 //     ```
-//
-// !!! todo "we need to say when the sample value is unset in case of ..."
-// !!! todo ".. resampling without samples in e.g. realtime stream"
-// !!! todo "in this case resampled samples might be updated"
-// !!! todo "in case of historic data that might also happen"
 //
 message ReceiveAggregatedMicrogridElectricalComponentsDataStreamResponse {
   // The metric and formula that has been used to aggregate the sample.
