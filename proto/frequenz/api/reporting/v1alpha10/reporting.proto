@@ -232,13 +232,12 @@ message TimeFilter {
 // Resampling options for microgrid electrical component or sensor telemetry.
 //
 // Resampling allows clients to request a regular, uniform time grid onto
-// which high-resolution telemetry samples are aggregated.
-//
-// The Reporting service operates on telemetry data that may be sampled at
-// sub-second resolution and whose sampling characteristics can differ
-// between microgrids, components, and metrics. Resampling therefore
-// materializes a fixed time grid and aggregates all telemetry samples whose
-// timestamps fall into each grid interval.
+// which high-resolution telemetry samples are aggregated. The service
+// operates on telemetry data that may be sampled at sub-second resolution
+// and whose sampling characteristics can differ between microgrids,
+// electrical components, and sensors. Resampling therefore materializes a
+// fixed time grid and aggregates all telemetry samples whose timestamps fall into each
+// grid interval.
 //
 // The output time series contains at most one sample per interval. The
 // timestamp of each output sample equals the start of the corresponding
@@ -250,7 +249,7 @@ message TimeFilter {
 //     contain no telemetry samples.
 //
 //     In such cases, the corresponding output sample will have no value
-//     set. The Reporting API does not interpolate, extrapolate, or carry
+//     set. The Reporting service does not interpolate, extrapolate, or carry
 //     values forward across intervals.
 //
 // !!! note "Resolution constraints"
@@ -262,12 +261,6 @@ message TimeFilter {
 //     Typical and recommended resolutions include 5 minutes, 15 minutes,
 //     1 hour, and 1 day. Monthly resolution may be used for long-horizon
 //     analysis and backtesting.
-//
-// !!! note "Real-time streams"
-//     For open-ended streams, resampling windows advance according to
-//     wall-clock time. Window emission is time-driven, not event-driven.
-//     A window MAY be emitted even if no new telemetry samples arrive
-//     during the interval, depending on metric availability.
 //
 // !!! example "Example: Downsampling from 1-second to 15-minute intervals"
 //     The stored time series has a native resolution of Δt = 1 second.
@@ -286,10 +279,22 @@ message TimeFilter {
 //     The resampled series consists of points:
 //         (t = T0 + k·ΔT,  value = A_k)
 //
+// !!! note "Real-time streams"
+//     For open-ended streams, resampling windows advance according to
+//     wall-clock time. Window emission is time-driven, not event-driven.
+//      As telemetry samples may arrive late (e.g. due to
+//     buffering, transport delays, or upstream batching) a window MAY be
+//     emitted even if the telemetry samples have not yet arrived during the
+//     interval. In consequence a resampling interval that has already been
+//     emitted MAY be re-emitted later with an updated value when additional
+//     samples for that interval arrive.
+//
+//     Clients must be able to handle interval updates (upserts) and must not
+//     assume that emitted intervals are final.
+//
 message ResamplingOptions {
-  // Optional resampling resolution for the output time grid, expressed in
-  // seconds. The resolution MUST NOT exceed the maximum supported resampling
-  // interval.
+  // Optional resampling resolution, expressed in seconds. The resolution
+  // MUST NOT exceed the maximum supported resampling interval.
   //
   // If omitted, telemetry is returned in its original, event-driven form
   // without resampling.
@@ -352,26 +357,56 @@ message AggregationConfig {
   string aggregation_formula = 3;
 }
 
-// Defines a single aggregated metric sample, which represents a consolidated
-// metric value over a collection of microgrid components within a specific
-// timeframe.
+// Defines a single aggregated metric value.
 //
-// This message serves to encapsulate aggregate metrics derived from multiple
-// component measurements. It is particularly useful in scenarios where an
-// overall metric needs to be calculated for a set of components. For
-// instance, you could use it to represent the average voltage across
-// multiple sources within a microgrid or to calculate the average state of
-// charge of several batteries.
+// This message represents the aggregated - across multiple electrical
+// components or sensors- result for one metric and one aggregation
+// configuration. It is particularly useful in scenarios where an overall
+// metric needs to be calculated for a set of components. For instance, it
+// can be used to represent the average voltage across multiple sources
+// within a microgrid or to calculate the average state of charge of several
+// batteries.
+//
+// Depending on whether resampling is enabled in the request, it can
+// represent either:
+//   • a point-in-time aggregated value (no resampling requested), or
+//   • an aggregated value for a resampling interval (resampling requested).
 //
 message SimpleAggregatedMetricValue {
-  // The UTC sample timestamp for the aggregated metrics.
+  // The UTC timestamp associated with this aggregated value.
   //
-  // !!! info
-  //     This is the original timestamp of the samples that were aggregated.
+  // Semantics depend on whether resampling is enabled:
+  //
+  //   • Without resampling:
+  //       `sample_time` represents the origin time of the underlying
+  //       telemetry measurement(s), i.e. the time at which the metric
+  //       value was observed at the component or sensor. This is the
+  //       original timestamp of the samples that were aggregated.
+  //
+  //   • With resampling:
+  //       `sample_time` represents the start of the resampling interval
+  //       [t, t + ΔT) to which contributing telemetry samples are assigned
+  //       based on their origin timestamps.
+  //
+  // In all cases, `sample_time` refers to measurement time, not processing
+  // or emission time.
   google.protobuf.Timestamp sample_time = 1;
 
-  // The aggregated value of the metric.
-  // float value = 2;
+  // The aggregated metric value.
+  //
+  // !!! note "Unset values (resampling)"
+  //     When resampling is enabled, the sample value MAY be unset if no
+  //     telemetry measurements were observed within the corresponding
+  //     resampling interval.
+  //
+  // !!! important "Late measurements and updates"
+  //     Telemetry measurements are assigned based on their origin timestamps,
+  //     not their arrival time. As a result, when resampling is enabled,
+  //     previously emitted intervals MAY be re-emitted later with updated
+  //     values if additional measurements arrive for the same interval.
+  //
+  //     Clients MUST be able to handle such updates and MUST NOT assume that
+  //     emitted values are final.
   frequenz.api.common.v1alpha8.metrics.SimpleMetricValue sample = 2;
 }
 
@@ -481,6 +516,7 @@ message ReceiveMicrogridElectricalComponentsDataStreamRequest {
   message StreamFilter {
     // Optional resampling options like resolution for the data, represented
     // in seconds.
+    //
     // If omitted, data will be returned in its original representation.
     ResamplingOptions resampling_options = 1;
 
@@ -618,6 +654,7 @@ message ReceiveMicrogridElectricalComponentsDataStreamResponse {
 
   // List of electrical components within this microgrid, each with its
   // associated data samples.
+  // !!! todo "This can be empty. We might need to adjust the common definition"
   repeated frequenz.api.common.v1alpha8.microgrid.electrical_components.
       ElectricalComponentTelemetry components = 2;
 }
