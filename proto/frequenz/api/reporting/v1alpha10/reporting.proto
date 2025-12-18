@@ -10,7 +10,7 @@
 
 syntax = "proto3";
 
-package frequenz.api.reporting.v1alpha11;
+package frequenz.api.reporting.v1alpha10;
 
 import "google/protobuf/timestamp.proto";
 
