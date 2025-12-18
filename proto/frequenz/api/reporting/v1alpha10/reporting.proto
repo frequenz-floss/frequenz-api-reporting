@@ -12,12 +12,12 @@ syntax = "proto3";
 
 package frequenz.api.reporting.v1alpha10;
 
-import "frequenz/api/common/v1alpha8/types/interval.proto";
+import "google/protobuf/timestamp.proto";
 import "frequenz/api/common/v1alpha8/metrics/metrics.proto";
 import "frequenz/api/common/v1alpha8/microgrid/electrical_components/electrical_components.proto";
 import "frequenz/api/common/v1alpha8/microgrid/microgrid.proto";
 import "frequenz/api/common/v1alpha8/microgrid/sensors/sensors.proto";
-import "google/protobuf/timestamp.proto";
+import "frequenz/api/common/v1alpha8/types/interval.proto";
 
 // The Reporting service provides access to historical and real-time telemetry
 // data from microgrids.
