@@ -136,7 +136,7 @@ import "google/protobuf/timestamp.proto";
 //     over TLS (HTTPS).
 //
 service ReportingService {
-  // Streams metrics for a list of microgrid components.
+  // Streams metrics for a list of microgrid electrical components.
   //
   // !!! note
   //     This RPC endpoint streams metrics data for electrical components of one
@@ -261,14 +261,17 @@ message TimeFilter {
 //     values forward across intervals.
 //
 // !!! note "Resolution constraints"
-//     The service enforces an upper bound on the resampling resolution.
+//     Resampling resolutions are fixed-duration intervals expressed in
+//     seconds and are not calendar-aware. The service enforces an upper
+//     bound on the resampling resolution.
 //
-//     Resolutions larger than one calendar month are not supported, as
-//     they exceed the intended scope of telemetry resampling.
+//     Resolutions larger than 7 days are not supported, as they exceed the
+//     intended scope of fixed-duration telemetry resampling.
 //
 //     Typical and recommended resolutions include 5 minutes, 15 minutes,
-//     1 hour, and 1 day. Monthly resolution may be used for long-horizon
-//     analysis and backtesting.
+//     1 hour, 1 day, and 7 days. Longer-horizon or calendar-based aggregation
+//     (for example monthly analysis) should be performed client-side on the
+//     resampled data.
 //
 // !!! example "Example: Downsampling from 1-second to 15-minute intervals"
 //     The stored time series has a effective sampling resolution of Δt = 1
@@ -281,8 +284,14 @@ message TimeFilter {
 //     For each interval k:
 //         Ik = [T0 + k·ΔT,  T0 + (k+1)·ΔT)
 //
-//     The aggregated value A_k is by default the arithmetic mean of all
-//     samples whose timestamps ts satisfy: ts ∈ Ik
+//     The aggregated value A_k is computed using the configured aggregation
+//     method (see `downsampling_method`) and may additionally follow
+//     metric-specific semantics.
+//
+//     For example, for instantaneous metrics the arithmetic mean is commonly
+//     used, while for cumulative (counter-like) metrics averaging is not
+//     meaningful and a representative value within the interval is used
+//     instead.
 //
 //     The resampled series consists of points:
 //         (t = T0 + k·ΔT,  value = A_k)
@@ -290,14 +299,20 @@ message TimeFilter {
 // !!! note "Real-time streams"
 //     For open-ended streams, resampling windows advance according to
 //     wall-clock time. Window emission is time-driven, not event-driven.
-//      As telemetry samples may arrive late (e.g. due to
-//     buffering, transport delays, or upstream batching) a window MAY be
-//     emitted even if the telemetry samples have not yet arrived during the
-//     interval. In consequence a resampling interval that has already been
-//     emitted MAY be re-emitted later with an updated value when additional
-//     samples for that interval arrive.
 //
-//     Clients must be able to handle interval updates (upserts) and must not
+//     The service does not provide a fixed guarantee for when an interval’s
+//     sample will be emitted. In particular, delivery latency may vary due to
+//     buffering, transport delays, upstream batching, scheduling, or load.
+//     Clients MUST NOT rely on sample arrival time to infer measurement time
+//     or completeness.
+//
+//     Because telemetry samples may arrive late, an interval MAY be emitted
+//     before all telemetry for that interval has arrived. In consequence, a
+//     resampling interval that has already been emitted MAY be re-emitted
+//     later with an updated value when additional samples for that interval
+//     arrive.
+//
+//     Clients MUST be able to handle interval updates (upserts) and MUST NOT
 //     assume that emitted intervals are final.
 //
 message ResamplingOptions {
@@ -378,28 +393,18 @@ message AggregationConfig {
 // within a microgrid or to calculate the average state of charge of several
 // batteries.
 //
-// Depending on whether resampling is enabled in the request, it can
-// represent either:
-//   • a point-in-time aggregated value (no resampling requested), or
-//   • an aggregated value for a resampling interval (resampling requested).
+// !!! note "Resampling is required"
+//     Aggregated/formula streams always use resampling to align measurements
+//     from various sources in time.
 //
 message SimpleAggregatedMetricValue {
-  // The UTC timestamp associated with this aggregated value.
+  // The UTC timestamp identifying the resampling interval.
   //
-  // Semantics depend on whether resampling is enabled:
+  // This timestamp is the start of the resampling interval [t, t + ΔT) to
+  // which contributing telemetry measurements are assigned based on their
+  // origin timestamps.
   //
-  //   • Without resampling:
-  //       `sample_time` represents the origin time of the underlying
-  //       telemetry measurement(s), i.e. the time at which the metric
-  //       value was observed at the component or sensor. This is the
-  //       original timestamp of the samples that were aggregated.
-  //
-  //   • With resampling:
-  //       `sample_time` represents the start of the resampling interval
-  //       [t, t + ΔT) to which contributing telemetry samples are assigned
-  //       based on their origin timestamps.
-  //
-  // In all cases, `sample_time` refers to measurement time, not processing
+  // `sample_time` refers to measurement time (interval start), not processing
   // or emission time.
   google.protobuf.Timestamp sample_time = 1;
 
