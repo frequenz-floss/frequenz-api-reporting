@@ -96,7 +96,7 @@ dev-pylint = [
   "frequenz-api-reporting[dev-mkdocs,dev-noxfile,dev-pytest]",
 ]
 dev-pytest = [
-  "pytest == 9.0.2",
+  "pytest == 9.0.3",
   "pylint == 3.3.8", # We need this to check for the examples
   "frequenz-repo-config[extra-lint-examples] == 0.17.0",
 ]
