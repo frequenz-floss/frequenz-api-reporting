@@ -69,10 +69,10 @@ dev-flake8 = [
   "pydoclint == 0.8.3",
   "pydocstyle == 6.3.0",
 ]
-dev-formatting = ["black == 26.3.1", "isort == 6.1.0"]
+dev-formatting = ["black == 26.5.1", "isort == 6.1.0"]
 dev-mkdocs = [
   "Markdown == 3.10.2",
-  "black == 26.3.1",
+  "black == 26.5.1",
   "mike == 2.2.0",
   "mkdocs-gen-files == 0.5.0",
   "mkdocs-literate-nav == 0.6.3",
@@ -83,7 +83,7 @@ dev-mkdocs = [
   "frequenz-repo-config[api] == 0.18.0",
 ]
 dev-mypy = [
-  "mypy == 2.0.0",
+  "mypy == 2.1.0",
   "grpc-stubs == 1.53.0.6",
   "types-Markdown == 3.10.2.20260508",
   # For checking the noxfile, docs/ script, and tests
