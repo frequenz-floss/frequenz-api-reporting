@@ -79,7 +79,7 @@ dev-mkdocs = [
   "mkdocs-macros-plugin == 1.5.0",
   "mkdocs-material == 9.7.7",
   "mkdocstrings[python] == 1.0.6",
-  "mkdocstrings-python == 2.0.7",
+  "mkdocstrings-python == 2.0.9",
   "frequenz-repo-config[api] == 0.19.0",
 ]
 dev-mypy = [
@@ -97,7 +97,7 @@ dev-pylint = [
 ]
 dev-pytest = [
   "pytest == 9.1.1",
-  "pylint == 4.0.8", # We need this to check for the examples
+  "pylint == 4.0.9", # We need this to check for the examples
   "frequenz-repo-config[extra-lint-examples] == 0.19.0",
 ]
 dev = [
